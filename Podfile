@@ -15,5 +15,6 @@ target 'v-Chess' do
     pod 'SVProgressHUD'
     pod 'IQKeyboardManager'
     pod 'SDWebImage'
-
+    pod 'AMSlideMenu'
+    
 end

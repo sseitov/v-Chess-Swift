@@ -1,18 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ceb-gF-cjX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C14-6k-rla">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--MainVC-->
+        <scene sceneID="fQP-f9-O23">
+            <objects>
+                <viewController id="C14-6k-rla" customClass="MainVC" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="x9s-ll-sgi"/>
+                        <viewControllerLayoutGuide type="bottom" id="f7Y-6P-C6U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2H0-yF-hZg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <segue destination="re5-7E-vD6" kind="custom" identifier="rightMenu" customClass="AMSlideMenuRightMenuSegue" id="Klm-P6-sV9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UN8-LP-wgG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2145" y="174"/>
+        </scene>
+        <!--Right MenuVC-->
+        <scene sceneID="hfn-lN-cJH">
+            <objects>
+                <tableViewController id="re5-7E-vD6" customClass="RightMenuVC" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="epa-ua-sWz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="re5-7E-vD6" id="daw-3w-Sdr"/>
+                            <outlet property="delegate" destination="re5-7E-vD6" id="CBk-3v-meh"/>
+                        </connections>
+                    </tableView>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <segue destination="Ceb-gF-cjX" kind="custom" identifier="board" customClass="AMSlideMenuContentSegue" id="El5-Pq-yKS"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yie-Fx-Iri" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1269" y="172"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="aHF-Wc-28d">
             <objects>
                 <navigationController id="Ceb-gF-cjX" sceneMemberID="viewController">
+                    <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="CkK-7Q-1Gp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -24,7 +68,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bn8-1o-5iX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-265" y="163"/>
+            <point key="canvasLocation" x="-371" y="173"/>
         </scene>
         <!--Board Controller-->
         <scene sceneID="cgN-Ff-v4d">
@@ -35,11 +79,11 @@
                         <viewControllerLayoutGuide type="bottom" id="h2N-d7-NGo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oe9-l3-Lpp">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBC-az-Uvw">
-                                <rect key="frame" x="0.0" y="92" width="320" height="320"/>
+                                <rect key="frame" x="0.0" y="102" width="320" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcL-wY-Lyf" customClass="yAxizView" customModule="v_Chess" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="300"/>
@@ -93,7 +137,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6c2-S0-Hkt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="600" y="163"/>
+            <point key="canvasLocation" x="559" y="173"/>
         </scene>
     </scenes>
     <resources>
