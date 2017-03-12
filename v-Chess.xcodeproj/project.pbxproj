@@ -8,24 +8,46 @@
 
 /* Begin PBXBuildFile section */
 		2C68D10E1E74BCF700D12AEC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68D10D1E74BCF700D12AEC /* AppDelegate.swift */; };
-		2C68D1101E74BCF700D12AEC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68D10F1E74BCF700D12AEC /* ViewController.swift */; };
 		2C68D1131E74BCF700D12AEC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C68D1111E74BCF700D12AEC /* Main.storyboard */; };
 		2C68D1151E74BCF700D12AEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C68D1141E74BCF700D12AEC /* Assets.xcassets */; };
 		2C68D1181E74BCF700D12AEC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C68D1161E74BCF700D12AEC /* LaunchScreen.storyboard */; };
 		2C68D1221E74BD6500D12AEC /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C68D1211E74BD6500D12AEC /* GameKit.framework */; };
+		2C6A126D1E75AD71003451E1 /* BoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A126C1E75AD71003451E1 /* BoardController.swift */; };
+		2C6A126F1E75BF3B003451E1 /* velvet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C6A126E1E75BF3B003451E1 /* velvet.png */; };
+		2C6A12771E75C74C003451E1 /* NSStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12711E75C74C003451E1 /* NSStringExtensions.swift */; };
+		2C6A12781E75C74C003451E1 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12721E75C74C003451E1 /* StringExtensions.swift */; };
+		2C6A12791E75C74C003451E1 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12731E75C74C003451E1 /* UIColorExtensions.swift */; };
+		2C6A127A1E75C74C003451E1 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12741E75C74C003451E1 /* UIFontExtensions.swift */; };
+		2C6A127B1E75C74C003451E1 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12751E75C74C003451E1 /* UIViewControllerExtensions.swift */; };
+		2C6A127C1E75C74C003451E1 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12761E75C74C003451E1 /* UIViewExtensions.swift */; };
+		2C6A12801E75C7CF003451E1 /* xAxizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A127E1E75C7CF003451E1 /* xAxizView.swift */; };
+		2C6A12811E75C7CF003451E1 /* yAxizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A127F1E75C7CF003451E1 /* yAxizView.swift */; };
+		2C6A12831E75D6E6003451E1 /* Desk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12821E75D6E6003451E1 /* Desk.swift */; };
+		2C6A12851E75D77E003451E1 /* Figure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12841E75D77E003451E1 /* Figure.swift */; };
 		BBAF61327E48F50DC282B5A7 /* Pods_v_Chess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2EEEB3C17B1D7064C31F8EC /* Pods_v_Chess.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2C68D10A1E74BCF700D12AEC /* v-Chess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "v-Chess.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C68D10D1E74BCF700D12AEC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2C68D10F1E74BCF700D12AEC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2C68D1121E74BCF700D12AEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2C68D1141E74BCF700D12AEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "v-Chess/Assets.xcassets"; sourceTree = "<group>"; };
 		2C68D1171E74BCF700D12AEC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C68D1191E74BCF800D12AEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "v-Chess/Info.plist"; sourceTree = "<group>"; };
 		2C68D11F1E74BD4000D12AEC /* v-Chess.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "v-Chess.entitlements"; path = "v-Chess/v-Chess.entitlements"; sourceTree = "<group>"; };
 		2C68D1211E74BD6500D12AEC /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		2C6A126C1E75AD71003451E1 /* BoardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardController.swift; sourceTree = "<group>"; };
+		2C6A126E1E75BF3B003451E1 /* velvet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = velvet.png; sourceTree = "<group>"; };
+		2C6A12711E75C74C003451E1 /* NSStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSStringExtensions.swift; path = Extensions/NSStringExtensions.swift; sourceTree = "<group>"; };
+		2C6A12721E75C74C003451E1 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = Extensions/StringExtensions.swift; sourceTree = "<group>"; };
+		2C6A12731E75C74C003451E1 /* UIColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtensions.swift; path = Extensions/UIColorExtensions.swift; sourceTree = "<group>"; };
+		2C6A12741E75C74C003451E1 /* UIFontExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIFontExtensions.swift; path = Extensions/UIFontExtensions.swift; sourceTree = "<group>"; };
+		2C6A12751E75C74C003451E1 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewControllerExtensions.swift; path = Extensions/UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		2C6A12761E75C74C003451E1 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
+		2C6A127E1E75C7CF003451E1 /* xAxizView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = xAxizView.swift; path = CustomViews/xAxizView.swift; sourceTree = "<group>"; };
+		2C6A127F1E75C7CF003451E1 /* yAxizView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = yAxizView.swift; path = CustomViews/yAxizView.swift; sourceTree = "<group>"; };
+		2C6A12821E75D6E6003451E1 /* Desk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Desk.swift; path = CustomViews/Desk.swift; sourceTree = "<group>"; };
+		2C6A12841E75D77E003451E1 /* Figure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Figure.swift; path = CustomViews/Figure.swift; sourceTree = "<group>"; };
 		8D4F2BC3A1EFC6EE56203CE7 /* Pods-v-Chess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v-Chess.release.xcconfig"; path = "Pods/Target Support Files/Pods-v-Chess/Pods-v-Chess.release.xcconfig"; sourceTree = "<group>"; };
 		AAC7754DB04219B59041B63F /* Pods-v-Chess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v-Chess.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v-Chess/Pods-v-Chess.debug.xcconfig"; sourceTree = "<group>"; };
 		C2EEEB3C17B1D7064C31F8EC /* Pods_v_Chess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_v_Chess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,8 +97,10 @@
 		2C68D10C1E74BCF700D12AEC /* v-Chess */ = {
 			isa = PBXGroup;
 			children = (
+				2C6A127D1E75C78C003451E1 /* Custom Views */,
+				2C6A12701E75C738003451E1 /* Extensions */,
 				2C68D10D1E74BCF700D12AEC /* AppDelegate.swift */,
-				2C68D10F1E74BCF700D12AEC /* ViewController.swift */,
+				2C6A126C1E75AD71003451E1 /* BoardController.swift */,
 			);
 			path = "v-Chess";
 			sourceTree = "<group>";
@@ -93,13 +117,38 @@
 		2C68D1231E74BD8D00D12AEC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2C68D11F1E74BD4000D12AEC /* v-Chess.entitlements */,
 				2C68D1111E74BCF700D12AEC /* Main.storyboard */,
 				2C68D1141E74BCF700D12AEC /* Assets.xcassets */,
+				2C6A126E1E75BF3B003451E1 /* velvet.png */,
 				2C68D1161E74BCF700D12AEC /* LaunchScreen.storyboard */,
+				2C68D11F1E74BD4000D12AEC /* v-Chess.entitlements */,
 				2C68D1191E74BCF800D12AEC /* Info.plist */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		2C6A12701E75C738003451E1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2C6A12711E75C74C003451E1 /* NSStringExtensions.swift */,
+				2C6A12721E75C74C003451E1 /* StringExtensions.swift */,
+				2C6A12731E75C74C003451E1 /* UIColorExtensions.swift */,
+				2C6A12741E75C74C003451E1 /* UIFontExtensions.swift */,
+				2C6A12751E75C74C003451E1 /* UIViewControllerExtensions.swift */,
+				2C6A12761E75C74C003451E1 /* UIViewExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		2C6A127D1E75C78C003451E1 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C6A127E1E75C7CF003451E1 /* xAxizView.swift */,
+				2C6A127F1E75C7CF003451E1 /* yAxizView.swift */,
+				2C6A12821E75D6E6003451E1 /* Desk.swift */,
+				2C6A12841E75D77E003451E1 /* Figure.swift */,
+			);
+			name = "Custom Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +228,7 @@
 				2C68D1181E74BCF700D12AEC /* LaunchScreen.storyboard in Resources */,
 				2C68D1151E74BCF700D12AEC /* Assets.xcassets in Resources */,
 				2C68D1131E74BCF700D12AEC /* Main.storyboard in Resources */,
+				2C6A126F1E75BF3B003451E1 /* velvet.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,8 +287,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C68D1101E74BCF700D12AEC /* ViewController.swift in Sources */,
+				2C6A12781E75C74C003451E1 /* StringExtensions.swift in Sources */,
+				2C6A12771E75C74C003451E1 /* NSStringExtensions.swift in Sources */,
+				2C6A12831E75D6E6003451E1 /* Desk.swift in Sources */,
+				2C6A127C1E75C74C003451E1 /* UIViewExtensions.swift in Sources */,
+				2C6A127A1E75C74C003451E1 /* UIFontExtensions.swift in Sources */,
+				2C6A12851E75D77E003451E1 /* Figure.swift in Sources */,
+				2C6A126D1E75AD71003451E1 /* BoardController.swift in Sources */,
 				2C68D10E1E74BCF700D12AEC /* AppDelegate.swift in Sources */,
+				2C6A12811E75C7CF003451E1 /* yAxizView.swift in Sources */,
+				2C6A12791E75C74C003451E1 /* UIColorExtensions.swift in Sources */,
+				2C6A127B1E75C74C003451E1 /* UIViewControllerExtensions.swift in Sources */,
+				2C6A12801E75C7CF003451E1 /* xAxizView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +366,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -350,7 +410,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -413,6 +473,7 @@
 				2C68D11E1E74BCF800D12AEC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
