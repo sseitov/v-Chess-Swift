@@ -49,6 +49,7 @@
                         <segue destination="Ceb-gF-cjX" kind="custom" identifier="play" customClass="AMSlideMenuContentSegue" id="El5-Pq-yKS"/>
                         <segue destination="lYG-3n-D9i" kind="custom" identifier="settings" customClass="AMSlideMenuContentSegue" id="U9a-oO-oxc"/>
                         <segue destination="9pb-Bd-n80" kind="custom" identifier="community" customClass="AMSlideMenuContentSegue" id="xB7-hq-rai"/>
+                        <segue destination="duP-oM-M3P" kind="custom" identifier="login" customClass="AMSlideMenuContentSegue" id="N20-gt-hVc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yie-Fx-Iri" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -142,12 +143,11 @@
                         <outlet property="desk" destination="Ku5-6S-Ewp" id="yje-bN-ijM"/>
                         <outlet property="xAxiz" destination="Nsb-r9-Rp6" id="gWG-1O-T6X"/>
                         <outlet property="yAxiz" destination="UcL-wY-Lyf" id="96j-6O-M0V"/>
-                        <segue destination="duP-oM-M3P" kind="presentation" identifier="login" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="iXc-vf-RII"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6c2-S0-Hkt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="559" y="173"/>
+            <point key="canvasLocation" x="527" y="173"/>
         </scene>
         <!--Community Controller-->
         <scene sceneID="D4P-rF-V9n">
@@ -168,7 +168,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cnv-z4-f4Z">
                                             <rect key="frame" x="5" y="5" width="310" height="75"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f37-6w-QDd">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f37-6w-QDd">
                                                     <rect key="frame" x="10" y="8" width="60" height="60"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="Huq-Sp-Mg3"/>
@@ -176,7 +176,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMP-4K-aCl">
-                                                    <rect key="frame" x="80" y="23" width="220" height="30"/>
+                                                    <rect key="frame" x="90" y="23" width="210" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="MGZ-Pb-ajm"/>
                                                     </constraints>
@@ -191,7 +191,7 @@
                                                 <constraint firstItem="tMP-4K-aCl" firstAttribute="centerY" secondItem="Cnv-z4-f4Z" secondAttribute="centerY" id="dAk-Wd-VaJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="tMP-4K-aCl" secondAttribute="trailing" constant="10" id="fD1-U6-S31"/>
                                                 <constraint firstItem="f37-6w-QDd" firstAttribute="centerY" secondItem="Cnv-z4-f4Z" secondAttribute="centerY" id="mrk-86-33C"/>
-                                                <constraint firstItem="tMP-4K-aCl" firstAttribute="leading" secondItem="f37-6w-QDd" secondAttribute="trailing" constant="10" id="rwt-F1-fI3"/>
+                                                <constraint firstItem="tMP-4K-aCl" firstAttribute="leading" secondItem="f37-6w-QDd" secondAttribute="trailing" constant="20" id="rwt-F1-fI3"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -256,11 +256,13 @@
                     </navigationBar>
                     <connections>
                         <segue destination="Ird-Ch-XHD" kind="relationship" relationship="rootViewController" id="cyQ-rw-p1K"/>
+                        <segue destination="SxC-sA-V4T" kind="unwind" identifier="unwindToMenu" unwindAction="unwindToMenu:" id="upy-Aj-Chz"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u0N-OW-GZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="SxC-sA-V4T" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1373" y="-567"/>
+            <point key="canvasLocation" x="-371" y="-537"/>
         </scene>
         <!--Login Controller-->
         <scene sceneID="OXL-Lu-sWc">
@@ -372,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bNu-px-y4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2158" y="-567"/>
+            <point key="canvasLocation" x="527" y="-537"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="61D-H7-h1X">
@@ -488,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OpP-6F-nqv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3030" y="-567"/>
+            <point key="canvasLocation" x="1388" y="-537"/>
         </scene>
         <!--Settings Controller-->
         <scene sceneID="49d-ft-MyC">

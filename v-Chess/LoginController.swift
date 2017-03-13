@@ -10,17 +10,10 @@ import UIKit
 import SVProgressHUD
 import Firebase
 
-protocol LoginControllerDelegate {
-    func didLogin()
-    func didLogout()
-}
-
 class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, TextFieldContainerDelegate {
 
     @IBOutlet weak var userField: TextFieldContainer!
     @IBOutlet weak var passwordField: TextFieldContainer!
-    
-    var delegate:LoginControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +37,11 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
         self.view.addGestureRecognizer(tap)
     }
 
+    override func goBack() {
+        Model.shared.startObservers()
+        self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
+    }
+    
     func tap() {
         UIApplication.shared.sendAction(#selector(UIApplication.resignFirstResponder), to: nil, from: nil, for: nil)
     }
@@ -77,14 +75,14 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
     // MARK: - Facebook Auth
     
     @IBAction func facebookSignIn(_ sender: Any) { // read_custom_friendlists
-        FBSDKLoginManager().logIn(withReadPermissions: ["public_profile","email","user_friends","user_photos"], from: self, handler: { result, error in
+        FBSDKLoginManager().logIn(withReadPermissions: ["public_profile","email"], from: self, handler: { result, error in
             if error != nil {
                 self.showMessage("Facebook authorization error.", messageType: .error)
                 return
             }
             
             SVProgressHUD.show(withStatus: "Login...") // interested_in
-            let params = ["fields" : "name,email,picture.width(480).height(480)"]
+            let params = ["fields" : "name,email,picture.width(100).height(100)"]
             let request = FBSDKGraphRequest(graphPath: "me", parameters: params)
             request!.start(completionHandler: { _, result, fbError in
                 if fbError != nil {
@@ -103,7 +101,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
                             if let profile = result as? [String:Any] {
                                 Model.shared.createFacebookUser(firUser!, profile: profile, completion: {
                                     SVProgressHUD.dismiss()
-                                    self.delegate?.didLogin()
+                                    self.goBack()
                                 })
                             } else {
                                 self.showMessage("Can not read user profile.", messageType: .error)
@@ -138,7 +136,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
             } else {
                 Model.shared.createGoogleUser(firUser!, googleProfile: user.profile, completion: {
                     SVProgressHUD.dismiss()
-                    self.delegate?.didLogin()
+                    self.goBack()
                 })
             }
         })
@@ -170,7 +168,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
                     Model.shared.uploadUser(firUser!.uid, result: { user in
                         SVProgressHUD.dismiss()
                         if user != nil {
-                            self.delegate?.didLogin()
+                            self.goBack()
                         } else {
                             self.showMessage("Can not download profile data.", messageType: .error)
                         }

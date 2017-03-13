@@ -24,16 +24,10 @@ func navBarHeight() -> CGFloat {
     }
 }
 
-func showMenu() {
-    let app = UIApplication.shared.delegate as! AppDelegate
-    app.mainController?.openRightMenu(animated: true)
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var mainController: MainController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -54,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
+        
         // Use Firebase library to configure APIs
         FIRApp.configure()
         
@@ -67,8 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Model.shared.publishToken(currUser, token:token)
             }
         })
-
-        mainController = window?.rootViewController as? MainController
         
         SVProgressHUD.setDefaultStyle(.custom)
         SVProgressHUD.setBackgroundColor(UIColor.mainColor())
@@ -139,6 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

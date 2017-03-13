@@ -12,9 +12,7 @@ import Firebase
 import AFNetworking
 import SDWebImage
 
-let addUserNotification = Notification.Name("ADD_USER")
-let updateUserNotification = Notification.Name("UPDATE_USER")
-let deleteUserNotification = Notification.Name("DELETE_USER")
+let refreshUserNotification = Notification.Name("REFRESH_USER_LIST")
 
 func currentUser() -> User? {
     if let firUser = FIRAuth.auth()?.currentUser {
@@ -92,6 +90,9 @@ class Model: NSObject {
     
     func signOut(_ completion: @escaping() -> ()) {
         let ref = FIRDatabase.database().reference()
+        currentUser()!.token = nil
+        currentUser()!.available = NSNumber(booleanLiteral: false)
+        updateUser(currentUser()!)
         ref.child("tokens").child(currentUser()!.uid!).removeValue(completionBlock: { _, _ in
             switch currentUser()!.socialType {
             case .google:
@@ -106,7 +107,6 @@ class Model: NSObject {
             self.updateTokenRefHandle = nil
             self.newUserRefHandle = nil
             self.updateUserRefHandle = nil
-            self.deleteUserRefHandle = nil
             UserDefaults.standard.removeObject(forKey: "fbToken")
             completion()
         })
@@ -129,7 +129,6 @@ class Model: NSObject {
     
     private var newUserRefHandle: FIRDatabaseHandle?
     private var updateUserRefHandle: FIRDatabaseHandle?
-    private var deleteUserRefHandle: FIRDatabaseHandle?
     
     // MARK: - User table
     
@@ -212,6 +211,7 @@ class Model: NSObject {
                 if let token = snapshot.value as? String {
                     user.token = token
                     self.saveContext()
+                    NotificationCenter.default.post(name: refreshUserNotification, object: nil)
                 }
             }
         })
@@ -221,6 +221,7 @@ class Model: NSObject {
                 if let token = snapshot.value as? String {
                     user.token = token
                     self.saveContext()
+                    NotificationCenter.default.post(name: refreshUserNotification, object: nil)
                 }
             }
         })
@@ -237,7 +238,7 @@ class Model: NSObject {
                     self.getUserToken(snapshot.key, token: { token in
                         user.token = token
                         self.saveContext()
-                        NotificationCenter.default.post(name: deleteUserNotification, object: snapshot.key)
+                        NotificationCenter.default.post(name:refreshUserNotification, object: nil)
                     })
                 })
             }
@@ -248,17 +249,8 @@ class Model: NSObject {
                 if let available = userData["available"] as? Bool {
                     user.available = NSNumber(booleanLiteral: available)
                     self.saveContext()
-                    NotificationCenter.default.post(name: updateUserNotification, object: snapshot.key)
+                    NotificationCenter.default.post(name: refreshUserNotification, object: nil)
                 }
-            }
-        })
-        
-        deleteUserRefHandle = usersQuery.observe(.childRemoved, with: { (snapshot) -> Void in
-            if let user = self.getUser(snapshot.key) {
-                let uid = user.uid
-                self.managedObjectContext.delete(user)
-                self.saveContext()
-                NotificationCenter.default.post(name: deleteUserNotification, object: uid)
             }
         })
     }
@@ -267,6 +259,7 @@ class Model: NSObject {
         let cashedUser = createUser(user.uid)
         cashedUser.email = email
         cashedUser.name = nick
+        cashedUser.available = NSNumber(booleanLiteral: true)
         cashedUser.accountType = NSNumber(integerLiteral: SocialType.email.rawValue)
         cashedUser.avatar = UIImagePNGRepresentation(image) as NSData?
         saveContext()
@@ -288,6 +281,7 @@ class Model: NSObject {
         cashedUser.accountType = NSNumber(integerLiteral: SocialType.facebook.rawValue)
         cashedUser.email = profile["email"] as? String
         cashedUser.name = profile["name"] as? String
+        cashedUser.available = NSNumber(booleanLiteral: true)
         if let picture = profile["picture"] as? [String:Any] {
             if let data = picture["data"] as? [String:Any] {
                 cashedUser.avatarURL = data["url"] as? String
@@ -313,6 +307,7 @@ class Model: NSObject {
         cashedUser.accountType = NSNumber(integerLiteral: SocialType.google.rawValue)
         cashedUser.email = googleProfile.email
         cashedUser.name = googleProfile.name
+        cashedUser.available = NSNumber(booleanLiteral: true)
         if googleProfile.hasImage {
             if let url = googleProfile.imageURL(withDimension: 100) {
                 cashedUser.avatarURL = url.absoluteString
@@ -333,9 +328,28 @@ class Model: NSObject {
         }
     }
 
-    func members() -> [User] {
+    func available() -> [User] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        fetchRequest.predicate = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
+        let pred1 = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
+        let pred2 = NSPredicate(format: "available != nil")
+        let pred3 = NSPredicate(format: "available == true")
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2, pred3])
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {
+            return all
+        } else {
+            return []
+        }
+    }
+    
+    func notAvailable() -> [User] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        let pred1 = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
+        let pred21 = NSPredicate(format: "available == nil")
+        let pred22 = NSPredicate(format: "available == false")
+        let pred2 = NSCompoundPredicate(orPredicateWithSubpredicates: [pred21, pred22])
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
         let sort = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sort]
         if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {

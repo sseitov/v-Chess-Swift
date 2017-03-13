@@ -14,7 +14,7 @@ extension UINavigationController {
     }
 }
 
-class BoardController: UIViewController, LoginControllerDelegate {
+class BoardController: UIViewController {
 
     @IBOutlet weak var xAxiz: xAxizView!
     @IBOutlet weak var yAxiz: yAxizView!
@@ -26,11 +26,7 @@ class BoardController: UIViewController, LoginControllerDelegate {
         super.viewDidLoad()
         setupTitle("Choose mode from menu")
         setupBackButton()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
-        
-        if currentUser() == nil {
-            performSegue(withIdentifier: "login", sender: self)
-        }
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)        
     }
         
     override func goBack() {
@@ -70,26 +66,10 @@ class BoardController: UIViewController, LoginControllerDelegate {
         self.yAxiz.rotated = rotated
         self.desk.rotated = rotated
     }
-    
-    func didLogin() {
-        dismiss(animated: true, completion: {
-            Model.shared.startObservers()
-            showMenu()
-        })
-    }
-    
-    func didLogout() {
-        performSegue(withIdentifier: "login", sender: self)
-    }
 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "login" {
-            let nav = segue.destination as! UINavigationController
-            let controller = nav.topViewController as! LoginController
-            controller.delegate = self
-        }
     }
 
 }

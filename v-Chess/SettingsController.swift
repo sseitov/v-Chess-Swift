@@ -11,8 +11,6 @@ import SVProgressHUD
 
 class SettingsController: UITableViewController, ProfileCellDelegate {
 
-    var delegate:LoginControllerDelegate?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("My Profile")
@@ -69,7 +67,7 @@ class SettingsController: UITableViewController, ProfileCellDelegate {
             SVProgressHUD.show(withStatus: "SignOut...")
             Model.shared.signOut({
                 SVProgressHUD.dismiss()
-                self.delegate?.didLogout()
+                self.goBack()
             })
         })
         alert?.show()

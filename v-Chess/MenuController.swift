@@ -10,25 +10,21 @@ import UIKit
 import AMSlideMenu
 
 class MenuController: AMSlideMenuRightTableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 3 : 1
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? navBarHeight() : 1
+        return navBarHeight()
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return section == 0 ? 40 : 1
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -36,37 +32,31 @@ class MenuController: AMSlideMenuRightTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: navBarHeight()))
-            label.textAlignment = .center
-            label.font = UIFont.condensedFont(13)
-            label.text = "v-Chess menu".uppercased()
-            label.textColor = UIColor.white
-            label.backgroundColor = UIColor.mainColor()
-            return label
-        } else {
-            return nil
-        }
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: navBarHeight()))
+        label.textAlignment = .center
+        label.font = UIFont.condensedFont(13)
+        label.text = "v-Chess menu".uppercased()
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.mainColor()
+        return label
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.imageView?.setupBorder(UIColor.mainColor(), radius: 40, width: 3)
-        if indexPath.section == 0 {
-            switch indexPath.row {
-            case 1:
-                cell.textLabel?.text = "v-Chess Club".uppercased()
-                cell.imageView?.image = UIImage(named: "community")!.withSize(CGSize(width: 80, height: 80)).inCircle()
-            case 2:
-                cell.textLabel?.text = "Games Archive".uppercased()
-                cell.imageView?.image = UIImage(named: "archive")!.withSize(CGSize(width: 80, height: 80)).inCircle()
-            default:
-                cell.textLabel?.text = "Play".uppercased()
-                cell.imageView?.image = UIImage(named: "logo")!.withSize(CGSize(width: 80, height: 80)).inCircle()
-            }
-        } else {
+        cell.imageView?.setupBorder(UIColor.white, radius: 40, width: 3)
+        switch indexPath.row {
+        case 1:
+            cell.textLabel?.text = "game room".uppercased()
+            cell.imageView?.image = UIImage(named: "community")!.withSize(CGSize(width: 80, height: 80)).inCircle()
+        case 2:
+            cell.textLabel?.text = "Games Archive".uppercased()
+            cell.imageView?.image = UIImage(named: "archive")!.withSize(CGSize(width: 80, height: 80)).inCircle()
+        case 3:
             cell.textLabel?.text = "settings".uppercased()
             cell.imageView?.image = UIImage(named: "settings")!.withSize(CGSize(width: 80, height: 80)).inCircle()
+        default:
+            cell.textLabel?.text = "Play".uppercased()
+            cell.imageView?.image = UIImage(named: "logo")!.withSize(CGSize(width: 80, height: 80)).inCircle()
         }
         cell.contentView.backgroundColor = UIColor.clear
         cell.backgroundColor = UIColor.clear
@@ -81,7 +71,11 @@ class MenuController: AMSlideMenuRightTableViewController {
     // MARK: - Navigation
     
     @IBAction func unwindToMenu(_ segue: UIStoryboardSegue) {
-        mainVC.openRightMenu(animated: true)
+        if currentUser() == nil {
+            performSegue(withIdentifier: "login", sender: self)
+        } else {
+            mainVC.openRightMenu(animated: true)
+        }
     }
   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

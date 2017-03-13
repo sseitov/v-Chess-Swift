@@ -10,13 +10,25 @@ import UIKit
 
 class CommunityController: UITableViewController {
 
-    var members:[User] = []
+    var available:[User] = []
+    var notAvailable:[User] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("v-Chess Community")
         setupBackButton()
-        members = Model.shared.members()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.refresh),
+                                               name: refreshUserNotification,
+                                               object: nil)
+        refresh()
+    }
+    
+    func refresh() {
+        available = Model.shared.available()
+        notAvailable = Model.shared.notAvailable()
+        tableView.reloadData()
     }
     
     override func goBack() {
@@ -26,11 +38,11 @@ class CommunityController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1
+        return 40
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -38,12 +50,20 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        return section == 0 ? available.count : notAvailable.count
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "available for invitations" : "not available"
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "member", for: indexPath) as! MemberCell
-        cell.member = members[indexPath.row]
+        if indexPath.section == 0 {
+            cell.member = available[indexPath.row]
+        } else {
+            cell.member = notAvailable[indexPath.row]
+        }
         return cell
     }
 
