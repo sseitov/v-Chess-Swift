@@ -24,7 +24,7 @@ class BoardController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTitle("v-Chess")
+        setupTitle("Choose mode from menu")
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
     }
     

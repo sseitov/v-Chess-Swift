@@ -13,13 +13,23 @@ func IS_PAD() -> Bool {
     return UIDevice.current.userInterfaceIdiom == .pad
 }
 
+func navBarHeight() -> CGFloat {
+    if IS_PAD() {
+        return  44
+    } else {
+        return UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) ? 30 : 44
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var mainController: MainController?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        mainController = window?.rootViewController as? MainController
         
         SVProgressHUD.setDefaultStyle(.custom)
         SVProgressHUD.setBackgroundColor(UIColor.mainColor())

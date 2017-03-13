@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  MainController.swift
 //  WD Content
 //
 //  Created by Сергей Сейтов on 24.02.17.
@@ -9,7 +9,7 @@
 import UIKit
 import AMSlideMenu
 
-class MainVC: AMSlideMenuMainViewController {
+class MainController: AMSlideMenuMainViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,16 +20,26 @@ class MainVC: AMSlideMenuMainViewController {
         return AMPrimaryMenuRight
     }
     
+    // MARK: - Right menu
+    
     override func initialIndexPathForRightMenu() -> IndexPath! {
         return IndexPath(row: 0, section: 0)
     }
     
     override func segueIdentifierForIndexPath(inRightMenu indexPath: IndexPath!) -> String! {
-        return "board"
+        return "play"
     }
-    
+
     override func rightMenuWidth() -> CGFloat {
         return IS_PAD() ? 320 : 260
+    }
+    
+    override func deepnessForRightMenu() -> Bool {
+        return true
+    }
+    
+    override func maxDarknessWhileRightMenu() -> CGFloat {
+        return 0.5
     }
 
     override func configureRightMenuButton(_ button: UIButton!) {
@@ -37,7 +47,9 @@ class MainVC: AMSlideMenuMainViewController {
         button.backgroundColor = UIColor.clear
         button.setImage(UIImage(named:"menuButton"), for: .normal)
     }
-
+    
+    // MARK: - Common
+    
     override func configureSlideLayer(_ layer: CALayer!) {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 1
@@ -46,29 +58,13 @@ class MainVC: AMSlideMenuMainViewController {
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(rect: self.view.layer.bounds).cgPath
     }
-    
+
     override func openAnimationCurve() -> UIViewAnimationOptions {
         return .curveEaseOut
     }
     
     override func closeAnimationCurve() -> UIViewAnimationOptions {
         return .curveEaseOut
-    }
-
-    override func deepnessForLeftMenu() -> Bool {
-        return false
-    }
-
-    override func deepnessForRightMenu() -> Bool {
-        return true
-    }
-    
-    override func maxDarknessWhileLeftMenu() -> CGFloat {
-        return 0.5
-    }
-    
-    override func maxDarknessWhileRightMenu() -> CGFloat {
-        return 0.5
     }
 
     /*

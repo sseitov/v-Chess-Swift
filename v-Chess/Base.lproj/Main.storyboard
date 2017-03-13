@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--MainVC-->
+        <!--Main Controller-->
         <scene sceneID="fQP-f9-O23">
             <objects>
-                <viewController id="C14-6k-rla" customClass="MainVC" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="C14-6k-rla" customClass="MainController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="x9s-ll-sgi"/>
                         <viewControllerLayoutGuide type="bottom" id="f7Y-6P-C6U"/>
@@ -30,10 +30,10 @@
             </objects>
             <point key="canvasLocation" x="-2145" y="174"/>
         </scene>
-        <!--Right MenuVC-->
+        <!--Menu Controller-->
         <scene sceneID="hfn-lN-cJH">
             <objects>
-                <tableViewController id="re5-7E-vD6" customClass="RightMenuVC" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="re5-7E-vD6" customClass="MenuController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="epa-ua-sWz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,7 +45,7 @@
                     </tableView>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <segue destination="Ceb-gF-cjX" kind="custom" identifier="board" customClass="AMSlideMenuContentSegue" id="El5-Pq-yKS"/>
+                        <segue destination="Ceb-gF-cjX" kind="custom" identifier="play" customClass="AMSlideMenuContentSegue" id="El5-Pq-yKS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yie-Fx-Iri" userLabel="First Responder" sceneMemberID="firstResponder"/>

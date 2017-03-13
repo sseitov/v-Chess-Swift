@@ -21,15 +21,11 @@ extension UIColor {
     }
     
     class func mainColor() -> UIColor {
-        return color(70, 123, 170, 1)
+        return color(0, 32, 91, 1)
     }
     
     class func mainColor(_ alpha:Float) -> UIColor {
-        return color(70, 123, 170, alpha)
-    }
-    
-    class func bloodColor() -> UIColor {
-        return color(207, 43, 64, 1)
+        return color(0, 32, 91, alpha)
     }
     
     func imageFromColor(_ size:CGSize, cornerRadius:CGFloat) -> UIImage {
