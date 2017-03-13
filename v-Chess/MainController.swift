@@ -28,7 +28,12 @@ class MainController: AMSlideMenuMainViewController {
     
     override func segueIdentifierForIndexPath(inRightMenu indexPath: IndexPath!) -> String! {
         if indexPath.section == 0 {
-            return "play"
+            switch indexPath.row {
+            case 1:
+                return "community"
+            default:
+                return "play"
+            }
         } else {
             return "settings"
         }
@@ -44,12 +49,6 @@ class MainController: AMSlideMenuMainViewController {
     
     override func maxDarknessWhileRightMenu() -> CGFloat {
         return 0.5
-    }
-
-    override func configureRightMenuButton(_ button: UIButton!) {
-        button.frame = CGRect(x: 0, y: 0, width: 25, height: 13)
-        button.backgroundColor = UIColor.clear
-        button.setImage(UIImage(named:"menuButton"), for: .normal)
     }
     
     // MARK: - Common

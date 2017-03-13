@@ -12,8 +12,6 @@ import SVProgressHUD
 class SettingsController: UITableViewController, ProfileCellDelegate {
 
     var delegate:LoginControllerDelegate?
-    
-    private var defaultSoundSetting:URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +21,6 @@ class SettingsController: UITableViewController, ProfileCellDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        defaultSoundSetting = UserDefaults.standard.url(forKey: "ringtone")
         tableView.reloadData()
     }
 

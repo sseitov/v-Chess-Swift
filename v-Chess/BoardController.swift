@@ -25,13 +25,17 @@ class BoardController: UIViewController, LoginControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("Choose mode from menu")
+        setupBackButton()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
         
         if currentUser() == nil {
             performSegue(withIdentifier: "login", sender: self)
         }
     }
-    
+        
+    override func goBack() {
+        self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

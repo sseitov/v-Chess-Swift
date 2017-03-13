@@ -144,8 +144,7 @@ class Model: NSObject {
     
     func getUser(_ uid:String) -> User? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        let predicate = NSPredicate(format: "uid = %@", uid)
-        fetchRequest.predicate = predicate
+        fetchRequest.predicate = NSPredicate(format: "uid = %@", uid)
         if let user = try? managedObjectContext.fetch(fetchRequest).first as? User {
             return user
         } else {
@@ -334,4 +333,15 @@ class Model: NSObject {
         }
     }
 
+    func members() -> [User] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        fetchRequest.predicate = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {
+            return all
+        } else {
+            return []
+        }
+    }
 }
