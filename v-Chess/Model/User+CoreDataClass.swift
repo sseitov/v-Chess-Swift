@@ -40,6 +40,10 @@ public class User: NSManagedObject {
         }
     }
     
+    func isAvailable() -> Bool {
+        return (available != nil && available!.boolValue)
+    }
+    
     func getData() -> [String:Any] {
         var profile:[String : Any] = ["socialType" : self.accountType!.intValue]
         if email != nil {
@@ -51,6 +55,9 @@ public class User: NSManagedObject {
         if avatarURL != nil {
             profile["avatarURL"] = avatarURL!
         }
+        if available != nil {
+            profile["available"] = available!.boolValue
+        }
         return profile
     }
     
@@ -60,6 +67,10 @@ public class User: NSManagedObject {
         } else {
             self.accountType = NSNumber(integerLiteral: SocialType.email.rawValue)
         }
+        if let availVal = profile["socialType"] as? Bool {
+            self.available = NSNumber(booleanLiteral: availVal)
+        }
+        
         email = profile["email"] as? String
         name = profile["name"] as? String
         

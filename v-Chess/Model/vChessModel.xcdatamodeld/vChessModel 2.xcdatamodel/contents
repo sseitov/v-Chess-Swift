@@ -14,6 +14,7 @@
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="accountType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="available" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="avatarURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,6 +24,6 @@
     </entity>
     <elements>
         <element name="ChessGame" positionX="-6480" positionY="-3046" width="128" height="193"/>
-        <element name="User" positionX="-6696" positionY="-3096" width="128" height="148"/>
+        <element name="User" positionX="-6696" positionY="-3096" width="128" height="165"/>
     </elements>
 </model>

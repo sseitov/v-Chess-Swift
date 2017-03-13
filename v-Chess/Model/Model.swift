@@ -13,6 +13,7 @@ import AFNetworking
 import SDWebImage
 
 let addUserNotification = Notification.Name("ADD_USER")
+let updateUserNotification = Notification.Name("UPDATE_USER")
 let deleteUserNotification = Notification.Name("DELETE_USER")
 
 func currentUser() -> User? {
@@ -104,6 +105,7 @@ class Model: NSObject {
             self.newTokenRefHandle = nil
             self.updateTokenRefHandle = nil
             self.newUserRefHandle = nil
+            self.updateUserRefHandle = nil
             self.deleteUserRefHandle = nil
             UserDefaults.standard.removeObject(forKey: "fbToken")
             completion()
@@ -126,6 +128,7 @@ class Model: NSObject {
     private var updateTokenRefHandle: FIRDatabaseHandle?
     
     private var newUserRefHandle: FIRDatabaseHandle?
+    private var updateUserRefHandle: FIRDatabaseHandle?
     private var deleteUserRefHandle: FIRDatabaseHandle?
     
     // MARK: - User table
@@ -238,6 +241,16 @@ class Model: NSObject {
                         NotificationCenter.default.post(name: deleteUserNotification, object: snapshot.key)
                     })
                 })
+            }
+        })
+        
+        updateUserRefHandle = usersQuery.observe(.childChanged, with: { (snapshot) -> Void in
+            if let user = self.getUser(snapshot.key), let userData = snapshot.value as? [String : Any] {
+                if let available = userData["available"] as? Bool {
+                    user.available = NSNumber(booleanLiteral: available)
+                    self.saveContext()
+                    NotificationCenter.default.post(name: updateUserNotification, object: snapshot.key)
+                }
             }
         })
         

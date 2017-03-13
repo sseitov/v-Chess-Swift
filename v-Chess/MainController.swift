@@ -27,7 +27,11 @@ class MainController: AMSlideMenuMainViewController {
     }
     
     override func segueIdentifierForIndexPath(inRightMenu indexPath: IndexPath!) -> String! {
-        return "play"
+        if indexPath.section == 0 {
+            return "play"
+        } else {
+            return "settings"
+        }
     }
 
     override func rightMenuWidth() -> CGFloat {
