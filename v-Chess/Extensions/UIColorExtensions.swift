@@ -28,6 +28,10 @@ extension UIColor {
         return color(0, 32, 91, alpha)
     }
     
+    class func errorColor() -> UIColor {
+        return color(240, 90, 80, 1)
+    }
+
     func imageFromColor(_ size:CGSize, cornerRadius:CGFloat) -> UIImage {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)

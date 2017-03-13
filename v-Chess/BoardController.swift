@@ -14,7 +14,7 @@ extension UINavigationController {
     }
 }
 
-class BoardController: UIViewController {
+class BoardController: UIViewController, LoginControllerDelegate {
 
     @IBOutlet weak var xAxiz: xAxizView!
     @IBOutlet weak var yAxiz: yAxizView!
@@ -26,6 +26,10 @@ class BoardController: UIViewController {
         super.viewDidLoad()
         setupTitle("Choose mode from menu")
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
+        
+        if currentUser() == nil {
+            performSegue(withIdentifier: "login", sender: self)
+        }
     }
     
     
@@ -63,14 +67,25 @@ class BoardController: UIViewController {
         self.desk.rotated = rotated
     }
     
-    /*
+    func didLogin() {
+        dismiss(animated: true, completion: {
+            Model.shared.startObservers()
+            showMenu()
+        })
+    }
+    
+    func didLogout() {
+        performSegue(withIdentifier: "login", sender: self)
+    }
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "login" {
+            let nav = segue.destination as! UINavigationController
+            let controller = nav.topViewController as! LoginController
+            controller.delegate = self
+        }
     }
-    */
 
 }

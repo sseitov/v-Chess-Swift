@@ -21,6 +21,11 @@ func navBarHeight() -> CGFloat {
     }
 }
 
+func showMenu() {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    app.mainController?.openRightMenu(animated: true)
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

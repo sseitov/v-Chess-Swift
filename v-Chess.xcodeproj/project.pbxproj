@@ -26,6 +26,29 @@
 		2C6A12831E75D6E6003451E1 /* Desk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12821E75D6E6003451E1 /* Desk.swift */; };
 		2C6A12851E75D77E003451E1 /* Figure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12841E75D77E003451E1 /* Figure.swift */; };
 		2CAAA0011E76A68500414961 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0001E76A68500414961 /* UIImageExtensions.swift */; };
+		2CAAA0051E76C0EB00414961 /* vChessModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0031E76C0EB00414961 /* vChessModel.xcdatamodeld */; };
+		2CAAA0091E76C1AB00414961 /* ChessGame+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0071E76C1AB00414961 /* ChessGame+CoreDataClass.swift */; };
+		2CAAA00A1E76C1AB00414961 /* ChessGame+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0081E76C1AB00414961 /* ChessGame+CoreDataProperties.swift */; };
+		2CAAA00D1E76C32700414961 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA00B1E76C32700414961 /* User+CoreDataClass.swift */; };
+		2CAAA00E1E76C32700414961 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA00C1E76C32700414961 /* User+CoreDataProperties.swift */; };
+		2CAAA0121E76C64400414961 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0101E76C64400414961 /* LoginController.swift */; };
+		2CAAA0131E76C64400414961 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0111E76C64400414961 /* SignUpController.swift */; };
+		2CAAA0211E76C6CB00414961 /* LGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0171E76C6CB00414961 /* LGAlertView.m */; };
+		2CAAA0221E76C6CB00414961 /* LGAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA0181E76C6CB00414961 /* LGAlertView.xib */; };
+		2CAAA0231E76C6CB00414961 /* LGDecoratedAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA0191E76C6CB00414961 /* LGDecoratedAlertView.xib */; };
+		2CAAA0241E76C6CB00414961 /* LGProgressAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA01A1E76C6CB00414961 /* LGProgressAlertView.xib */; };
+		2CAAA0251E76C6CB00414961 /* LGProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA01C1E76C6CB00414961 /* LGProgressView.m */; };
+		2CAAA0261E76C6CB00414961 /* LGTextFieldAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA01D1E76C6CB00414961 /* LGTextFieldAlertView.xib */; };
+		2CAAA0271E76C6CB00414961 /* LGVAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA01E1E76C6CB00414961 /* LGVAlertView.xib */; };
+		2CAAA0281E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0201E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m */; };
+		2CAAA02A1E76C71F00414961 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0291E76C71E00414961 /* Model.swift */; };
+		2CAAA02F1E76C8CC00414961 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAAA02B1E76C8CC00414961 /* Bolts.framework */; };
+		2CAAA0301E76C8CC00414961 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAAA02C1E76C8CC00414961 /* FBSDKCoreKit.framework */; };
+		2CAAA0311E76C8CC00414961 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAAA02D1E76C8CC00414961 /* FBSDKLoginKit.framework */; };
+		2CAAA0321E76C8CC00414961 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAAA02E1E76C8CC00414961 /* FBSDKShareKit.framework */; };
+		2CAAA0341E76C9C900414961 /* TextFieldContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0331E76C9C900414961 /* TextFieldContainer.swift */; };
+		2CAAA0371E76CDEF00414961 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0351E76CDEF00414961 /* ActionSheet.swift */; };
+		2CAAA0381E76CDEF00414961 /* ActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA0361E76CDEF00414961 /* ActionSheet.xib */; };
 		2CF5BE431E767DF2001EF8C8 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5BE421E767DF2001EF8C8 /* Credentials.swift */; };
 		2CF5BE451E767E02001EF8C8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CF5BE441E767E02001EF8C8 /* GoogleService-Info.plist */; };
 		2CF5BE471E7682B3001EF8C8 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF5BE461E7682B3001EF8C8 /* MenuController.swift */; };
@@ -55,6 +78,34 @@
 		2C6A12821E75D6E6003451E1 /* Desk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Desk.swift; path = CustomViews/Desk.swift; sourceTree = "<group>"; };
 		2C6A12841E75D77E003451E1 /* Figure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Figure.swift; path = CustomViews/Figure.swift; sourceTree = "<group>"; };
 		2CAAA0001E76A68500414961 /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageExtensions.swift; path = Extensions/UIImageExtensions.swift; sourceTree = "<group>"; };
+		2CAAA0041E76C0EB00414961 /* vChessModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = vChessModel.xcdatamodel; sourceTree = "<group>"; };
+		2CAAA0061E76C14000414961 /* vChessModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "vChessModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		2CAAA0071E76C1AB00414961 /* ChessGame+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ChessGame+CoreDataClass.swift"; path = "Model/ChessGame+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CAAA0081E76C1AB00414961 /* ChessGame+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ChessGame+CoreDataProperties.swift"; path = "Model/ChessGame+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CAAA00B1E76C32700414961 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "Model/User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		2CAAA00C1E76C32700414961 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "Model/User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2CAAA0101E76C64400414961 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		2CAAA0111E76C64400414961 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		2CAAA0151E76C6CA00414961 /* v-Chess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "v-Chess-Bridging-Header.h"; sourceTree = "<group>"; };
+		2CAAA0161E76C6CB00414961 /* LGAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGAlertView.h; path = "v-Chess/LGAlertSheet/LGAlertView.h"; sourceTree = "<group>"; };
+		2CAAA0171E76C6CB00414961 /* LGAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGAlertView.m; path = "v-Chess/LGAlertSheet/LGAlertView.m"; sourceTree = "<group>"; };
+		2CAAA0181E76C6CB00414961 /* LGAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LGAlertView.xib; path = "v-Chess/LGAlertSheet/LGAlertView.xib"; sourceTree = "<group>"; };
+		2CAAA0191E76C6CB00414961 /* LGDecoratedAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LGDecoratedAlertView.xib; path = "v-Chess/LGAlertSheet/LGDecoratedAlertView.xib"; sourceTree = "<group>"; };
+		2CAAA01A1E76C6CB00414961 /* LGProgressAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LGProgressAlertView.xib; path = "v-Chess/LGAlertSheet/LGProgressAlertView.xib"; sourceTree = "<group>"; };
+		2CAAA01B1E76C6CB00414961 /* LGProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGProgressView.h; path = "v-Chess/LGAlertSheet/LGProgressView.h"; sourceTree = "<group>"; };
+		2CAAA01C1E76C6CB00414961 /* LGProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGProgressView.m; path = "v-Chess/LGAlertSheet/LGProgressView.m"; sourceTree = "<group>"; };
+		2CAAA01D1E76C6CB00414961 /* LGTextFieldAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LGTextFieldAlertView.xib; path = "v-Chess/LGAlertSheet/LGTextFieldAlertView.xib"; sourceTree = "<group>"; };
+		2CAAA01E1E76C6CB00414961 /* LGVAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LGVAlertView.xib; path = "v-Chess/LGAlertSheet/LGVAlertView.xib"; sourceTree = "<group>"; };
+		2CAAA01F1E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPointerArray+AbstractionHelpers.h"; path = "v-Chess/LGAlertSheet/NSPointerArray+AbstractionHelpers.h"; sourceTree = "<group>"; };
+		2CAAA0201E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSPointerArray+AbstractionHelpers.m"; path = "v-Chess/LGAlertSheet/NSPointerArray+AbstractionHelpers.m"; sourceTree = "<group>"; };
+		2CAAA0291E76C71E00414961 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Model.swift; path = Model/Model.swift; sourceTree = "<group>"; };
+		2CAAA02B1E76C8CC00414961 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		2CAAA02C1E76C8CC00414961 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		2CAAA02D1E76C8CC00414961 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		2CAAA02E1E76C8CC00414961 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		2CAAA0331E76C9C900414961 /* TextFieldContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldContainer.swift; path = CustomViews/TextFieldContainer.swift; sourceTree = "<group>"; };
+		2CAAA0351E76CDEF00414961 /* ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionSheet.swift; path = CustomViews/ActionSheet.swift; sourceTree = "<group>"; };
+		2CAAA0361E76CDEF00414961 /* ActionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionSheet.xib; path = CustomViews/ActionSheet.xib; sourceTree = "<group>"; };
 		2CF5BE421E767DF2001EF8C8 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = SOURCE_ROOT; };
 		2CF5BE441E767E02001EF8C8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2CF5BE461E7682B3001EF8C8 /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -68,6 +119,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAAA02F1E76C8CC00414961 /* Bolts.framework in Frameworks */,
+				2CAAA0301E76C8CC00414961 /* FBSDKCoreKit.framework in Frameworks */,
+				2CAAA0311E76C8CC00414961 /* FBSDKLoginKit.framework in Frameworks */,
+				2CAAA0321E76C8CC00414961 /* FBSDKShareKit.framework in Frameworks */,
 				2C68D1221E74BD6500D12AEC /* GameKit.framework in Frameworks */,
 				BBAF61327E48F50DC282B5A7 /* Pods_v_Chess.framework in Frameworks */,
 			);
@@ -88,6 +143,8 @@
 		2C68D1011E74BCF600D12AEC = {
 			isa = PBXGroup;
 			children = (
+				2CAAA0151E76C6CA00414961 /* v-Chess-Bridging-Header.h */,
+				2CAAA0141E76C6A100414961 /* LGAlertView */,
 				2C68D10C1E74BCF700D12AEC /* v-Chess */,
 				2C68D1231E74BD8D00D12AEC /* Resources */,
 				2C68D10B1E74BCF700D12AEC /* Products */,
@@ -107,12 +164,14 @@
 		2C68D10C1E74BCF700D12AEC /* v-Chess */ = {
 			isa = PBXGroup;
 			children = (
+				2CAAA0021E76C05100414961 /* Model */,
 				2C6A127D1E75C78C003451E1 /* Custom Views */,
 				2C6A12701E75C738003451E1 /* Extensions */,
-				2C68D10D1E74BCF700D12AEC /* AppDelegate.swift */,
+				2CAAA00F1E76C62B00414961 /* Profile */,
 				2C6A126C1E75AD71003451E1 /* BoardController.swift */,
 				2C0BE34C1E75FC61000AE962 /* MainController.swift */,
 				2CF5BE461E7682B3001EF8C8 /* MenuController.swift */,
+				2C68D10D1E74BCF700D12AEC /* AppDelegate.swift */,
 			);
 			path = "v-Chess";
 			sourceTree = "<group>";
@@ -120,6 +179,10 @@
 		2C68D1201E74BD6500D12AEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CAAA02B1E76C8CC00414961 /* Bolts.framework */,
+				2CAAA02C1E76C8CC00414961 /* FBSDKCoreKit.framework */,
+				2CAAA02D1E76C8CC00414961 /* FBSDKLoginKit.framework */,
+				2CAAA02E1E76C8CC00414961 /* FBSDKShareKit.framework */,
 				2C68D1211E74BD6500D12AEC /* GameKit.framework */,
 				C2EEEB3C17B1D7064C31F8EC /* Pods_v_Chess.framework */,
 			);
@@ -158,12 +221,55 @@
 		2C6A127D1E75C78C003451E1 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				2CAAA0351E76CDEF00414961 /* ActionSheet.swift */,
+				2CAAA0361E76CDEF00414961 /* ActionSheet.xib */,
+				2CAAA0331E76C9C900414961 /* TextFieldContainer.swift */,
 				2C6A127E1E75C7CF003451E1 /* xAxizView.swift */,
 				2C6A127F1E75C7CF003451E1 /* yAxizView.swift */,
 				2C6A12821E75D6E6003451E1 /* Desk.swift */,
 				2C6A12841E75D77E003451E1 /* Figure.swift */,
 			);
 			name = "Custom Views";
+			sourceTree = "<group>";
+		};
+		2CAAA0021E76C05100414961 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CAAA0031E76C0EB00414961 /* vChessModel.xcdatamodeld */,
+				2CAAA00B1E76C32700414961 /* User+CoreDataClass.swift */,
+				2CAAA00C1E76C32700414961 /* User+CoreDataProperties.swift */,
+				2CAAA0071E76C1AB00414961 /* ChessGame+CoreDataClass.swift */,
+				2CAAA0081E76C1AB00414961 /* ChessGame+CoreDataProperties.swift */,
+				2CAAA0291E76C71E00414961 /* Model.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2CAAA00F1E76C62B00414961 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				2CAAA0101E76C64400414961 /* LoginController.swift */,
+				2CAAA0111E76C64400414961 /* SignUpController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		2CAAA0141E76C6A100414961 /* LGAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				2CAAA0161E76C6CB00414961 /* LGAlertView.h */,
+				2CAAA0171E76C6CB00414961 /* LGAlertView.m */,
+				2CAAA0181E76C6CB00414961 /* LGAlertView.xib */,
+				2CAAA0191E76C6CB00414961 /* LGDecoratedAlertView.xib */,
+				2CAAA01A1E76C6CB00414961 /* LGProgressAlertView.xib */,
+				2CAAA01B1E76C6CB00414961 /* LGProgressView.h */,
+				2CAAA01C1E76C6CB00414961 /* LGProgressView.m */,
+				2CAAA01D1E76C6CB00414961 /* LGTextFieldAlertView.xib */,
+				2CAAA01E1E76C6CB00414961 /* LGVAlertView.xib */,
+				2CAAA01F1E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.h */,
+				2CAAA0201E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m */,
+			);
+			name = LGAlertView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +308,7 @@
 					2C68D1091E74BCF600D12AEC = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 7TSVKXZ79P;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -240,7 +347,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAAA0231E76C6CB00414961 /* LGDecoratedAlertView.xib in Resources */,
+				2CAAA0221E76C6CB00414961 /* LGAlertView.xib in Resources */,
+				2CAAA0381E76CDEF00414961 /* ActionSheet.xib in Resources */,
+				2CAAA0261E76C6CB00414961 /* LGTextFieldAlertView.xib in Resources */,
 				2C68D1181E74BCF700D12AEC /* LaunchScreen.storyboard in Resources */,
+				2CAAA0241E76C6CB00414961 /* LGProgressAlertView.xib in Resources */,
+				2CAAA0271E76C6CB00414961 /* LGVAlertView.xib in Resources */,
 				2C68D1151E74BCF700D12AEC /* Assets.xcassets in Resources */,
 				2CF5BE451E767E02001EF8C8 /* GoogleService-Info.plist in Resources */,
 				2C68D1131E74BCF700D12AEC /* Main.storyboard in Resources */,
@@ -303,21 +416,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAAA02A1E76C71F00414961 /* Model.swift in Sources */,
 				2C6A12781E75C74C003451E1 /* StringExtensions.swift in Sources */,
 				2C6A12771E75C74C003451E1 /* NSStringExtensions.swift in Sources */,
 				2C6A12831E75D6E6003451E1 /* Desk.swift in Sources */,
 				2CAAA0011E76A68500414961 /* UIImageExtensions.swift in Sources */,
 				2C6A127C1E75C74C003451E1 /* UIViewExtensions.swift in Sources */,
 				2CF5BE471E7682B3001EF8C8 /* MenuController.swift in Sources */,
+				2CAAA0341E76C9C900414961 /* TextFieldContainer.swift in Sources */,
+				2CAAA0091E76C1AB00414961 /* ChessGame+CoreDataClass.swift in Sources */,
 				2C6A127A1E75C74C003451E1 /* UIFontExtensions.swift in Sources */,
+				2CAAA0051E76C0EB00414961 /* vChessModel.xcdatamodeld in Sources */,
+				2CAAA0251E76C6CB00414961 /* LGProgressView.m in Sources */,
 				2C6A12851E75D77E003451E1 /* Figure.swift in Sources */,
+				2CAAA0371E76CDEF00414961 /* ActionSheet.swift in Sources */,
 				2C6A126D1E75AD71003451E1 /* BoardController.swift in Sources */,
+				2CAAA0121E76C64400414961 /* LoginController.swift in Sources */,
+				2CAAA0281E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m in Sources */,
+				2CAAA0131E76C64400414961 /* SignUpController.swift in Sources */,
 				2C68D10E1E74BCF700D12AEC /* AppDelegate.swift in Sources */,
 				2C6A12811E75C7CF003451E1 /* yAxizView.swift in Sources */,
 				2C6A12791E75C74C003451E1 /* UIColorExtensions.swift in Sources */,
+				2CAAA00D1E76C32700414961 /* User+CoreDataClass.swift in Sources */,
 				2C6A127B1E75C74C003451E1 /* UIViewControllerExtensions.swift in Sources */,
 				2CF5BE431E767DF2001EF8C8 /* Credentials.swift in Sources */,
+				2CAAA00E1E76C32700414961 /* User+CoreDataProperties.swift in Sources */,
+				2CAAA00A1E76C1AB00414961 /* ChessGame+CoreDataProperties.swift in Sources */,
 				2C6A12801E75C7CF003451E1 /* xAxizView.swift in Sources */,
+				2CAAA0211E76C6CB00414961 /* LGAlertView.m in Sources */,
 				2C0BE34E1E75FC61000AE962 /* MainController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,14 +570,21 @@
 			baseConfigurationReference = AAC7754DB04219B59041B63F /* Pods-v-Chess.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "v-Chess/v-Chess.entitlements";
 				DEVELOPMENT_TEAM = 7TSVKXZ79P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "v-Chess/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vchannel.vchessViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4c83ca87-b5de-4308-b86c-b5c6c486fc5b";
 				PROVISIONING_PROFILE_SPECIFIER = "v-Chess Development";
+				SWIFT_OBJC_BRIDGING_HEADER = "v-Chess-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -461,15 +594,21 @@
 			baseConfigurationReference = 8D4F2BC3A1EFC6EE56203CE7 /* Pods-v-Chess.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "v-Chess/v-Chess.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 7TSVKXZ79P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "v-Chess/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vchannel.vchessViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "557b3286-b6a8-4860-96c6-1fd4eb28fe44";
 				PROVISIONING_PROFILE_SPECIFIER = "v-Chess AppStore";
+				SWIFT_OBJC_BRIDGING_HEADER = "v-Chess-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -496,6 +635,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2CAAA0031E76C0EB00414961 /* vChessModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2CAAA0061E76C14000414961 /* vChessModel 2.xcdatamodel */,
+				2CAAA0041E76C0EB00414961 /* vChessModel.xcdatamodel */,
+			);
+			currentVersion = 2CAAA0061E76C14000414961 /* vChessModel 2.xcdatamodel */;
+			name = vChessModel.xcdatamodeld;
+			path = Model/vChessModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2C68D1021E74BCF600D12AEC /* Project object */;
 }
