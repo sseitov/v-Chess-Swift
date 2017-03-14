@@ -124,6 +124,10 @@
 #endif
 }
 
+- (bool)gameStarted
+{
+    return _timerView.enabled;
+}
 
 - (void)startGame:(bool)white
 {

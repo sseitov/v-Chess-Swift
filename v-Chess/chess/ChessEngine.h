@@ -20,5 +20,7 @@ NSString* const YouWinNotification = @"YouWinNotification";
 - (instancetype)initWithView:(UIView*)view forDepth:(Depth)depth timerView:(UISegmentedControl*)timerView;
 - (void)rotateDesk:(bool)rotate;
 - (void)startGame:(bool)white;
+- (void)stopGame;
+- (bool)gameStarted;
 
 @end
