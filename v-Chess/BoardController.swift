@@ -57,26 +57,26 @@ class BoardController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        var orientation:UIInterfaceOrientation!
         coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) in
-            let orientation = UIApplication.shared.statusBarOrientation
-            self.setRotated((orientation == .landscapeLeft) || (orientation == .portraitUpsideDown))
+            orientation = UIApplication.shared.statusBarOrientation
+            print("================= orientation \(orientation)")
             if UIInterfaceOrientationIsLandscape(orientation) {
                 self.boardWidth.constant = self.view.frame.height
                 self.boardHeight.constant = self.view.frame.height
-                self.chessEngine?.resizeDesk(self.view.frame.height - 20)
             } else {
                 self.boardWidth.constant = self.view.frame.width
                 self.boardHeight.constant = self.view.frame.width
-                self.chessEngine?.resizeDesk(self.view.frame.width - 20)
             }
         }) { (context: UIViewControllerTransitionCoordinatorContext) in
+            self.setRotated((orientation == .landscapeLeft) || (orientation == .portraitUpsideDown))
         }
     }
     
     func setRotated(_ rotated:Bool) {
         self.xAxiz.rotated = rotated
         self.yAxiz.rotated = rotated
-        chessEngine?.rotateDesk()
+        chessEngine?.rotateDesk(rotated)
     }
 
     func youWin() {

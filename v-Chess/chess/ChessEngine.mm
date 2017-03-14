@@ -43,6 +43,8 @@
 
 @property (readwrite, nonatomic) BOOL isDebut;
 @property (readwrite, nonatomic) enum Depth depth;
+
+@property (weak, nonatomic) UIView *deskView;
 @property (weak, nonatomic) UISegmentedControl *timerView;
 
 @end
@@ -55,8 +57,9 @@
     if (self) {
         _desk = [[Desk alloc] initWithFrame:view.bounds];
         _depth = depth;
+        _deskView = view;
         _timerView = timerView;
-        [view addSubview:_desk];
+        [_deskView addSubview:_desk];
         
         srand((unsigned int)time(NULL));
         _desk.delegate = self;
@@ -67,17 +70,22 @@
     return self;
 }
 
-- (void)resizeDesk:(CGFloat)size
+- (void)rotateDesk:(bool)rotate
 {
-    _desk.DESK_SIZE = size;
-    _desk.FIGURE_SIZE = size / 8.0;
-    [_desk setNeedsLayout];
-}
-
-- (void)rotateDesk
-{
-    [_desk rotate];
-    [_desk setNeedsLayout];
+    [_desk startUpdate];
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         _desk.frame = _deskView.bounds;
+                     }
+                     completion:^(BOOL finished){
+                         if (_desk.rotated != rotate) {
+                             [_desk rotate];
+                         } else {
+                             [_desk update];
+                         }
+                         [_desk endUpdate];
+                     }
+     ];
 }
 
 - (void)switchColor
@@ -122,8 +130,9 @@
     _timerView.enabled = YES;
     
     _isDebut = YES;
-    [_whiteLostFigures clear];
-    [_blackLostFigures clear];
+#pragma mark - TODO insert code
+//    [_whiteLostFigures clear];
+//    [_blackLostFigures clear];
     _moves.clear();
     _currentGame.reset();
     [_desk resetDisposition:_currentGame.state()];
@@ -178,21 +187,26 @@
     [f removeFromSuperview];
     [_desk.figures removeObject:f];
     
+#pragma mark - TODO insert code
+/*
     if (vchess::COLOR(f.model)) {
         [_blackLostFigures addFigure:f];
     } else {
         [_whiteLostFigures addFigure:f];
     }
+ */
 }
 
 - (void)aliveFigure:(FigureView*)f
 {
+#pragma mark - TODO insert code
+/*
     if (vchess::COLOR(f.model)) {
         [_blackLostFigures removeFigure:f];
     } else {
         [_whiteLostFigures removeFigure:f];
     }
-
+*/
     f.liveState = LIVING;
     f.frame = [_desk cellFrameForPosition:f.position];
     [_desk.figures addObject:f];

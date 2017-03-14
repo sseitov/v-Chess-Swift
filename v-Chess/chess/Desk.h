@@ -22,9 +22,6 @@
 
 @interface Desk : UIImageView
 
-@property (readwrite, nonatomic) CGFloat FIGURE_SIZE;
-@property (readwrite, nonatomic) CGFloat DESK_SIZE;
-
 @property (weak, nonatomic) id<DeskDelegate> delegate;
 
 @property (readwrite, nonatomic) BOOL rotated;
@@ -32,7 +29,10 @@
 @property (strong, nonatomic, readonly) NSMutableArray	*figures;
 
 - (void)resetDisposition:(vchess::GameState)state;
+- (void)startUpdate;
 - (void)rotate;
+- (void)update;
+- (void)endUpdate;
 - (CGRect)cellFrameForPosition:(vchess::Position)pos;
 
 - (void)makeMove:(const vchess::Move&)move

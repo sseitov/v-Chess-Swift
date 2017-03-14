@@ -11,6 +11,10 @@ import AMSlideMenu
 
 class MainController: AMSlideMenuMainViewController {
 
+    override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .all
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isInitialStart = false

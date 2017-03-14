@@ -21,6 +21,9 @@
 @property (strong, nonatomic) DragRect *dragRect;
 @property (strong, nonatomic) NSMutableArray *possibleCells;
 
+- (CGFloat)FIGURE_SIZE;
+- (CGFloat)DESK_SIZE;
+
 @end
 
 @implementation Desk
@@ -38,15 +41,21 @@
         NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"turn_sound" ofType:@"wav"];
         AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
         
-        
-        self.DESK_SIZE = frame.size.width;
-        self.FIGURE_SIZE = frame.size.width / 8;
-        
         _dragRect = [[DragRect alloc] initWithFrame:CGRectMake(0, 0, self.FIGURE_SIZE, self.FIGURE_SIZE)];
         _dragRect.hidden = YES;
         [self addSubview:_dragRect];
     }
     return self;
+}
+
+- (CGFloat)FIGURE_SIZE
+{
+    return self.frame.size.width / 8;
+}
+
+- (CGFloat)DESK_SIZE
+{
+    return self.frame.size.width;
 }
 
 - (CGRect)cellFrameForPosition:(vchess::Position)pos
@@ -95,12 +104,31 @@
 	return state;
 }
 
+- (void)startUpdate
+{
+    for (FigureView *f in _figures) {
+        f.hidden = true;
+    }
+}
+
+- (void)endUpdate
+{
+    for (FigureView *f in _figures) {
+        f.hidden = false;
+    }
+}
+
+- (void)update
+{
+    for (FigureView *f in _figures) {
+        f.frame = [self cellFrameForPosition:f.position];
+    }
+}
+
 - (void)rotate
 {
 	_rotated = !_rotated;
-	for (FigureView *f in _figures) {
-		f.frame = [self cellFrameForPosition:f.position];
-	}
+    [self update];
 }
 
 #pragma mark - move animations

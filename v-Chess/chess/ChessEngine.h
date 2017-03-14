@@ -18,8 +18,7 @@ NSString* const YouWinNotification = @"YouWinNotification";
 @interface ChessEngine : NSObject
 
 - (instancetype)initWithView:(UIView*)view forDepth:(Depth)depth timerView:(UISegmentedControl*)timerView;
-- (void)rotateDesk;
-- (void)resizeDesk:(CGFloat)size;
+- (void)rotateDesk:(bool)rotate;
 - (void)startGame:(bool)white;
 
 @end
