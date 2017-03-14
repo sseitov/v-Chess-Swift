@@ -7,3 +7,4 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #import "LGAlertView.h"
+#import "ChessEngine.h"

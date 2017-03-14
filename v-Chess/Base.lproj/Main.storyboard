@@ -95,41 +95,42 @@
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="300"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="upQ-t1-vHi"/>
+                                            <constraint firstAttribute="width" constant="20" id="3MZ-2e-OpC"/>
                                         </constraints>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="board" translatesAutoresizingMaskIntoConstraints="NO" id="Ku5-6S-Ewp" customClass="Desk" customModule="v_Chess" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="0.0" width="300" height="300"/>
-                                    </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nsb-r9-Rp6" customClass="xAxizView" customModule="v_Chess" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="300" width="320" height="20"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="z4z-qI-ZWd"/>
+                                            <constraint firstAttribute="height" constant="20" id="9iB-WA-uah"/>
                                         </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eB4-iV-A3S">
+                                        <rect key="frame" x="20" y="0.0" width="300" height="300"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Nsb-r9-Rp6" secondAttribute="bottom" id="016-GT-WmT"/>
-                                    <constraint firstItem="Nsb-r9-Rp6" firstAttribute="leading" secondItem="JBC-az-Uvw" secondAttribute="leading" id="D8o-tH-4Mx"/>
-                                    <constraint firstItem="UcL-wY-Lyf" firstAttribute="leading" secondItem="JBC-az-Uvw" secondAttribute="leading" id="Ie8-hn-CaJ"/>
-                                    <constraint firstItem="Ku5-6S-Ewp" firstAttribute="top" secondItem="JBC-az-Uvw" secondAttribute="top" id="Ieh-Pt-7dG"/>
-                                    <constraint firstItem="UcL-wY-Lyf" firstAttribute="top" secondItem="JBC-az-Uvw" secondAttribute="top" id="Li5-bI-JuH"/>
-                                    <constraint firstAttribute="trailing" secondItem="Nsb-r9-Rp6" secondAttribute="trailing" id="QJZ-4g-uKJ"/>
-                                    <constraint firstItem="Nsb-r9-Rp6" firstAttribute="top" secondItem="UcL-wY-Lyf" secondAttribute="bottom" id="TEr-Bd-ed7"/>
-                                    <constraint firstItem="Ku5-6S-Ewp" firstAttribute="leading" secondItem="UcL-wY-Lyf" secondAttribute="trailing" id="Uzs-QV-v3K"/>
-                                    <constraint firstItem="Nsb-r9-Rp6" firstAttribute="top" secondItem="Ku5-6S-Ewp" secondAttribute="bottom" id="Yab-3N-hQq"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ku5-6S-Ewp" secondAttribute="trailing" id="a1x-Gq-wvK"/>
-                                    <constraint firstAttribute="width" constant="320" id="bFe-VG-cH2"/>
-                                    <constraint firstAttribute="height" constant="320" id="lYo-Na-oZS"/>
+                                    <constraint firstItem="eB4-iV-A3S" firstAttribute="top" secondItem="JBC-az-Uvw" secondAttribute="top" id="8vc-dl-3Dh"/>
+                                    <constraint firstItem="Nsb-r9-Rp6" firstAttribute="top" secondItem="UcL-wY-Lyf" secondAttribute="bottom" id="AEN-FW-kDj"/>
+                                    <constraint firstItem="Nsb-r9-Rp6" firstAttribute="top" secondItem="eB4-iV-A3S" secondAttribute="bottom" id="ENs-8F-okB"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nsb-r9-Rp6" secondAttribute="bottom" id="Fkr-nC-Qm0"/>
+                                    <constraint firstItem="UcL-wY-Lyf" firstAttribute="top" secondItem="JBC-az-Uvw" secondAttribute="top" id="HEf-Mg-5ey"/>
+                                    <constraint firstAttribute="width" constant="320" id="Oap-c5-8hN"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nsb-r9-Rp6" secondAttribute="trailing" id="QjD-8n-WhA"/>
+                                    <constraint firstItem="Nsb-r9-Rp6" firstAttribute="leading" secondItem="JBC-az-Uvw" secondAttribute="leading" id="ZFb-tX-woE"/>
+                                    <constraint firstAttribute="height" constant="320" id="bsp-lz-buL"/>
+                                    <constraint firstItem="eB4-iV-A3S" firstAttribute="leading" secondItem="UcL-wY-Lyf" secondAttribute="trailing" id="h4v-tN-oK9"/>
+                                    <constraint firstItem="UcL-wY-Lyf" firstAttribute="leading" secondItem="JBC-az-Uvw" secondAttribute="leading" id="odT-qq-CMR"/>
+                                    <constraint firstAttribute="trailing" secondItem="eB4-iV-A3S" secondAttribute="trailing" id="pJE-sC-jiL"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JBC-az-Uvw" firstAttribute="centerX" secondItem="oe9-l3-Lpp" secondAttribute="centerX" id="GWn-PQ-JRO"/>
-                            <constraint firstItem="JBC-az-Uvw" firstAttribute="centerY" secondItem="oe9-l3-Lpp" secondAttribute="centerY" id="f3G-th-WRH"/>
+                            <constraint firstItem="JBC-az-Uvw" firstAttribute="centerX" secondItem="oe9-l3-Lpp" secondAttribute="centerX" id="FHE-me-mvj"/>
+                            <constraint firstItem="JBC-az-Uvw" firstAttribute="centerY" secondItem="oe9-l3-Lpp" secondAttribute="centerY" id="Fft-2T-phE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1lt-zL-1av">
@@ -138,9 +139,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="boardHeight" destination="lYo-Na-oZS" id="uLR-kk-MgZ"/>
-                        <outlet property="boardWidth" destination="bFe-VG-cH2" id="nZR-B0-LKY"/>
-                        <outlet property="desk" destination="Ku5-6S-Ewp" id="yje-bN-ijM"/>
+                        <outlet property="boardHeight" destination="bsp-lz-buL" id="oH4-AD-0OQ"/>
+                        <outlet property="boardWidth" destination="Oap-c5-8hN" id="Skh-CV-QD6"/>
+                        <outlet property="desk" destination="eB4-iV-A3S" id="KBl-kg-ulp"/>
                         <outlet property="xAxiz" destination="Nsb-r9-Rp6" id="gWG-1O-T6X"/>
                         <outlet property="yAxiz" destination="UcL-wY-Lyf" id="96j-6O-M0V"/>
                     </connections>
@@ -606,7 +607,6 @@
     </scenes>
     <resources>
         <image name="back" width="22" height="22"/>
-        <image name="board" width="640" height="640"/>
         <image name="button-Facebook" width="260" height="40"/>
         <image name="button-Google" width="260" height="40"/>
         <image name="logo" width="340" height="340"/>
