@@ -35,8 +35,7 @@ class ProfileStatusCell: UITableViewCell {
     @IBOutlet weak var availableSwitch: UISwitch!
     
     @IBAction func changeAvailable(_ sender: UISwitch) {
-        let available = currentUser()!.isAvailable()
-        currentUser()?.available = NSNumber(booleanLiteral: !available)
+        currentUser()?.available = !currentUser()!.available
         Model.shared.updateUser(currentUser()!)
     }    
 }

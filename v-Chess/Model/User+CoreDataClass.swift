@@ -2,7 +2,7 @@
 //  User+CoreDataClass.swift
 //  v-Chess
 //
-//  Created by Сергей Сейтов on 13.03.17.
+//  Created by Сергей Сейтов on 14.03.17.
 //  Copyright © 2017 V-Channel. All rights reserved.
 //
 
@@ -21,8 +21,7 @@ enum SocialType:Int {
 public class User: NSManagedObject {
     
     lazy var socialType: SocialType = {
-        
-        if self.accountType != nil, let val =  SocialType(rawValue: self.accountType!.intValue) {
+        if let val = SocialType(rawValue: Int(self.accountType)) {
             return val
         } else {
             return .email
@@ -40,12 +39,8 @@ public class User: NSManagedObject {
         }
     }
     
-    func isAvailable() -> Bool {
-        return (available != nil && available!.boolValue)
-    }
-    
     func getData() -> [String:Any] {
-        var profile:[String : Any] = ["socialType" : self.accountType!.intValue]
+        var profile:[String : Any] = ["socialType" : Int(accountType)]
         if email != nil {
             profile["email"] = email!
         }
@@ -55,20 +50,20 @@ public class User: NSManagedObject {
         if avatarURL != nil {
             profile["avatarURL"] = avatarURL!
         }
-        if available != nil {
-            profile["available"] = available!.boolValue
-        }
+        profile["available"] = available
         return profile
     }
     
     func setData(_ profile:[String : Any], completion: @escaping() -> ()) {
         if let typeVal = profile["socialType"] as? Int {
-            self.accountType = NSNumber(integerLiteral: typeVal)
+            accountType = Int16(typeVal)
         } else {
-            self.accountType = NSNumber(integerLiteral: SocialType.email.rawValue)
+            accountType = 0
         }
-        if let availVal = profile["socialType"] as? Bool {
-            self.available = NSNumber(booleanLiteral: availVal)
+        if let availVal = profile["available"] as? Bool {
+            self.available = availVal
+        } else {
+            self.available = false
         }
         
         email = profile["email"] as? String
@@ -77,7 +72,7 @@ public class User: NSManagedObject {
         avatarURL = profile["avatarURL"] as? String
         
         if avatarURL != nil {
-            if accountType!.intValue > 0, let url = URL(string: avatarURL!) {
+            if accountType > 0, let url = URL(string: avatarURL!) {
                 SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: { _ in}, completed: { _, data, error, _ in
                     self.avatar = data as NSData?
                     Model.shared.saveContext()
@@ -96,4 +91,5 @@ public class User: NSManagedObject {
             completion()
         }
     }
+
 }

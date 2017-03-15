@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>Alekhine</string>
+	<string>Anand</string>
+	<string>Beliavsky</string>
+	<string>Botvinnik</string>
+	<string>Capablanca</string>
+	<string>Chigorin</string>
+	<string>Fischer</string>
+	<string>Karpov</string>
+	<string>Kasparov</string>
+	<string>Kramnik</string>
+	<string>Lasker</string>
+	<string>Philidor</string>
+	<string>Polugaevsky</string>
+	<string>Short</string>
+	<string>Smyslov</string>
+	<string>Spassky</string>
+	<string>Tal</string>
+</array>
+</plist>

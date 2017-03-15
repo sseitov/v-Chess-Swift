@@ -38,6 +38,8 @@ class MainController: AMSlideMenuMainViewController {
             switch indexPath.row {
             case 1:
                 return "community"
+            case 2:
+                return "archive"
             case 3:
                 return "settings"
             default:

@@ -8,3 +8,6 @@
 
 #import "LGAlertView.h"
 #import "ChessEngine.h"
+#import "StorageManager.h"
+#import "MasterLoader.h"
+#import "ChessGame.h"

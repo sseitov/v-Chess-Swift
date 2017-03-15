@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>A00</key>
+	<string>Polish Opening; Sokolsky's Opening</string>
+	<key>A01</key>
+	<string>Larsen Attack</string>
+	<key>A02</key>
+	<string>Bird's Opening</string>
+	<key>A03</key>
+	<string>Bird's Opening. Dutch Variation</string>
+	<key>A04</key>
+	<string>King's Indian Attack</string>
+	<key>A05</key>
+	<string>King's Indian Attack</string>
+	<key>A06</key>
+	<string>King's Indian Attack</string>
+	<key>A07</key>
+	<string>King's Indian Attack</string>
+	<key>A08</key>
+	<string>King's Indian Attack</string>
+	<key>A09</key>
+	<string>King's Indian Attack</string>
+	<key>A10</key>
+	<string>English Opening</string>
+	<key>A11</key>
+	<string>Reti Opening</string>
+	<key>A12</key>
+	<string>Reti Opening</string>
+	<key>A13</key>
+	<string>English Opening</string>
+	<key>A14</key>
+	<string>English Opening</string>
+	<key>A15</key>
+	<string>English Opening</string>
+	<key>A16</key>
+	<string>English Opening</string>
+	<key>A17</key>
+	<string>English Opening. Hedgehog Variation</string>
+	<key>A18</key>
+	<string>English Opening</string>
+	<key>A19</key>
+	<string>English Opening</string>
+	<key>A20</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A21</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A22</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A23</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A24</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A25</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A26</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A27</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A28</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A29</key>
+	<string>English Opening. Reversed Sicilian</string>
+	<key>A30</key>
+	<string>English Opening. Hedgehod Variation</string>
+	<key>A31</key>
+	<string>English Opening. Hedgehod Variation</string>
+	<key>A32</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A33</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A34</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A35</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A36</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A37</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A38</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A39</key>
+	<string>English Opening. Symmetrical Variation</string>
+	<key>A40</key>
+	<string>Englund Gambit</string>
+	<key>A41</key>
+	<string>Modern Defense</string>
+	<key>A42</key>
+	<string>Modern Defense</string>
+	<key>A43</key>
+	<string>Old Benoni Defense</string>
+	<key>A44</key>
+	<string>Old Benoni Defense</string>
+	<key>A45</key>
+	<string>Trompovsky Attack</string>
+	<key>A46</key>
+	<string>Queen's Pawn Game</string>
+	<key>A47</key>
+	<string>Queen's Indian Defense</string>
+	<key>A48</key>
+	<string>Torre Attack</string>
+	<key>A49</key>
+	<string>Torre Attack</string>
+	<key>A50</key>
+	<string>Queen's Indian Defense</string>
+	<key>A51</key>
+	<string>Budapest Gambit</string>
+	<key>A52</key>
+	<string>Budapest Gambit. Main Line</string>
+	<key>A53</key>
+	<string>Old Indian Defense</string>
+	<key>A54</key>
+	<string>Old Indian Defense</string>
+	<key>A55</key>
+	<string>Old Indian Defense</string>
+	<key>A56</key>
+	<string>Czech Benoni Defense</string>
+	<key>A57</key>
+	<string>Benko (Volga) Gambit</string>
+	<key>A58</key>
+	<string>Benko (Volga) Gambit. Accepted</string>
+	<key>A59</key>
+	<string>Benko (Volga) Gambit</string>
+	<key>A60</key>
+	<string>Modern Benoni Defense</string>
+	<key>A61</key>
+	<string>Modern Benoni Defense</string>
+	<key>A62</key>
+	<string>Modern Benoni Defense</string>
+	<key>A63</key>
+	<string>Modern Benoni Defense</string>
+	<key>A64</key>
+	<string>Modern Benoni Defense</string>
+	<key>A65</key>
+	<string>Modern Benoni Defense</string>
+	<key>A66</key>
+	<string>Modern Benoni Defense</string>
+	<key>A67</key>
+	<string>Modern Benoni Defense</string>
+	<key>A68</key>
+	<string>Modern Benoni Defense</string>
+	<key>A69</key>
+	<string>Modern Benoni Defense</string>
+	<key>A70</key>
+	<string>Modern Benoni Defense</string>
+	<key>A71</key>
+	<string>Modern Benoni Defense</string>
+	<key>A72</key>
+	<string>Modern Benoni Defense</string>
+	<key>A73</key>
+	<string>Modern Benoni Defense</string>
+	<key>A74</key>
+	<string>Modern Benoni Defense</string>
+	<key>A75</key>
+	<string>Modern Benoni Defense</string>
+	<key>A76</key>
+	<string>Modern Benoni Defense</string>
+	<key>A77</key>
+	<string>Modern Benoni Defense</string>
+	<key>A78</key>
+	<string>Modern Benoni Defense</string>
+	<key>A79</key>
+	<string>Modern Benoni Defense</string>
+	<key>A80</key>
+	<string>Dutch Defense</string>
+	<key>A81</key>
+	<string>Dutch Defense</string>
+	<key>A82</key>
+	<string>Dutch Defense. Staunton Gambit</string>
+	<key>A83</key>
+	<string>Dutch Defense. Mainline</string>
+	<key>A84</key>
+	<string>Dutch Defense</string>
+	<key>A85</key>
+	<string>Dutch Defense</string>
+	<key>A86</key>
+	<string>Dutch Defense</string>
+	<key>A87</key>
+	<string>Dutch Defense. Leningrad</string>
+	<key>A88</key>
+	<string>Dutch Defense. Leningrad</string>
+	<key>A89</key>
+	<string>Dutch Defense. Leningrad</string>
+	<key>A90</key>
+	<string>Dutch Defense. Leningrad</string>
+	<key>A91</key>
+	<string>Dutch Defense</string>
+	<key>A92</key>
+	<string>Dutch Defense</string>
+	<key>A93</key>
+	<string>Dutch Defense</string>
+	<key>A94</key>
+	<string>Dutch Defense</string>
+	<key>A95</key>
+	<string>Dutch Defense</string>
+	<key>A96</key>
+	<string>Dutch Defense</string>
+	<key>A97</key>
+	<string>Dutch Defense</string>
+	<key>A98</key>
+	<string>Dutch Defense</string>
+	<key>A99</key>
+	<string>Dutch Defense</string>
+	<key>B00</key>
+	<string>Nimzowitsch Defense; Owens Defense</string>
+	<key>B01</key>
+	<string>Scandinavian Defense</string>
+	<key>B02</key>
+	<string>Alekhine's Defense</string>
+	<key>B03</key>
+	<string>Alekhine's Defense. Four Pawns Attack</string>
+	<key>B04</key>
+	<string>Alekhine's Defense</string>
+	<key>B05</key>
+	<string>Alekhine's Defense</string>
+	<key>B06</key>
+	<string>Modern Defense</string>
+	<key>B07</key>
+	<string>Pirc Defense</string>
+	<key>B08</key>
+	<string>Pirc Defense. Classical Variation</string>
+	<key>B09</key>
+	<string>Pirc Defense. Austrian Attack</string>
+	<key>B10</key>
+	<string>Caro-Kann Defense</string>
+	<key>B11</key>
+	<string>Caro-Kann Defense. Two Knights' Defense</string>
+	<key>B12</key>
+	<string>Caro-Kann Defense. 3.c5 Attack</string>
+	<key>B13</key>
+	<string>Caro-Kann Defense</string>
+	<key>B14</key>
+	<string>Caro-Kann Defense. Panov Attack</string>
+	<key>B15</key>
+	<string>Caro-Kann Defense</string>
+	<key>B16</key>
+	<string>Caro-Kann Defense</string>
+	<key>B17</key>
+	<string>Caro-Kann Defense</string>
+	<key>B18</key>
+	<string>Caro-Kann Defense</string>
+	<key>B19</key>
+	<string>Caro-Kann Defense</string>
+	<key>B20</key>
+	<string>Sicilian Defense</string>
+	<key>B21</key>
+	<string>Sicilian Defense. Morra Gambit; Grand Prix Attack</string>
+	<key>B22</key>
+	<string>Sicilian Defense. Alapin Variation</string>
+	<key>B23</key>
+	<string>Sicilian Defense. Closed Variation</string>
+	<key>B24</key>
+	<string>Sicilian Defense. Closed Variation</string>
+	<key>B25</key>
+	<string>Sicilian Defense. Closed Variation</string>
+	<key>B26</key>
+	<string>Sicilian Defense. Closed Variation</string>
+	<key>B27</key>
+	<string>Sicilian Defense</string>
+	<key>B28</key>
+	<string>Sicilian Defense</string>
+	<key>B29</key>
+	<string>Sicilian Defense. Rubinstein Variation</string>
+	<key>B30</key>
+	<string>Sicilian Defense. Rossolimo Variation</string>
+	<key>B31</key>
+	<string>Sicilian Defense. Rossolimo Variation</string>
+	<key>B32</key>
+	<string>Sicilian Defense. Lowenthal Hunting Variation</string>
+	<key>B33</key>
+	<string>Sicilian Defense. Sveshnikov Variation</string>
+	<key>B34</key>
+	<string>Sicilian Defense. Accelerated Dragon Variation</string>
+	<key>B35</key>
+	<string>Sicilian Defense. Accelerated Dragon Variation</string>
+	<key>B36</key>
+	<string>Sicilian Defense. Accelerated Dragon Variation</string>
+	<key>B37</key>
+	<string>Sicilian Defense. Accelerated Dragon Variation. Maroczy Bind</string>
+	<key>B38</key>
+	<string>Sicilian Defense. Accelerated Dragon Variation. Maroczy Bind</string>
+	<key>B39</key>
+	<string>Sicilian Defense. Accelerated Dragon Variation</string>
+	<key>B40</key>
+	<string>Sicilian Defense. Counter Attack Variation</string>
+	<key>B41</key>
+	<string>Sicilian Defense. Paulsen Variation. Kan System</string>
+	<key>B42</key>
+	<string>Sicilian Defense. Paulsen Variation. Kan System</string>
+	<key>B43</key>
+	<string>Sicilian Defense. Paulsen Variation. Kan System</string>
+	<key>B44</key>
+	<string>Sicilian Defense. Paulsen Variation. Taimanov System</string>
+	<key>B45</key>
+	<string>Sicilian Defense. Paulsen Variation. Classical System</string>
+	<key>B46</key>
+	<string>Sicilian Defense. Paulsen Variation. Taimanov System</string>
+	<key>B47</key>
+	<string>Sicilian Defense. Paulsen Variation. Taimanov System</string>
+	<key>B48</key>
+	<string>Sicilian Defense. Paulsen Variation</string>
+	<key>B49</key>
+	<string>Sicilian Defense. Paulsen Variation</string>
+	<key>B50</key>
+	<string>Sicilian Defense. Kopec Variation</string>
+	<key>B51</key>
+	<string>Sicilian Defense. Rossolimo Variation</string>
+	<key>B52</key>
+	<string>Sicilian Defense. Rossolimo Variation</string>
+	<key>B53</key>
+	<string>Sicilian Defense. Hungarian Variation</string>
+	<key>B54</key>
+	<string>Sicilian Defense</string>
+	<key>B55</key>
+	<string>Sicilian Defense. Anti-Dragon Variation</string>
+	<key>B56</key>
+	<string>Sicilian Defense</string>
+	<key>B57</key>
+	<string>Sicilian Defense. Sozin-Benko Variation</string>
+	<key>B58</key>
+	<string>Sicilian Defense. Boleslavsky Variation</string>
+	<key>B59</key>
+	<string>Sicilian Defense</string>
+	<key>B60</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B61</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B62</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B63</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B64</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B65</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B66</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B67</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B68</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B69</key>
+	<string>Sicilian Defense. Richter Rauzer Attack</string>
+	<key>B70</key>
+	<string>Sicilian Defense. Dragon Variation</string>
+	<key>B71</key>
+	<string>Sicilian Defense. Dragon Variation</string>
+	<key>B72</key>
+	<string>Sicilian Defense. Dragon Variation. Classical System</string>
+	<key>B73</key>
+	<string>Sicilian Defense. Dragon Variation</string>
+	<key>B74</key>
+	<string>Sicilian Defense. Dragon Variation</string>
+	<key>B75</key>
+	<string>Sicilian Defense. Dragon Variation</string>
+	<key>B76</key>
+	<string>Sicilian Defense. Dragon Variation. Yugoslav Attack</string>
+	<key>B77</key>
+	<string>Sicilian Defense. Dragon Variation. Yugoslav Attack</string>
+	<key>B78</key>
+	<string>Sicilian Defense. Dragon Variation. Yugoslav Attack</string>
+	<key>B79</key>
+	<string>Sicilian Defense. Dragon Variation</string>
+	<key>B80</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B81</key>
+	<string>Sicilian Defense. Scheveningen Variation. Keres System</string>
+	<key>B82</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B83</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B84</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B85</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B86</key>
+	<string>Sicilian Defense. Scheveningen Variation. Fischer/Sozin System</string>
+	<key>B87</key>
+	<string>Sicilian Defense. Scheveningen Variation. Fischer/Sozin System</string>
+	<key>B88</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B89</key>
+	<string>Sicilian Defense. Scheveningen Variation</string>
+	<key>B90</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B91</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B92</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B93</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B94</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B95</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B96</key>
+	<string>Sicilian Defense. Najdorf Variation. Goteborg System</string>
+	<key>B97</key>
+	<string>Sicilian Defense. Najdorf Variation. Poisoned Pawn System</string>
+	<key>B98</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>B99</key>
+	<string>Sicilian Defense. Najdorf Variation</string>
+	<key>C00</key>
+	<string>French Defense</string>
+	<key>C01</key>
+	<string>French Defense. Exchange Variation</string>
+	<key>C02</key>
+	<string>French Defense. Advance Variation</string>
+	<key>C03</key>
+	<string>French Defense. Tarrasch Variation. 3.... a6 System</string>
+	<key>C04</key>
+	<string>French Defense. Tarrasch Variation. 3.... Bc6 System</string>
+	<key>C05</key>
+	<string>French Defense. Tarrasch Variation. 3.... Nf6 System</string>
+	<key>C06</key>
+	<string>French Defense. Tarrasch Variation. 3.... Nf6 System</string>
+	<key>C07</key>
+	<string>French Defense. Tarrasch Variation. 3.... c5 System</string>
+	<key>C08</key>
+	<string>French Defense. Tarrasch Variation. 3.... c5 System</string>
+	<key>C09</key>
+	<string>French Defense. Tarrasch Variation. 3.... c5 System</string>
+	<key>C10</key>
+	<string>French Defense. Rubinstein Variation</string>
+	<key>C11</key>
+	<string>French Defense. Steinitz Variation</string>
+	<key>C12</key>
+	<string>French Defense. MacCutcheon Variation</string>
+	<key>C13</key>
+	<string>French Defense</string>
+	<key>C14</key>
+	<string>French Defense</string>
+	<key>C15</key>
+	<string>French Defense. Winawer Variation. Lapus Manus System</string>
+	<key>C16</key>
+	<string>French Defense. Winawer Variation</string>
+	<key>C17</key>
+	<string>French Defense. Winawer Variation. Swiss System</string>
+	<key>C18</key>
+	<string>French Defense. Winawer Variation. Main Line</string>
+	<key>C19</key>
+	<string>French Defense. Winawer Variation. Advance, 6. ... Ne7</string>
+	<key>C20</key>
+	<string>French Defense. Winawer Variation. Exchange System</string>
+	<key>C21</key>
+	<string>Nordic Gambit</string>
+	<key>C22</key>
+	<string>Center Game</string>
+	<key>C23</key>
+	<string>Bishop's Opening</string>
+	<key>C24</key>
+	<string>Bishop's Opening</string>
+	<key>C25</key>
+	<string>Vienna Game</string>
+	<key>C26</key>
+	<string>Vienna Game</string>
+	<key>C27</key>
+	<string>Vienna Game</string>
+	<key>C28</key>
+	<string>Vienna Game</string>
+	<key>C29</key>
+	<string>Vienna Game</string>
+	<key>C30</key>
+	<string>King's Gambit</string>
+	<key>C31</key>
+	<string>King's Gambit. Falkbeer Counter Gambit</string>
+	<key>C32</key>
+	<string>King's Gambit. Falkbeer Counter Gambit</string>
+	<key>C33</key>
+	<string>King's Gambit. Keres Variation</string>
+	<key>C34</key>
+	<string>King's Gambit</string>
+	<key>C35</key>
+	<string>King's Gambit. Cunningham Variation</string>
+	<key>C36</key>
+	<string>King's Gambit. Modern Variation</string>
+	<key>C37</key>
+	<string>King's Gambit. Muzio Gambit</string>
+	<key>C38</key>
+	<string>King's Gambit. Greco &amp; Philidor Gambits</string>
+	<key>C39</key>
+	<string>King's Gambit. Allagier &amp; Kiesertisky Gambits</string>
+	<key>C40</key>
+	<string>Latvian Gambit</string>
+	<key>C41</key>
+	<string>Philidor's Defense</string>
+	<key>C42</key>
+	<string>Russian (Petroff's) Defense</string>
+	<key>C43</key>
+	<string>Russian (Petroff's) Defense</string>
+	<key>C44</key>
+	<string>Ponziani Opening</string>
+	<key>C45</key>
+	<string>Scotch Game</string>
+	<key>C46</key>
+	<string>Three Knights' Opening</string>
+	<key>C47</key>
+	<string>Four Knights' Opening</string>
+	<key>C48</key>
+	<string>Four Knights' Opening</string>
+	<key>C49</key>
+	<string>Four Knights' Opening</string>
+	<key>C50</key>
+	<string>Italian Game (Giuoco Piano). Hungarian Defense</string>
+	<key>C51</key>
+	<string>Italian Game (Giuoco Piano). Evans Gambit</string>
+	<key>C52</key>
+	<string>Italian Game (Giuoco Piano). Evans Gambit</string>
+	<key>C53</key>
+	<string>Italian Game (Giuoco Piano)</string>
+	<key>C54</key>
+	<string>Italian Game (Giuoco Piano)</string>
+	<key>C55</key>
+	<string>Italian Game (Giuoco Piano). Two Knights' Defense</string>
+	<key>C56</key>
+	<string>Italian Game (Giuoco Piano). Max Lange Attack</string>
+	<key>C57</key>
+	<string>Italian Game (Giuoco Piano). Two Knights' Defense</string>
+	<key>C58</key>
+	<string>Italian Game (Giuoco Piano). Two Knights' Defense</string>
+	<key>C59</key>
+	<string>Italian Game (Giuoco Piano). Two Knights' Defense</string>
+	<key>C60</key>
+	<string>Spanish Opening (Ruy Lopez)</string>
+	<key>C61</key>
+	<string>Spanish Opening (Ruy Lopez). Bird's Defense</string>
+	<key>C62</key>
+	<string>Spanish Opening (Ruy Lopez). Old Steinitz Defense</string>
+	<key>C63</key>
+	<string>Spanish Opening (Ruy Lopez). Schliemann Gambit</string>
+	<key>C64</key>
+	<string>Spanish Opening (Ruy Lopez). Cordel Defense</string>
+	<key>C65</key>
+	<string>Spanish Opening (Ruy Lopez). Berlin Defense</string>
+	<key>C66</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defense</string>
+	<key>C67</key>
+	<string>Spanish Opening (Ruy Lopez). Rio de Janerio Defense</string>
+	<key>C68</key>
+	<string>Spanish Opening (Ruy Lopez). Exchange Variation</string>
+	<key>C69</key>
+	<string>Spanish Opening (Ruy Lopez). Exchange Variation</string>
+	<key>C70</key>
+	<string>Spanish Opening (Ruy Lopez)</string>
+	<key>C71</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defens</string>
+	<key>C72</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defens</string>
+	<key>C73</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defens</string>
+	<key>C74</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defens</string>
+	<key>C75</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defens</string>
+	<key>C76</key>
+	<string>Spanish Opening (Ruy Lopez). Modern Steinitz Defens</string>
+	<key>C77</key>
+	<string>Spanish Opening (Ruy Lopez). Anderssen Variation</string>
+	<key>C78</key>
+	<string>Spanish Opening (Ruy Lopez). Archangel Variation; Moeller Attack</string>
+	<key>C79</key>
+	<string>Spanish Opening (Ruy Lopez). Russian Variation</string>
+	<key>C80</key>
+	<string>Spanish Opening (Ruy Lopez). Open Variation. Bernstein System</string>
+	<key>C81</key>
+	<string>Spanish Opening (Ruy Lopez). Open Variation. Keres System</string>
+	<key>C82</key>
+	<string>Spanish Opening (Ruy Lopez). Open Variation</string>
+	<key>C83</key>
+	<string>Spanish Opening (Ruy Lopez). Open Variation. Main Line</string>
+	<key>C84</key>
+	<string>Spanish Opening (Ruy Lopez). Center Attack</string>
+	<key>C85</key>
+	<string>Spanish Opening (Ruy Lopez). Delayed Defered Exchange Variation</string>
+	<key>C86</key>
+	<string>Spanish Opening (Ruy Lopez). Worral Attack</string>
+	<key>C87</key>
+	<string>Spanish Opening (Ruy Lopez)</string>
+	<key>C88</key>
+	<string>Spanish Opening (Ruy Lopez). Marshall Gambit</string>
+	<key>C89</key>
+	<string>Spanish Opening (Ruy Lopez)</string>
+	<key>C90</key>
+	<string>Spanish Opening (Ruy Lopez)</string>
+	<key>C91</key>
+	<string>Spanish Opening (Ruy Lopez)</string>
+	<key>C92</key>
+	<string>Spanish Opening (Ruy Lopez). Zaitsev Variation</string>
+	<key>C93</key>
+	<string>Spanish Opening (Ruy Lopez). Smyslov Variation</string>
+	<key>C94</key>
+	<string>Spanish Opening (Ruy Lopez). Breyer Variation</string>
+	<key>C95</key>
+	<string>Spanish Opening (Ruy Lopez). Breyer Variation</string>
+	<key>C96</key>
+	<string>Spanish Opening (Ruy Lopez). Tchigorin</string>
+	<key>C97</key>
+	<string>Spanish Opening (Ruy Lopez). Tchigorin</string>
+	<key>C98</key>
+	<string>Spanish Opening (Ruy Lopez). Tchigorin</string>
+	<key>C99</key>
+	<string>Spanish Opening (Ruy Lopez). Tchigorin</string>
+	<key>D00</key>
+	<string>Queen's Pawn Opening</string>
+	<key>D01</key>
+	<string>Veresov Opening</string>
+	<key>D02</key>
+	<string>Gruenfeld Reversed Opening</string>
+	<key>D03</key>
+	<string>Torre attack (Tartakower variation)</string>
+	<key>D04</key>
+	<string>Queen's pawn game</string>
+	<key>D05</key>
+	<string>Colle System</string>
+	<key>D06</key>
+	<string>Queen's Gambit</string>
+	<key>D07</key>
+	<string>Queen's Gambit. Tchigorin Variation</string>
+	<key>D08</key>
+	<string>Queen's Gambit. Albin Counter Gambit</string>
+	<key>D09</key>
+	<string>Queen's Gambit. Albin Counter Gambit</string>
+	<key>D10</key>
+	<string>Queen's Gambit. Slav Defense</string>
+	<key>D11</key>
+	<string>Queen's Gambit. Slav Defense</string>
+	<key>D12</key>
+	<string>Queen's Gambit. Slav Defense</string>
+	<key>D13</key>
+	<string>Queen's Gambit. Slav Defense</string>
+	<key>D14</key>
+	<string>Queen's Gambit. Slav Defense. Exchange System</string>
+	<key>D15</key>
+	<string>Queen's Gambit. Slav Defense. Geller Gambit</string>
+	<key>D16</key>
+	<string>Queen's Gambit. Slav Defense</string>
+	<key>D17</key>
+	<string>Queen's Gambit. Slav Defense. Czech System</string>
+	<key>D18</key>
+	<string>Queen's Gambit. Slav Defense. Main Line</string>
+	<key>D19</key>
+	<string>Queen's Gambit. Slav Defense. Euwe System</string>
+	<key>D20</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D21</key>
+	<string>Queen's Gambit. Accepted. Borsenko-Furman System</string>
+	<key>D22</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D23</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D24</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D25</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D26</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D27</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D28</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D29</key>
+	<string>Queen's Gambit. Accepted</string>
+	<key>D30</key>
+	<string>Queen's Gambit. Declined</string>
+	<key>D31</key>
+	<string>Queen's Gambit. Declined. Alatortsev System</string>
+	<key>D32</key>
+	<string>Queen's Gambit. Declined. Tarrasch System</string>
+	<key>D33</key>
+	<string>Queen's Gambit. Declined. Tarrasch System</string>
+	<key>D34</key>
+	<string>Queen's Gambit. Declined. Rubinstein System</string>
+	<key>D35</key>
+	<string>Queen's Gambit. Declined. Exchange System</string>
+	<key>D36</key>
+	<string>Queen's Gambit. Declined. Exchange System</string>
+	<key>D37</key>
+	<string>Queen's Gambit. Declined. 5.Bf4 System</string>
+	<key>D38</key>
+	<string>Queen's Gambit. Declined. Ragozin Defense</string>
+	<key>D39</key>
+	<string>Queen's Gambit. Declined. Ragozin Defense</string>
+	<key>D40</key>
+	<string>Queen's Gambit. Declined. Semi-Tarrasch Defense</string>
+	<key>D41</key>
+	<string>Queen's Gambit. Declined. Semi-Tarrasch Defense</string>
+	<key>D42</key>
+	<string>Queen's Gambit. Declined. Semi-Tarrasch Defense</string>
+	<key>D43</key>
+	<string>Queen's Gambit. Declined. Semi-Slav Defense</string>
+	<key>D44</key>
+	<string>Queen's Gambit. Declined. Anti-Meran Defense</string>
+	<key>D45</key>
+	<string>Queen's Gambit. Declined. Anti-Meran Defense</string>
+	<key>D46</key>
+	<string>Queen's Gambit. Declined. Semi-Slav Defense</string>
+	<key>D47</key>
+	<string>Queen's Gambit. Declined. Meran Defense</string>
+	<key>D48</key>
+	<string>Queen's Gambit. Declined. Meran Defense</string>
+	<key>D49</key>
+	<string>Queen's Gambit. Declined. Meran Defense</string>
+	<key>D50</key>
+	<string>Queen's Gambit. Declined</string>
+	<key>D51</key>
+	<string>Queen's Gambit. Declined. Cambridge Springs Defense</string>
+	<key>D52</key>
+	<string>Queen's Gambit. Declined. Cambridge Springs Defense</string>
+	<key>D53</key>
+	<string>Queen's Gambit. Declined. Orthodox Defense</string>
+	<key>D54</key>
+	<string>Queen's Gambit. Declined. Orthodox Defense</string>
+	<key>D55</key>
+	<string>Queen's Gambit. Declined. Anti-Tartakower Syste</string>
+	<key>D56</key>
+	<string>Queen's Gambit. Declined. Lasker System</string>
+	<key>D57</key>
+	<string>Queen's Gambit. Declined. Modern System</string>
+	<key>D58</key>
+	<string>Queen's Gambit. Declined. Tartakower System</string>
+	<key>D59</key>
+	<string>Queen's Gambit. Declined. Tartakower System</string>
+	<key>D60</key>
+	<string>Queen's Gambit. Declined. Orthodox Defense</string>
+	<key>D61</key>
+	<string>Queen's Gambit. Declined. Orthodox Defense</string>
+	<key>D62</key>
+	<string>Queen's Gambit. Declined. Orthodox Defense</string>
+	<key>D63</key>
+	<string>Queen's Gambit. Declined. Blackburne System</string>
+	<key>D64</key>
+	<string>Queen's Gambit. Declined. Blackburne System</string>
+	<key>D65</key>
+	<string>Queen's Gambit. Declined. Blackburne System</string>
+	<key>D66</key>
+	<string>Queen's Gambit. Declined. Blackburne System</string>
+	<key>D67</key>
+	<string>Queen's Gambit. Declined. Capablanca System</string>
+	<key>D68</key>
+	<string>Queen's Gambit. Declined. Blackburne System</string>
+	<key>D69</key>
+	<string>Queen's Gambit. Declined</string>
+	<key>D70</key>
+	<string>Grunfeld Defense</string>
+	<key>D71</key>
+	<string>Grunfeld Defense. Neo-Grunfeld Variatio</string>
+	<key>D72</key>
+	<string>Grunfeld Defense</string>
+	<key>D73</key>
+	<string>Grunfeld Defense</string>
+	<key>D74</key>
+	<string>Grunfeld Defense</string>
+	<key>D75</key>
+	<string>Grunfeld Defense</string>
+	<key>D76</key>
+	<string>Grunfeld Defense. Orthodox Fianchetto Variation</string>
+	<key>D77</key>
+	<string>Grunfeld Defense</string>
+	<key>D78</key>
+	<string>Grunfeld Defense</string>
+	<key>D79</key>
+	<string>Grunfeld Defense. Slav Variation</string>
+	<key>D80</key>
+	<string>Grunfeld Defense</string>
+	<key>D81</key>
+	<string>Grunfeld Defense</string>
+	<key>D82</key>
+	<string>Grunfeld Defense. Bf4 System</string>
+	<key>D83</key>
+	<string>Grunfeld Defense. Bf4 System</string>
+	<key>D84</key>
+	<string>Grunfeld Defense. Bf4 System</string>
+	<key>D85</key>
+	<string>Grunfeld Defense. Modern Exchange Variation</string>
+	<key>D86</key>
+	<string>Grunfeld Defense</string>
+	<key>D87</key>
+	<string>Grunfeld Defense. Botvinnik Exchange Variation</string>
+	<key>D88</key>
+	<string>Grunfeld Defense</string>
+	<key>D89</key>
+	<string>Grunfeld Defense. Exchange Variation</string>
+	<key>D90</key>
+	<string>Grunfeld Defense</string>
+	<key>D91</key>
+	<string>Grunfeld Defense</string>
+	<key>D92</key>
+	<string>Grunfeld Defense</string>
+	<key>D93</key>
+	<string>Grunfeld Defense. Bg3 System</string>
+	<key>D94</key>
+	<string>Grunfeld Defense. Closed Variation</string>
+	<key>D95</key>
+	<string>Grunfeld Defense. Closed Variation</string>
+	<key>D96</key>
+	<string>Grunfeld Defense. Russian Variation</string>
+	<key>D97</key>
+	<string>Grunfeld Defense. Ragozin Variation (Classical)</string>
+	<key>D98</key>
+	<string>Grunfeld Defense</string>
+	<key>D99</key>
+	<string>Grunfeld Defense. Ragozin Variation (Smyslov)</string>
+	<key>E00</key>
+	<string>Catalan Opening</string>
+	<key>E01</key>
+	<string>Catalan Opening</string>
+	<key>E02</key>
+	<string>Catalan Opening</string>
+	<key>E03</key>
+	<string>Catalan Opening</string>
+	<key>E04</key>
+	<string>Catalan Opening. Open Variation</string>
+	<key>E05</key>
+	<string>Catalan Opening. Open Variation</string>
+	<key>E06</key>
+	<string>Catalan Opening. Closed Variation</string>
+	<key>E07</key>
+	<string>Catalan Opening. Closed Variation</string>
+	<key>E08</key>
+	<string>Catalan Opening. Closed Variation</string>
+	<key>E09</key>
+	<string>Catalan Opening. Closed Variation</string>
+	<key>E10</key>
+	<string>Blumenfeld Gambit</string>
+	<key>E11</key>
+	<string>Bogo-Indian Defense</string>
+	<key>E12</key>
+	<string>Queen's Indian Defense</string>
+	<key>E13</key>
+	<string>Queen's Indian Defense</string>
+	<key>E14</key>
+	<string>Queen's Indian Defense</string>
+	<key>E15</key>
+	<string>Queen's Indian Defense. Accelerated Fianchetto Variation</string>
+	<key>E16</key>
+	<string>Queen's Indian Defense. Bogo Variation</string>
+	<key>E17</key>
+	<string>Queen's Indian Defense</string>
+	<key>E18</key>
+	<string>Queen's Indian Defense</string>
+	<key>E19</key>
+	<string>Queen's Indian Defense</string>
+	<key>E20</key>
+	<string>Nimzo-Indian Defense</string>
+	<key>E21</key>
+	<string>Nimzo-Indian Defense</string>
+	<key>E22</key>
+	<string>Nimzo-Indian Defense</string>
+	<key>E23</key>
+	<string>Nimzo-Indian Defense</string>
+	<key>E24</key>
+	<string>Nimzo-Indian Defense. Saemisch Variation</string>
+	<key>E25</key>
+	<string>Nimzo-Indian Defense. Saemisch Variation</string>
+	<key>E26</key>
+	<string>Nimzo-Indian Defense. Saemisch Variation</string>
+	<key>E27</key>
+	<string>Nimzo-Indian Defense. Saemisch Variation</string>
+	<key>E28</key>
+	<string>Nimzo-Indian Defense. Saemisch Variation</string>
+	<key>E29</key>
+	<string>Nimzo-Indian Defense. Saemisch Variation</string>
+	<key>E30</key>
+	<string>Nimzo-Indian Defense. Leningrad Variation</string>
+	<key>E31</key>
+	<string>Nimzo-Indian Defense. Leningrad Variation</string>
+	<key>E32</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E33</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E34</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E35</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E36</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E37</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E38</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E39</key>
+	<string>Nimzo-Indian Defense. Classical Variation</string>
+	<key>E40</key>
+	<string>Nimzo-Indian Defense</string>
+	<key>E41</key>
+	<string>Nimzo-Indian Defense. Huebner Variation</string>
+	<key>E42</key>
+	<string>Nimzo-Indian Defense. Huebner Variation</string>
+	<key>E43</key>
+	<string>Nimzo-Indian Defense. Nimzowitsch Variation</string>
+	<key>E44</key>
+	<string>Nimzo-Indian Defense. Nimzowitsch Variation</string>
+	<key>E45</key>
+	<string>Nimzo-Indian Defense. Nimzowitsch Variation</string>
+	<key>E46</key>
+	<string>Nimzo-Indian Defense. Nimzowitsch Variation</string>
+	<key>E47</key>
+	<string>Nimzo-Indian Defense. Rubinstein Variation</string>
+	<key>E48</key>
+	<string>Nimzo-Indian Defense. Rubinstein Variation</string>
+	<key>E49</key>
+	<string>Nimzo-Indian Defense. Rubinstein Variation</string>
+	<key>E50</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E51</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E52</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E53</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E54</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E55</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E56</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E57</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E58</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E59</key>
+	<string>Nimzo-Indian Defense. Modern Variation</string>
+	<key>E60</key>
+	<string>King's Indian Defense</string>
+	<key>E61</key>
+	<string>King's Indian Defense</string>
+	<key>E62</key>
+	<string>King's Indian Defense. Fianchetto Variation. Panno System</string>
+	<key>E63</key>
+	<string>King's Indian Defense. Fianchetto Variation. Panno System</string>
+	<key>E64</key>
+	<string>King's Indian Defense. Fianchetto Variation</string>
+	<key>E65</key>
+	<string>King's Indian Defense. Fianchetto Variation. Yugoslav System</string>
+	<key>E66</key>
+	<string>King's Indian Defense. Fianchetto Variation. Yugoslav System</string>
+	<key>E67</key>
+	<string>King's Indian Defense. Fianchetto Variation</string>
+	<key>E68</key>
+	<string>King's Indian Defense. Fianchetto Variation</string>
+	<key>E69</key>
+	<string>King's Indian Defense. Fianchetto Variation</string>
+	<key>E70</key>
+	<string>King's Indian Defense. Fianchetto Variation</string>
+	<key>E71</key>
+	<string>King's Indian Defense</string>
+	<key>E72</key>
+	<string>King's Indian Defense</string>
+	<key>E73</key>
+	<string>King's Indian Defense. Averbach Variation</string>
+	<key>E74</key>
+	<string>King's Indian Defense. Averbach Variation</string>
+	<key>E75</key>
+	<string>King's Indian Defense</string>
+	<key>E76</key>
+	<string>King's Indian Defense. Four Pawns' Variation</string>
+	<key>E77</key>
+	<string>King's Indian Defense. Four Pawns' Variation</string>
+	<key>E78</key>
+	<string>King's Indian Defense. Four Pawns' Variation</string>
+	<key>E79</key>
+	<string>King's Indian Defense. Four Pawns' Variation</string>
+	<key>E80</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E81</key>
+	<string>King's Indian Defense. Classical Variation. Saemisch (Byrne) System</string>
+	<key>E82</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E83</key>
+	<string>King's Indian Defense. Classical Variation. Panov System</string>
+	<key>E84</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E85</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E86</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E87</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E88</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E89</key>
+	<string>King's Indian Defense. Classical Variation</string>
+	<key>E90</key>
+	<string>King's Indian Defense</string>
+	<key>E91</key>
+	<string>King's Indian Defense</string>
+	<key>E92</key>
+	<string>King's Indian Defense. Exchange Variation</string>
+	<key>E93</key>
+	<string>King's Indian Defense. Petrosian Variation</string>
+	<key>E94</key>
+	<string>King's Indian Defense</string>
+	<key>E95</key>
+	<string>King's Indian Defense</string>
+	<key>E96</key>
+	<string>King's Indian Defense</string>
+	<key>E97</key>
+	<string>King's Indian Defense</string>
+	<key>E98</key>
+	<string>King's Indian Defense</string>
+	<key>E99</key>
+	<string>King's Indian Defense</string>
+</dict>
+</plist>

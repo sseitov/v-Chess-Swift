@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MemberCell: UITableViewCell {
 
@@ -14,9 +15,12 @@ class MemberCell: UITableViewCell {
         didSet {
             if member!.avatar != nil, let image = UIImage(data: member!.avatar as! Data) {
                 memberView.image = image.withSize(memberView.frame.size).inCircle()
+            } else if member!.avatarURL != nil, let url = URL(string: member!.avatarURL!) {
+                print(url)
+                memberView.sd_setImage(with: url)
             }
             memberName.text = member!.name
-            if member!.isAvailable() {
+            if member!.available {
                 memberName.textColor = UIColor.mainColor()
             } else {
                 memberName.textColor = UIColor.mainColor(0.4)

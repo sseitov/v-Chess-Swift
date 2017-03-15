@@ -72,6 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.shared().isEnableAutoToolbar = false
 
+        StorageManager.shared().initUserPackages()
+        
         return true
     }
     

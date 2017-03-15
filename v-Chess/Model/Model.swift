@@ -54,13 +54,13 @@ class Model: NSObject {
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = Bundle.main.url(forResource: "vChessModel", withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: "v-Chess", withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.appendingPathComponent("vChessModel.sqlite")
+        let url = self.applicationDocumentsDirectory.appendingPathComponent("v-Chess.sqlite")
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         } catch {
@@ -91,7 +91,7 @@ class Model: NSObject {
     func signOut(_ completion: @escaping() -> ()) {
         let ref = FIRDatabase.database().reference()
         currentUser()!.token = nil
-        currentUser()!.available = NSNumber(booleanLiteral: false)
+        currentUser()!.available = false
         updateUser(currentUser()!)
         ref.child("tokens").child(currentUser()!.uid!).removeValue(completionBlock: { _, _ in
             switch currentUser()!.socialType {
@@ -247,7 +247,7 @@ class Model: NSObject {
         updateUserRefHandle = usersQuery.observe(.childChanged, with: { (snapshot) -> Void in
             if let user = self.getUser(snapshot.key), let userData = snapshot.value as? [String : Any] {
                 if let available = userData["available"] as? Bool {
-                    user.available = NSNumber(booleanLiteral: available)
+                    user.available = available
                     self.saveContext()
                     NotificationCenter.default.post(name: refreshUserNotification, object: nil)
                 }
@@ -259,8 +259,8 @@ class Model: NSObject {
         let cashedUser = createUser(user.uid)
         cashedUser.email = email
         cashedUser.name = nick
-        cashedUser.available = NSNumber(booleanLiteral: true)
-        cashedUser.accountType = NSNumber(integerLiteral: SocialType.email.rawValue)
+        cashedUser.available = true
+        cashedUser.accountType = Int16(SocialType.email.rawValue)
         cashedUser.avatar = UIImagePNGRepresentation(image) as NSData?
         saveContext()
         let meta = FIRStorageMetadata()
@@ -278,10 +278,10 @@ class Model: NSObject {
     
     func createFacebookUser(_ user:FIRUser, profile:[String:Any], completion: @escaping() -> ()) {
         let cashedUser = createUser(user.uid)
-        cashedUser.accountType = NSNumber(integerLiteral: SocialType.facebook.rawValue)
+        cashedUser.accountType = Int16(SocialType.facebook.rawValue)
         cashedUser.email = profile["email"] as? String
         cashedUser.name = profile["name"] as? String
-        cashedUser.available = NSNumber(booleanLiteral: true)
+        cashedUser.available = true
         if let picture = profile["picture"] as? [String:Any] {
             if let data = picture["data"] as? [String:Any] {
                 cashedUser.avatarURL = data["url"] as? String
@@ -304,10 +304,10 @@ class Model: NSObject {
     
     func createGoogleUser(_ user:FIRUser, googleProfile: GIDProfileData!, completion: @escaping() -> ()) {
         let cashedUser = createUser(user.uid)
-        cashedUser.accountType = NSNumber(integerLiteral: SocialType.google.rawValue)
+        cashedUser.accountType = Int16(SocialType.google.rawValue)
         cashedUser.email = googleProfile.email
         cashedUser.name = googleProfile.name
-        cashedUser.available = NSNumber(booleanLiteral: true)
+        cashedUser.available = true
         if googleProfile.hasImage {
             if let url = googleProfile.imageURL(withDimension: 100) {
                 cashedUser.avatarURL = url.absoluteString

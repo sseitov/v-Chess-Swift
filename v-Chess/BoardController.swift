@@ -14,11 +14,6 @@ extension UINavigationController {
     }
 }
 
-enum BoardMode {
-    case play
-    case view
-}
-
 class BoardController: UIViewController {
 
     @IBOutlet weak var xAxiz: xAxizView!
@@ -28,7 +23,7 @@ class BoardController: UIViewController {
     @IBOutlet weak var boardHeight: NSLayoutConstraint!
     
     var chessEngine:ChessEngine?
-    var boardMode:BoardMode = .play
+    var chessGame:ChessGame?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +31,7 @@ class BoardController: UIViewController {
         setupBackButton()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
         
-        if boardMode == .play {
+        if chessGame == nil {
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
@@ -50,6 +45,12 @@ class BoardController: UIViewController {
             controlButton.setupBorder(UIColor.clear, radius: 10)
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
+        } else {
+            let controlView = UISegmentedControl(items: ["Rewind", "Back", "Forward"])
+            controlView.isMomentary = true
+            controlView.tintColor = UIColor.white
+            self.navigationItem.titleView = controlView
+            self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),
@@ -91,6 +92,13 @@ class BoardController: UIViewController {
     }
     
     func setRotated(_ rotated:Bool) {
+        if chessGame != nil {
+            if rotated {
+                self.navigationItem.prompt = nil
+            } else {
+                self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
+            }
+        }
         self.xAxiz.rotated = rotated
         self.yAxiz.rotated = rotated
         chessEngine?.rotateDesk(rotated)

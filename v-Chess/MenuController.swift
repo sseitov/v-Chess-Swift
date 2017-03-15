@@ -74,17 +74,21 @@ class MenuController: AMSlideMenuRightTableViewController {
         if currentUser() == nil {
             performSegue(withIdentifier: "login", sender: self)
         } else {
-            mainVC.openRightMenu(animated: true)
+            let nav = segue.source as! UINavigationController
+            if let archive = nav.topViewController as? MasterLoader {
+                performSegue(withIdentifier: "play", sender: archive.mSelectedGame)
+            } else {
+                mainVC.openRightMenu(animated: true)
+            }
         }
     }
   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-/*
         if segue.identifier == "play" {
             let nav = segue.destination as! UINavigationController
             let next = nav.topViewController as! BoardController
+            next.chessGame = sender as? ChessGame
         }
- */
     }
 
 }
