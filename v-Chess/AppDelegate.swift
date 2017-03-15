@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setFont(UIFont.condensedFont())
         
         IQKeyboardManager.shared().isEnableAutoToolbar = false
-
+        
         StorageManager.shared().initUserPackages()
         
         return true

@@ -25,6 +25,8 @@ class BoardController: UIViewController {
     var chessEngine:ChessEngine?
     var chessGame:ChessGame?
     
+    private var observerContext = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("Choose mode from menu")
@@ -46,9 +48,15 @@ class BoardController: UIViewController {
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
         } else {
-            let controlView = UISegmentedControl(items: ["Rewind", "Back", "Forward"])
-            controlView.isMomentary = true
+            let controlView = UISegmentedControl(items: [
+                UIImage(named: "rewind")!,
+                UIImage(named: "previouse")!,
+                UIImage(named: "next")!,
+                UIImage(named: "stop")!,
+                UIImage(named: "play")!
+                ])
             controlView.tintColor = UIColor.white
+            controlView.selectedSegmentIndex = 3
             self.navigationItem.titleView = controlView
             self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
         }
@@ -56,8 +64,25 @@ class BoardController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),
                                                name: Notification.Name("YouWinNotification"),
                                                object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orientationChanged(_:)),
+                                               name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
-        
+    
+    func orientationChanged(_ notify:Notification) {
+        if chessGame != nil {
+            let orientation = UIDevice.current.orientation
+            if UIDeviceOrientationIsPortrait(orientation) {
+                if orientation == .faceUp {
+                    self.navigationItem.prompt = nil
+                } else {
+                    self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
+                }
+            } else {
+                self.navigationItem.prompt = nil
+            }
+        }
+    }
+
     override func goBack() {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
@@ -92,13 +117,6 @@ class BoardController: UIViewController {
     }
     
     func setRotated(_ rotated:Bool) {
-        if chessGame != nil {
-            if rotated {
-                self.navigationItem.prompt = nil
-            } else {
-                self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
-            }
-        }
         self.xAxiz.rotated = rotated
         self.yAxiz.rotated = rotated
         chessEngine?.rotateDesk(rotated)
