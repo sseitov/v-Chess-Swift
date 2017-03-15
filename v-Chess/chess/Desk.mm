@@ -48,6 +48,12 @@
     return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self update];
+}
+
 - (CGFloat)FIGURE_SIZE
 {
     return self.frame.size.width / 8;
@@ -104,25 +110,13 @@
 	return state;
 }
 
-- (void)startUpdate
-{
-    for (FigureView *f in _figures) {
-        f.hidden = true;
-    }
-}
-
-- (void)endUpdate
-{
-    for (FigureView *f in _figures) {
-        f.hidden = false;
-    }
-}
-
 - (void)update
 {
-    for (FigureView *f in _figures) {
-        f.frame = [self cellFrameForPosition:f.position];
-    }
+    [UIView animateWithDuration:0.4 animations:^{
+        for (FigureView *f in _figures) {
+            f.frame = [self cellFrameForPosition:f.position];
+        }
+    }];
 }
 
 - (void)rotate

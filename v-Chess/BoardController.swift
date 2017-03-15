@@ -51,14 +51,16 @@ class BoardController: UIViewController {
             let controlView = UISegmentedControl(items: [
                 UIImage(named: "rewind")!,
                 UIImage(named: "previouse")!,
-                UIImage(named: "next")!,
                 UIImage(named: "stop")!,
+                UIImage(named: "next")!,
                 UIImage(named: "play")!
                 ])
             controlView.tintColor = UIColor.white
-            controlView.selectedSegmentIndex = 3
+            controlView.selectedSegmentIndex = 2
             self.navigationItem.titleView = controlView
             self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
+            
+            chessEngine = ChessEngine(view: desk, for: chessGame, controlView: controlView)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),
@@ -69,7 +71,7 @@ class BoardController: UIViewController {
     }
     
     func orientationChanged(_ notify:Notification) {
-        if chessGame != nil {
+        if chessGame != nil && !IS_PAD() {
             let orientation = UIDevice.current.orientation
             if UIDeviceOrientationIsPortrait(orientation) {
                 if orientation == .faceUp {

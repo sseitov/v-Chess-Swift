@@ -65,6 +65,11 @@
 	[_gameTable reloadData];
 }
 
+- (IBAction)goBack:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:true];
+}
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)thePickerView {
 	
 	return 1;

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ChessGame.h"
 
 typedef NS_ENUM(NSUInteger, Depth) {
     Fast = 3,
@@ -18,6 +19,8 @@ NSString* const YouWinNotification = @"YouWinNotification";
 @interface ChessEngine : NSObject
 
 - (instancetype)initWithView:(UIView*)view forDepth:(Depth)depth timerView:(UISegmentedControl*)timerView;
+- (instancetype)initWithView:(UIView*)view forGame:(ChessGame*)game controlView:(UISegmentedControl*)controlView;
+
 - (void)rotateDesk:(bool)rotate;
 - (void)startGame:(bool)white;
 - (void)stopGame;

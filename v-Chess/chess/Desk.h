@@ -29,10 +29,8 @@
 @property (strong, nonatomic, readonly) NSMutableArray	*figures;
 
 - (void)resetDisposition:(vchess::GameState)state;
-- (void)startUpdate;
 - (void)rotate;
 - (void)update;
-- (void)endUpdate;
 - (CGRect)cellFrameForPosition:(vchess::Position)pos;
 
 - (void)makeMove:(const vchess::Move&)move

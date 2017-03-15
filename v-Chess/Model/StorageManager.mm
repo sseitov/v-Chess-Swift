@@ -12,8 +12,6 @@
 #include <string>
 #include <vector>
 
-typedef std::vector<std::string> TurnsArray;
-
 @implementation StorageManager
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(StorageManager);
@@ -24,37 +22,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StorageManager);
 @synthesize userPackages = _userPackages;
 
 #pragma mark - Core Data stack
-
-+ (BOOL)parseTurns:(NSString*)pgn into:(TurnsArray*)turns {
-	
-	NSError *err = nil;
-	NSString *pattern = @"(?:(\\d+)(\\.)\\s*((?:[PNBRQK]?[a-h]?[1-8]?x?[a-h][1-8](?:\\=[PNBRQK])?|O(-?O){1,2})[\\+#]?(\\s*[\\!\\?]+)?)(?:\\s*((?:[PNBRQK]?[a-h]?[1-8]?x?[a-h][1-8](?:\\=[PNBRQK])?|O(-?O){1,2})[\\+#]?(\\s*[\\!\\?]+)?))?\\s*)";
-	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&err];
-	if (err) {
-		NSLog(@"ERROR: %@", err.localizedDescription);
-		return NO;
-	}
-	NSArray *matches = [regex matchesInString:pgn options:0 range:NSMakeRange(0, [pgn length])];
-	for (NSTextCheckingResult *match in matches) {
-		if (match.numberOfRanges > 6) {
-			NSRange w = [match rangeAtIndex:3];
-			if (w.length > 0) {
-				(*turns).push_back([pgn substringWithRange:w].UTF8String);
-			} else {
-				return NO;
-			}
-			NSRange b = [match rangeAtIndex:6];
-			if (b.length > 0) {
-				(*turns).push_back([pgn substringWithRange:b].UTF8String);
-			} else {
-				break;
-			}
-		} else {
-			return NO;
-		}
-	}
-	return YES;
-}
 
 - (void)initUserPackages {
 	

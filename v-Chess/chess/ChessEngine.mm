@@ -11,6 +11,16 @@
 #import "FigureView.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
+enum CONTROL_BUTTON {
+    PLAY_START,
+    PLAY_PREV,
+    PLAY_STOP,
+    PLAY_NEXT,
+    PLAY_FINISH
+};
+
+typedef std::vector<std::string> TurnsArray;
+
 @interface NSIndexSet (indexOfIndex)
 
 - (NSUInteger)indexAtIndex:(NSUInteger)anIndex;
@@ -36,6 +46,8 @@
     vchess::Disposition _currentGame;
     vchess::Moves _moves;
     int _turnTime;
+    
+    TurnsArray _pgnMoves;
 }
 
 @property (strong, nonatomic, readonly) Desk* desk;
@@ -56,6 +68,7 @@
     self = [super init];
     if (self) {
         _desk = [[Desk alloc] initWithFrame:view.bounds];
+        _desk.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _depth = depth;
         _deskView = view;
         _timerView = timerView;
@@ -72,7 +85,6 @@
 
 - (void)rotateDesk:(bool)rotate
 {
-    [_desk startUpdate];
     [UIView animateWithDuration:0.2
                      animations:^{
                          _desk.frame = _deskView.bounds;
@@ -83,7 +95,6 @@
                          } else {
                              [_desk update];
                          }
-                         [_desk endUpdate];
                      }
      ];
 }
@@ -346,6 +357,88 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
                            }
                        });
     });
+}
+
+#pragma mark - Chess Viewer
+
+BOOL parseTurns(NSString* pgn, TurnsArray* turns) {
+    
+    NSError *err = nil;
+    NSString *pattern = @"(?:(\\d+)(\\.)\\s*((?:[PNBRQK]?[a-h]?[1-8]?x?[a-h][1-8](?:\\=[PNBRQK])?|O(-?O){1,2})[\\+#]?(\\s*[\\!\\?]+)?)(?:\\s*((?:[PNBRQK]?[a-h]?[1-8]?x?[a-h][1-8](?:\\=[PNBRQK])?|O(-?O){1,2})[\\+#]?(\\s*[\\!\\?]+)?))?\\s*)";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&err];
+    if (err) {
+        NSLog(@"ERROR: %@", err.localizedDescription);
+        return NO;
+    }
+    NSArray *matches = [regex matchesInString:pgn options:0 range:NSMakeRange(0, [pgn length])];
+    for (NSTextCheckingResult *match in matches) {
+        if (match.numberOfRanges > 6) {
+            NSRange w = [match rangeAtIndex:3];
+            if (w.length > 0) {
+                (*turns).push_back([pgn substringWithRange:w].UTF8String);
+            } else {
+                return NO;
+            }
+            NSRange b = [match rangeAtIndex:6];
+            if (b.length > 0) {
+                (*turns).push_back([pgn substringWithRange:b].UTF8String);
+            } else {
+                break;
+            }
+        } else {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (instancetype)initWithView:(UIView*)view forGame:(ChessGame*)game controlView:(UISegmentedControl*)controlView {
+    self = [super init];
+    if (self) {
+        _desk = [[Desk alloc] initWithFrame:view.bounds];
+        _deskView = view;
+        [_deskView addSubview:_desk];
+        [controlView addTarget:self action:@selector(controlEvent:) forControlEvents:UIControlEventValueChanged];
+
+        if ( parseTurns(game.turns, &_pgnMoves) ) {
+            for (int i=0; i<_pgnMoves.size(); i++) {
+                printf("%s\n", _pgnMoves[i].c_str());
+            }
+            [_desk resetDisposition:_currentGame.state()];
+        }
+    }
+    return self;
+}
+
+- (void)controlEvent:(UISegmentedControl*)sender {
+    printf("sender.selectedSegmentIndex\n");
+/*
+    switch (sender.selectedSegmentIndex) {
+        case PLAY_START:
+            _desk.playMode = PLAY_BACKWARD;
+            [self handlePlayPreviouse:NULL];
+            break;
+        case PLAY_PREV:
+            _desk.playMode = NOPLAY;
+            [self previouseTurn];
+            _controlButtons.selectedSegmentIndex = PLAY_STOP;
+            break;
+        case PLAY_STOP:
+            _desk.playMode = NOPLAY;
+            break;
+        case PLAY_NEXT:
+            _desk.playMode = NOPLAY;
+            [self nextTurn];
+            _controlButtons.selectedSegmentIndex = PLAY_STOP;
+            break;
+        case PLAY_FINISH:
+            _desk.playMode = PLAY_FORWARD;
+            [self handlePlayNext:NULL];
+            break;
+        default:
+            break;
+    }
+ */
 }
 
 @end
