@@ -20,12 +20,20 @@ class ArchiveController: UITableViewController, ChessComLoaderDelegate {
         
         users = NSArray(array: StorageManager.shared().getUserPackages()) as! [String]
         masters = NSArray(contentsOf: Bundle.main.url(forResource: "packages", withExtension: "plist")!) as! [String]
+        
+        let rightButton = UIBarButtonItem(image: UIImage(named: "add"), style: .plain, target: self, action: #selector(self.loadGame))
+        rightButton.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     override func goBack() {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
 
+    func loadGame() {
+        performSegue(withIdentifier: "importGame", sender: nil)
+    }
+    
     func loaderDidFinish(_ count: Int32) {
         dismiss(animated: true, completion: {
             self.users = NSArray(array: StorageManager.shared().getUserPackages()) as! [String]

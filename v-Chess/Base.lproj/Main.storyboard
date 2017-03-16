@@ -6,7 +6,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -396,18 +395,10 @@
                         <barButtonItem key="leftBarButtonItem" image="menuButton" id="YcR-hK-zR6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem id="CdE-3F-eSi"/>
-                            <barButtonItem image="add" id="nJJ-Kg-fVo">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="SKg-QP-San" kind="presentation" identifier="importGame" id="s3S-i8-DIB"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="x4o-Mg-Rpo" kind="show" identifier="openMaster" id="U6L-xC-rPj"/>
+                        <segue destination="SKg-QP-San" kind="presentation" identifier="importGame" modalTransitionStyle="flipHorizontal" id="aGr-Rn-w8a"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a36-EZ-nFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -460,7 +451,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="IYE-xT-JaM">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Amd-6M-ppT">
+                        <barButtonItem key="rightBarButtonItem" title="Close" id="Amd-6M-ppT">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancel:" destination="mMl-8C-J0I" id="9s1-gk-w0C"/>
@@ -848,7 +839,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="27" height="27"/>
         <image name="back" width="22" height="22"/>
         <image name="button-Facebook" width="260" height="40"/>
         <image name="button-Google" width="260" height="40"/>

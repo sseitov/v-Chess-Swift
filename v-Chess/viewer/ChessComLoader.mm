@@ -11,8 +11,6 @@
 #import "StorageManager.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
-static NSString *serverURL = @"http://www.chess.com";
-
 @implementation ChessComLoader
 
 @synthesize webView, delegate = _delegate;
@@ -27,7 +25,7 @@ static NSString *serverURL = @"http://www.chess.com";
     label.text = @"Download PGN Files";
     label.textColor = [UIColor whiteColor];
     self.navigationItem.titleView = label;
-
+    
 	[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.pgnmentor.com/files.html"]]];
 }
     
@@ -85,7 +83,7 @@ static NSString *serverURL = @"http://www.chess.com";
             
             [SVProgressHUD showProgress:0];
             [[StorageManager sharedStorageManager] removePackage:package];
-            [self importPGN:request.URL name:package isZip:isZip progress:^(float progress){
+            [self importZipPGN:request.URL name:package isZip:isZip progress:^(float progress){
                 [SVProgressHUD showProgress:progress];
             } complete:^(int count){
                 [SVProgressHUD dismiss];
@@ -95,14 +93,13 @@ static NSString *serverURL = @"http://www.chess.com";
         [self presentViewController:alert animated:true completion:nil];
 		return NO;
     } else {
-        printf("=============== start %s\n", request.URL.lastPathComponent.pathExtension.UTF8String);
         return NO;
     }
 }
 
 #pragma mark - Import thread
 
-- (void)importPGN:(NSURL*)url name:(NSString*)package isZip:(bool)isZip progress:(void (^)(float))progress complete:(void (^)(int))complete{
+- (void)importZipPGN:(NSURL*)url name:(NSString*)package isZip:(bool)isZip progress:(void (^)(float))progress complete:(void (^)(int))complete{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         doImport = YES;
