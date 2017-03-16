@@ -8,22 +8,32 @@
 
 import UIKit
 
-class ArchiveController: UITableViewController {
+class ArchiveController: UITableViewController, ChessComLoaderDelegate {
 
-    var masters:[String]?
+    var users:[String] = []
+    var masters:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("Archive")
         setupBackButton()
         
-        masters = NSArray(contentsOf: Bundle.main.url(forResource: "packages", withExtension: "plist")!) as? [String]
+        users = NSArray(array: StorageManager.shared().getUserPackages()) as! [String]
+        masters = NSArray(contentsOf: Bundle.main.url(forResource: "packages", withExtension: "plist")!) as! [String]
     }
     
     override func goBack() {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
 
+    func loaderDidFinish(_ count: Int32) {
+        dismiss(animated: true, completion: {
+            self.users = NSArray(array: StorageManager.shared().getUserPackages()) as! [String]
+            self.tableView.reloadData()
+            self.showMessage("Was imported \(count) games.", messageType: .information)
+        })
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -31,7 +41,7 @@ class ArchiveController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? StorageManager.shared().userPackages.count : masters!.count
+        return section == 0 ? users.count : masters.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -52,9 +62,9 @@ class ArchiveController: UITableViewController {
         cell.textLabel?.textColor = UIColor.mainColor()
         cell.accessoryType = .disclosureIndicator
         if indexPath.section == 0 {
-            cell.textLabel?.text = StorageManager.shared().userPackages.object(at: indexPath.row) as? String
+            cell.textLabel?.text = users[indexPath.row]
         } else {
-            cell.textLabel?.text = masters![indexPath.row]
+            cell.textLabel?.text = masters[indexPath.row]
         }
         return cell
     }
@@ -63,40 +73,20 @@ class ArchiveController: UITableViewController {
         performSegue(withIdentifier: "openMaster", sender: indexPath)
     }
     
-    /*
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        return (indexPath.section == 0)
     }
-    */
 
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            tableView.beginUpdates()
+            let package = users[indexPath.row]
+            users.remove(at: indexPath.row)
+            StorageManager.shared().removePackage(package)
+            tableView.deleteRows(at: [indexPath], with: .top)
+            tableView.endUpdates()
+        }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
@@ -104,11 +94,13 @@ class ArchiveController: UITableViewController {
         if segue.identifier == "openMaster" {
             let next = segue.destination as! MasterLoader
             let indexPath = sender as! IndexPath
-            if let package = indexPath.section == 0 ? StorageManager.shared().userPackages.object(at: indexPath.row) as? String : masters![indexPath.row] {
-                next.mPackageName = package
-                next.mMasterEco = StorageManager.shared().eco(inPackage: package)
-            }
+            let package = indexPath.section == 0 ? users[indexPath.row] : masters[indexPath.row]
+            next.mPackageName = package
+            next.mMasterEco = StorageManager.shared().eco(inPackage: package)
+        } else if segue.identifier == "importGame" {
+            let nav = segue.destination as! UINavigationController
+            let next = nav.topViewController as! ChessComLoader
+            next.delegate = self
         }
     }
-
 }

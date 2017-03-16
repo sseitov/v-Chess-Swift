@@ -58,6 +58,15 @@
 		2CB5BEA01E76F205004E9019 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BE9F1E76F205004E9019 /* ProfileCell.swift */; };
 		2CB5BEA21E7708A2004E9019 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BEA11E7708A2004E9019 /* CommunityController.swift */; };
 		2CB5BEA41E77157C004E9019 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BEA31E77157C004E9019 /* MemberCell.swift */; };
+		2CDCB8B01E7A6FC800520B96 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8AC1E7A6FC800520B96 /* game.cpp */; };
+		2CDCB8B11E7A6FC800520B96 /* turn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8AE1E7A6FC800520B96 /* turn.cpp */; };
+		2CDCB8B41E7A7B4000520B96 /* ChessComLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8B31E7A7B4000520B96 /* ChessComLoader.mm */; };
+		2CDCB8B71E7A7BBE00520B96 /* PGNImporter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8B61E7A7BBE00520B96 /* PGNImporter.mm */; };
+		2CDCB8C31E7A829F00520B96 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8BB1E7A829F00520B96 /* ioapi.c */; };
+		2CDCB8C41E7A829F00520B96 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8BD1E7A829F00520B96 /* mztools.c */; };
+		2CDCB8C51E7A829F00520B96 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8BF1E7A829F00520B96 /* unzip.c */; };
+		2CDCB8C61E7A829F00520B96 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8C11E7A829F00520B96 /* zip.c */; };
+		2CDCB8C91E7A82B100520B96 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8C81E7A82B100520B96 /* ZipArchive.mm */; };
 		2CE9468A1E77C97200A2835F /* disposition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CE946841E77C97200A2835F /* disposition.cpp */; };
 		2CE9468B1E77C97200A2835F /* evaluate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CE946861E77C97200A2835F /* evaluate.cpp */; };
 		2CE946941E77C98800A2835F /* Desk.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9468D1E77C98800A2835F /* Desk.mm */; };
@@ -135,6 +144,25 @@
 		2CB5BE9F1E76F205004E9019 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		2CB5BEA11E7708A2004E9019 /* CommunityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		2CB5BEA31E77157C004E9019 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
+		2CDCB8AC1E7A6FC800520B96 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game.cpp; path = viewer/engine/game.cpp; sourceTree = "<group>"; };
+		2CDCB8AD1E7A6FC800520B96 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game.h; path = viewer/engine/game.h; sourceTree = "<group>"; };
+		2CDCB8AE1E7A6FC800520B96 /* turn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = turn.cpp; path = viewer/engine/turn.cpp; sourceTree = "<group>"; };
+		2CDCB8AF1E7A6FC800520B96 /* turn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = turn.h; path = viewer/engine/turn.h; sourceTree = "<group>"; };
+		2CDCB8B21E7A7B4000520B96 /* ChessComLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChessComLoader.h; path = viewer/ChessComLoader.h; sourceTree = "<group>"; };
+		2CDCB8B31E7A7B4000520B96 /* ChessComLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ChessComLoader.mm; path = viewer/ChessComLoader.mm; sourceTree = "<group>"; };
+		2CDCB8B51E7A7BBE00520B96 /* PGNImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PGNImporter.h; path = viewer/PGNImporter.h; sourceTree = "<group>"; };
+		2CDCB8B61E7A7BBE00520B96 /* PGNImporter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = PGNImporter.mm; path = viewer/PGNImporter.mm; sourceTree = "<group>"; };
+		2CDCB8BA1E7A829F00520B96 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = viewer/ZipArchive/minizip/crypt.h; sourceTree = "<group>"; };
+		2CDCB8BB1E7A829F00520B96 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = viewer/ZipArchive/minizip/ioapi.c; sourceTree = "<group>"; };
+		2CDCB8BC1E7A829F00520B96 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = viewer/ZipArchive/minizip/ioapi.h; sourceTree = "<group>"; };
+		2CDCB8BD1E7A829F00520B96 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mztools.c; path = viewer/ZipArchive/minizip/mztools.c; sourceTree = "<group>"; };
+		2CDCB8BE1E7A829F00520B96 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mztools.h; path = viewer/ZipArchive/minizip/mztools.h; sourceTree = "<group>"; };
+		2CDCB8BF1E7A829F00520B96 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = viewer/ZipArchive/minizip/unzip.c; sourceTree = "<group>"; };
+		2CDCB8C01E7A829F00520B96 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = viewer/ZipArchive/minizip/unzip.h; sourceTree = "<group>"; };
+		2CDCB8C11E7A829F00520B96 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zip.c; path = viewer/ZipArchive/minizip/zip.c; sourceTree = "<group>"; };
+		2CDCB8C21E7A829F00520B96 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = viewer/ZipArchive/minizip/zip.h; sourceTree = "<group>"; };
+		2CDCB8C71E7A82B100520B96 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = viewer/ZipArchive/ZipArchive.h; sourceTree = "<group>"; };
+		2CDCB8C81E7A82B100520B96 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ZipArchive.mm; path = viewer/ZipArchive/ZipArchive.mm; sourceTree = "<group>"; };
 		2CE946841E77C97200A2835F /* disposition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = disposition.cpp; path = chess/engine/disposition.cpp; sourceTree = "<group>"; };
 		2CE946851E77C97200A2835F /* disposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = disposition.h; path = chess/engine/disposition.h; sourceTree = "<group>"; };
 		2CE946861E77C97200A2835F /* evaluate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = evaluate.cpp; path = chess/engine/evaluate.cpp; sourceTree = "<group>"; };
@@ -186,8 +214,14 @@
 		2C3D914D1E788F11004CCCE3 /* viewer */ = {
 			isa = PBXGroup;
 			children = (
+				2CDCB8B81E7A825400520B96 /* ZipArchive */,
+				2CDCB8AB1E7A6FB400520B96 /* engine */,
 				2C3D914E1E788F4C004CCCE3 /* MasterLoader.h */,
 				2C3D914F1E788F4C004CCCE3 /* MasterLoader.mm */,
+				2CDCB8B21E7A7B4000520B96 /* ChessComLoader.h */,
+				2CDCB8B31E7A7B4000520B96 /* ChessComLoader.mm */,
+				2CDCB8B51E7A7BBE00520B96 /* PGNImporter.h */,
+				2CDCB8B61E7A7BBE00520B96 /* PGNImporter.mm */,
 				2C3D91511E78AD35004CCCE3 /* GameCell.h */,
 				2C3D91521E78AD35004CCCE3 /* GameCell.m */,
 			);
@@ -338,6 +372,43 @@
 				2CAAA0201E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m */,
 			);
 			name = LGAlertView;
+			sourceTree = "<group>";
+		};
+		2CDCB8AB1E7A6FB400520B96 /* engine */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCB8AC1E7A6FC800520B96 /* game.cpp */,
+				2CDCB8AD1E7A6FC800520B96 /* game.h */,
+				2CDCB8AE1E7A6FC800520B96 /* turn.cpp */,
+				2CDCB8AF1E7A6FC800520B96 /* turn.h */,
+			);
+			name = engine;
+			sourceTree = "<group>";
+		};
+		2CDCB8B81E7A825400520B96 /* ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCB8B91E7A827600520B96 /* minizip */,
+				2CDCB8C71E7A82B100520B96 /* ZipArchive.h */,
+				2CDCB8C81E7A82B100520B96 /* ZipArchive.mm */,
+			);
+			name = ZipArchive;
+			sourceTree = "<group>";
+		};
+		2CDCB8B91E7A827600520B96 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				2CDCB8BA1E7A829F00520B96 /* crypt.h */,
+				2CDCB8BB1E7A829F00520B96 /* ioapi.c */,
+				2CDCB8BC1E7A829F00520B96 /* ioapi.h */,
+				2CDCB8BD1E7A829F00520B96 /* mztools.c */,
+				2CDCB8BE1E7A829F00520B96 /* mztools.h */,
+				2CDCB8BF1E7A829F00520B96 /* unzip.c */,
+				2CDCB8C01E7A829F00520B96 /* unzip.h */,
+				2CDCB8C11E7A829F00520B96 /* zip.c */,
+				2CDCB8C21E7A829F00520B96 /* zip.h */,
+			);
+			name = minizip;
 			sourceTree = "<group>";
 		};
 		2CE946821E77C95200A2835F /* chess */ = {
@@ -517,6 +588,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CAAA02A1E76C71F00414961 /* Model.swift in Sources */,
+				2CDCB8C51E7A829F00520B96 /* unzip.c in Sources */,
 				2C6A12781E75C74C003451E1 /* StringExtensions.swift in Sources */,
 				2C3D913A1E78857D004CCCE3 /* v-Chess.xcdatamodeld in Sources */,
 				2C3D913E1E788649004CCCE3 /* User+CoreDataProperties.swift in Sources */,
@@ -524,12 +596,16 @@
 				2C3D91431E78898A004CCCE3 /* vChessModel.xcdatamodeld in Sources */,
 				2CAAA0011E76A68500414961 /* UIImageExtensions.swift in Sources */,
 				2C6A127C1E75C74C003451E1 /* UIViewExtensions.swift in Sources */,
+				2CDCB8C61E7A829F00520B96 /* zip.c in Sources */,
 				2C3D91471E7889D8004CCCE3 /* StorageManager.mm in Sources */,
 				2CB5BE9E1E76EF0B004E9019 /* SettingsController.swift in Sources */,
 				2CB5BEA01E76F205004E9019 /* ProfileCell.swift in Sources */,
 				2C3D913D1E788649004CCCE3 /* User+CoreDataClass.swift in Sources */,
 				2CE9468B1E77C97200A2835F /* evaluate.cpp in Sources */,
 				2CF5BE471E7682B3001EF8C8 /* MenuController.swift in Sources */,
+				2CDCB8C91E7A82B100520B96 /* ZipArchive.mm in Sources */,
+				2CDCB8C41E7A829F00520B96 /* mztools.c in Sources */,
+				2CDCB8B11E7A6FC800520B96 /* turn.cpp in Sources */,
 				2CAAA0341E76C9C900414961 /* TextFieldContainer.swift in Sources */,
 				2C6A127A1E75C74C003451E1 /* UIFontExtensions.swift in Sources */,
 				2CE946951E77C98800A2835F /* FigureView.mm in Sources */,
@@ -539,7 +615,9 @@
 				2C6A126D1E75AD71003451E1 /* BoardController.swift in Sources */,
 				2CE946941E77C98800A2835F /* Desk.mm in Sources */,
 				2CAAA0121E76C64400414961 /* LoginController.swift in Sources */,
+				2CDCB8C31E7A829F00520B96 /* ioapi.c in Sources */,
 				2CAAA0281E76C6CB00414961 /* NSPointerArray+AbstractionHelpers.m in Sources */,
+				2CDCB8B71E7A7BBE00520B96 /* PGNImporter.mm in Sources */,
 				2CAAA0131E76C64400414961 /* SignUpController.swift in Sources */,
 				2C68D10E1E74BCF700D12AEC /* AppDelegate.swift in Sources */,
 				2C3D914A1E788A68004CCCE3 /* ChessGame.m in Sources */,
@@ -548,6 +626,7 @@
 				2CE9469A1E77D2C300A2835F /* ChessEngine.mm in Sources */,
 				2C6A12791E75C74C003451E1 /* UIColorExtensions.swift in Sources */,
 				2C3D91531E78AD35004CCCE3 /* GameCell.m in Sources */,
+				2CDCB8B01E7A6FC800520B96 /* game.cpp in Sources */,
 				2C6A127B1E75C74C003451E1 /* UIViewControllerExtensions.swift in Sources */,
 				2CF5BE431E767DF2001EF8C8 /* Credentials.swift in Sources */,
 				2C6A12801E75C7CF003451E1 /* xAxizView.swift in Sources */,
@@ -555,6 +634,7 @@
 				2C3D91501E788F4C004CCCE3 /* MasterLoader.mm in Sources */,
 				2CE9468A1E77C97200A2835F /* disposition.cpp in Sources */,
 				2CAAA0211E76C6CB00414961 /* LGAlertView.m in Sources */,
+				2CDCB8B41E7A7B4000520B96 /* ChessComLoader.mm in Sources */,
 				2C0BE34E1E75FC61000AE962 /* MainController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

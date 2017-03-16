@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 extension UINavigationController {
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
@@ -60,7 +61,18 @@ class BoardController: UIViewController {
             self.navigationItem.titleView = controlView
             self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
             
-            chessEngine = ChessEngine(view: desk, for: chessGame, controlView: controlView)
+            chessEngine = ChessEngine(view: desk)
+            SVProgressHUD.show(withStatus: "Load...")
+            DispatchQueue.global().async {
+                let success = self.chessEngine?.setupGame(self.chessGame)
+                DispatchQueue.main.async {
+                    SVProgressHUD.dismiss()
+                    if success == nil || !success! {
+                        controlView.isEnabled = false
+                        self.showMessage("Error parsing game.", messageType: .error)
+                    }
+                }
+            }
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),

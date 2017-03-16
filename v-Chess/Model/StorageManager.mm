@@ -12,6 +12,12 @@
 #include <string>
 #include <vector>
 
+@interface StorageManager ()
+
+@property (readonly, strong, nonatomic) NSMutableArray *userPackages;
+
+@end
+
 @implementation StorageManager
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(StorageManager);
@@ -258,6 +264,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StorageManager);
 }
 
 #pragma mark - vChess methods
+
+- (NSArray*)getUserPackages
+{
+    NSMutableArray* sortedArray = _userPackages;
+    [sortedArray sortUsingSelector:@selector(caseInsensitiveCompare:)];
+    return sortedArray;
+}
 
 - (BOOL)insertGameWithHeader:(NSDictionary*)header turns:(NSString*)pgn intoPackage:(NSString*)package {
 

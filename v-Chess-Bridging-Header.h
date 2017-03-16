@@ -11,3 +11,4 @@
 #import "StorageManager.h"
 #import "MasterLoader.h"
 #import "ChessGame.h"
+#import "ChessComLoader.h"

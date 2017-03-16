@@ -24,9 +24,9 @@ namespace vchess {
 	
 	
 	// маска для парных фигур и ферзя (дополнительный появляется без флага)
-	const unsigned char RIGHT	= 0x10;
+	const unsigned char RIGHT	= 0x20;
 	// маска для пешки, короля и ладьи
-	const unsigned char MOVED	= 0x20;
+	const unsigned char MOVED	= 0x10;
 	// маска для пешки
 	const unsigned char FIRST_MOVE = 0x40;
 	// маска цвета

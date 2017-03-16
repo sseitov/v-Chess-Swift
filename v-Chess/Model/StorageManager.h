@@ -15,15 +15,14 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (readonly, strong, nonatomic) NSMutableArray *userPackages;
 
 + (StorageManager *)sharedStorageManager;
-//+ (BOOL)parseTurns:(NSString*)pgn into:(TurnsArray*)turns;
 - (void)initUserPackages;
 
 - (BOOL)saveContext;
 - (id)fetchObjectFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate;
 
+- (NSArray*)getUserPackages;
 - (BOOL)insertGameWithHeader:(NSDictionary*)header turns:(NSString*)pgn intoPackage:(NSString*)package;
 - (void)removePackage:(NSString*)package;
 - (NSArray*)ecoInPackage:(NSString*)package;
