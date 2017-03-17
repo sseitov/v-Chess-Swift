@@ -222,9 +222,10 @@ extension BoardController : UITableViewDataSource {
             cell = TurnCell(style: .default, reuseIdentifier: "notationCell")
         }
         
-        cell?.number = indexPath.row
-        cell?.white.setTitle(chessEngine?.turnText(forRow: indexPath.row, white: true), for: .normal)
-        cell?.black.setTitle(chessEngine?.turnText(forRow: indexPath.row, white: false), for: .normal)
+        cell?.setTurn(number: indexPath.row,
+                      white: chessEngine!.turnText(forRow: indexPath.row, white: true),
+                      black: chessEngine!.turnText(forRow: indexPath.row, white: false)
+        )
         
         return cell!
     }
