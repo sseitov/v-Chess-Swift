@@ -29,7 +29,11 @@ class MainController: AMSlideMenuMainViewController {
     // MARK: - Right menu
     
     override func initialIndexPathForRightMenu() -> IndexPath! {
-        return IndexPath(row: 0, section: 0)
+        if let choice = UserDefaults.standard.value(forKey: "lastMenuChoice") as? Int {
+            return IndexPath(row: choice, section: 0)
+        } else {
+            return IndexPath(row: 0, section: 0)
+        }
     }
     
     override func segueIdentifierForIndexPath(inRightMenu indexPath: IndexPath!) -> String! {

@@ -20,7 +20,7 @@ class TurnCell: UITableViewCell {
     
     func setTurn(number:Int, white:String, black:String) {
         self.number = number
-        numberView.text = "\(number + 1))"
+        numberView.text = "\(number + 1)."
         whiteView.setTitle(white, for: .normal)
         blackView.isHidden = black.isEmpty
         blackView.setTitle(black, for: .normal)
@@ -29,17 +29,13 @@ class TurnCell: UITableViewCell {
     
     var currentTurn:Bool? {
         didSet {
-            whiteView.setTitleColor(UIColor.black, for: .normal)
             whiteView.setupBorder(UIColor.white, radius: 20)
-            blackView.setTitleColor(UIColor.white, for: .normal)
             blackView.setupBorder(UIColor.black, radius: 20)
             if currentTurn != nil {
                 if currentTurn! {
-                    whiteView.setTitleColor(UIColor.red, for: .normal)
-                    whiteView.setupBorder(UIColor.red, radius: 20, width: 2)
+                    whiteView.setupBorder(UIColor.red, radius: 20, width: 4)
                 } else {
-                    blackView.setTitleColor(UIColor.yellow, for: .normal)
-                    blackView.setupBorder(UIColor.yellow, radius: 20, width: 2)
+                    blackView.setupBorder(UIColor.red, radius: 20, width: 4)
                 }
             }
         }
@@ -58,7 +54,7 @@ class TurnCell: UITableViewCell {
         selectionStyle = .none
         
         numberView = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 60))
-        numberView.font = UIFont.condensedFont()
+        numberView.font = UIFont.condensedFont(15)
         numberView.textAlignment = .center
         numberView.backgroundColor = UIColor.groupTableViewBackground
         numberView.textColor = UIColor.mainColor()
@@ -96,18 +92,20 @@ class TurnCell: UITableViewCell {
         let num = notify.object as! Int
         if (number != num) {
             currentTurn = nil
+        } else {
+            currentTurn = notify.userInfo!["color"] as? Bool
         }
     }
     
     func touchWhite() {
         delegate?.didSetCurrentTurn(number, white: true)
-        currentTurn = true
-        NotificationCenter.default.post(name: unsetCurrentTurnNotification, object: number)
+//        currentTurn = true
+        NotificationCenter.default.post(name: unsetCurrentTurnNotification, object: number, userInfo: ["color" : true])
     }
     
     func touchBlack() {
         delegate?.didSetCurrentTurn(number, white: false)
-        currentTurn = false
-        NotificationCenter.default.post(name: unsetCurrentTurnNotification, object: number)
+//        currentTurn = false
+        NotificationCenter.default.post(name: unsetCurrentTurnNotification, object: number, userInfo: ["color" : false])
     }
 }

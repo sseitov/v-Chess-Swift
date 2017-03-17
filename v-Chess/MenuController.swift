@@ -67,6 +67,12 @@ class MenuController: AMSlideMenuRightTableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
+        UserDefaults.standard.set(indexPath.row, forKey: "lastMenuChoice")
+        UserDefaults.standard.synchronize()
+    }
+    
     // MARK: - Navigation
     
     @IBAction func unwindToMenu(_ segue: UIStoryboardSegue) {

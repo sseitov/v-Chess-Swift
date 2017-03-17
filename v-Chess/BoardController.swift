@@ -77,6 +77,7 @@ class BoardController: UIViewController {
                         self.notationTable?.delegate = self
                         self.notationTable?.dataSource = self
                         self.notationTable?.isHidden = true
+                        self.notationTable?.setupBorder(UIColor.mainColor(), radius: 1, width: 2)
                         self.view.addSubview(self.notationTable!)
                         
                         let btn = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(self.showTable))
