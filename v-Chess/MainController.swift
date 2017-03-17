@@ -18,6 +18,8 @@ class MainController: AMSlideMenuMainViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isInitialStart = false
+        self.disableSlidePanGestureForRightMenu()
+        self.disableSlidePanGestureForLeftMenu()
     }
 
     override func primaryMenu() -> AMPrimaryMenu {

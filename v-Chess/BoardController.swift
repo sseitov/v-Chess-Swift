@@ -30,6 +30,7 @@ class BoardController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupTitle("Choose mode from menu")
         setupBackButton()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
@@ -45,7 +46,7 @@ class BoardController: UIViewController {
             controlButton.setTitle("Start", for: .normal)
             controlButton.setTitleColor(UIColor.mainColor(), for: .normal)
             controlButton.backgroundColor = UIColor.white
-            controlButton.setupBorder(UIColor.clear, radius: 10)
+            controlButton.setupBorder(UIColor.clear, radius: 15)
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
         } else {

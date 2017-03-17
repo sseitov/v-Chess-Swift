@@ -63,7 +63,6 @@ class MenuController: AMSlideMenuRightTableViewController {
         cell.textLabel?.font = UIFont.condensedFont()
         cell.textLabel?.textColor = UIColor.mainColor()
         cell.textLabel?.textAlignment = .center
-        cell.selectionStyle = .none
         
         return cell
     }
