@@ -417,13 +417,13 @@
 		2CE946821E77C95200A2835F /* chess */ = {
 			isa = PBXGroup;
 			children = (
+				2CE946831E77C95A00A2835F /* engine */,
 				2CE9468C1E77C98800A2835F /* Desk.h */,
 				2CE9468D1E77C98800A2835F /* Desk.mm */,
 				2CE9468E1E77C98800A2835F /* FigureView.h */,
 				2CE9468F1E77C98800A2835F /* FigureView.mm */,
 				2CE946981E77D2C300A2835F /* ChessEngine.h */,
 				2CE946991E77D2C300A2835F /* ChessEngine.mm */,
-				2CE946831E77C95A00A2835F /* engine */,
 			);
 			name = chess;
 			sourceTree = "<group>";

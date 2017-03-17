@@ -60,13 +60,18 @@
         <!--Navigation Controller-->
         <scene sceneID="aHF-Wc-28d">
             <objects>
-                <navigationController id="Ceb-gF-cjX" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="Ceb-gF-cjX" sceneMemberID="viewController">
                     <nil key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="CkK-7Q-1Gp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.10980392160000001" green="0.30980392159999998" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="Jii-Zz-VEs">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.10980392160000001" green="0.30980392159999998" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
                     <connections>
                         <segue destination="yG4-iG-B09" kind="relationship" relationship="rootViewController" id="WVE-y7-deZ"/>
                         <segue destination="uKw-vq-2qx" kind="unwind" identifier="unwindToMenu" unwindAction="unwindToMenu:" id="Vld-Wy-AnE"/>
@@ -86,11 +91,11 @@
                         <viewControllerLayoutGuide type="bottom" id="h2N-d7-NGo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oe9-l3-Lpp">
-                        <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBC-az-Uvw">
-                                <rect key="frame" x="0.0" y="102" width="320" height="320"/>
+                                <rect key="frame" x="0.0" y="80" width="320" height="320"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcL-wY-Lyf" customClass="yAxizView" customModule="v_Chess" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="300"/>

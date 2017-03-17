@@ -18,9 +18,9 @@ func IS_PAD() -> Bool {
 
 func navBarHeight() -> CGFloat {
     if IS_PAD() {
-        return  44
+        return  64
     } else {
-        return UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) ? 30 : 44
+        return UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) ? 30 : 64
     }
 }
 
@@ -62,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Model.shared.publishToken(currUser, token:token)
             }
         })
+        
+        UIApplication.shared.statusBarStyle = .lightContent
         
         SVProgressHUD.setDefaultStyle(.custom)
         SVProgressHUD.setBackgroundColor(UIColor.mainColor())

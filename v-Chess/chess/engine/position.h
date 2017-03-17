@@ -14,7 +14,9 @@
 #include <stdexcept>
 
 namespace vchess {
-	
+    
+    inline void POS_FROM_NUM(int num, unsigned char &x, unsigned char &y) { x = (num & 15) - 4; y = (num >> 4) - 4; }
+   
 	class Position {
 		int		_x;
 		int		_y;
@@ -23,6 +25,14 @@ namespace vchess {
 	public:
 		Position() : _x(-1), _y(-1), _isNull(true) {}
 		Position(int x, int y) : _x(x), _y(y), _isNull(false) {}
+        Position(int num) : _isNull(false)
+        {
+            unsigned char x;
+            unsigned char y;
+            POS_FROM_NUM(num, x, y);
+            _x = x;
+            _y = y;
+        }
 		Position(const Position& pos) : _x(pos._x), _y(pos._y), _isNull(pos._isNull) {}
 		Position(std::string notation)
 		{

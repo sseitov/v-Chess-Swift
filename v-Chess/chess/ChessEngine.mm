@@ -13,14 +13,6 @@
 #import "game.h"
 #import "PGNImporter.h"
 
-enum CONTROL_BUTTON {
-    PLAY_START,
-    PLAY_PREV,
-    PLAY_STOP,
-    PLAY_NEXT,
-    PLAY_FINISH
-};
-
 @interface NSIndexSet (indexOfIndex)
 
 - (NSUInteger)indexAtIndex:(NSUInteger)anIndex;
@@ -47,7 +39,9 @@ enum CONTROL_BUTTON {
     vchess::Moves _moves;
     int _turnTime;
 
-    vchess_viewer::Game* _viewedGame;
+    vchess_viewer::Game*    _viewedGame;
+    NSMutableArray*         _whiteLost;
+    NSMutableArray*         _blackLost;
 }
 
 @property (strong, nonatomic, readonly) Desk* desk;
@@ -60,6 +54,8 @@ enum CONTROL_BUTTON {
 @property (weak, nonatomic) UISegmentedControl *timerView;
 
 @end
+
+typedef std::vector<vchess::Position> PositionArray;
 
 @implementation ChessEngine
 
@@ -375,7 +371,9 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
         _deskView = view;
         [_deskView addSubview:_desk];
         [_desk resetDisposition:_currentGame.state()];
-
+        
+        _whiteLost = [[NSMutableArray alloc] init];
+        _blackLost = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -414,6 +412,182 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
         } else {
             return @"";
         }
+    }
+}
+
+- (FigureView*)figureAt:(vchess::Position)position
+{
+    NSEnumerator *enumerator = [_desk.figures objectEnumerator];
+    FigureView *f;
+    while (f = [enumerator nextObject]) {
+        if (f.position == position) {
+            return f;
+        }
+    }
+    return nil;
+}
+
+- (void)turnForward:(void (^)(bool))next
+{
+    if (self.playMode == NOPLAY || !_viewedGame->hasNextTurn()) {
+        next(false);
+        return;
+    }
+    vchess_viewer::Turn turn = _viewedGame->nextTurn();
+    
+    NSMutableArray *theFigures = [NSMutableArray array];
+    PositionArray thePositions;
+    FigureView *f = [self figureAt:vchess::Position(turn.fromPos)];
+    if (!f) {
+        NSLog(@"Figure not found in turn %s", vchess_viewer::POSITION_TEXT(turn.fromPos).data());
+        next(false);
+        return;
+    }
+    if (vchess_viewer::IS_PROMOTE(turn.turnType)) {
+        [f promote:turn.figure];
+    }
+    [theFigures addObject:f];
+    thePositions.push_back(vchess::Position(turn.toPos));
+    
+    if (vchess_viewer::TURN(turn.turnType) == vchess_viewer::KingCastling ||
+        vchess_viewer::TURN(turn.turnType) == vchess_viewer::QueenCastling) {
+        FigureView *rock = [self figureAt:vchess::Position(turn.rockFromPos)];
+        if (!rock) {
+            NSLog(@"Figure not found in turn %s", vchess_viewer::POSITION_TEXT(turn.rockFromPos).data());
+            next(false);
+            return;
+        }
+        [theFigures addObject:rock];
+        thePositions.push_back(vchess::Position(turn.rockToPos));
+    } else if (vchess_viewer::TURN(turn.turnType) == vchess_viewer::Capture) {
+        FigureView *eat;
+        if (turn.eatPos >= 0) {
+            eat = [self figureAt:vchess::Position(turn.eatPos)];
+        } else {
+            eat = [self figureAt:vchess::Position(turn.toPos)];
+        }
+        if (!eat) {
+            NSLog(@"Figure not found in turn %s", vchess_viewer::POSITION_TEXT(turn.toPos).data());
+            next(false);
+            return;
+        }
+        if (vchess_viewer::COLOR(turn.figure) == vchess_viewer::CWHITE) {
+            [_blackLost addObject:eat];
+        } else {
+            [_whiteLost addObject:eat];
+        }
+        eat.liveState = KILLED;
+        [theFigures addObject:eat];
+        thePositions.push_back(vchess::Position());
+    }
+    
+    [self moveFigures:theFigures toPos:thePositions complete:^{
+        next(_viewedGame->hasNextTurn());
+    }];
+}
+
+- (void)turnBack:(void (^)(bool))next
+{
+    if (self.playMode == NOPLAY || !_viewedGame->hasPrevTurn()) {
+        next(false);
+        return;
+    }
+    vchess_viewer::Turn turn = _viewedGame->prevTurn();
+    
+    NSMutableArray *theFigures = [NSMutableArray array];
+    PositionArray thePositions;
+    FigureView *f = [self figureAt:vchess::Position(turn.toPos)];
+    if (!f) {
+        NSLog(@"Figure not found in turn %s", vchess_viewer::POSITION_TEXT(turn.toPos).data());
+        next(false);
+        return;
+    }
+    if (vchess_viewer::IS_PROMOTE(turn.turnType)) {
+        [f promote:f.model];
+    }
+    [theFigures addObject:f];
+    thePositions.push_back(vchess::Position(turn.fromPos));
+    
+    if (turn.turnType == vchess_viewer::KingCastling || turn.turnType == vchess_viewer::QueenCastling) {
+        FigureView *rock = [self figureAt:vchess::Position(turn.rockToPos)];
+        if (!rock) {
+            NSLog(@"Figure not found in turn %s", vchess_viewer::POSITION_TEXT(turn.rockToPos).data());
+            next(false);
+            return;
+        }
+        [theFigures addObject:rock];
+        thePositions.push_back(vchess::Position(turn.rockFromPos));
+    } else if (vchess_viewer::TURN(turn.turnType) == vchess_viewer::Capture) {
+        FigureView *eat;
+        if (vchess_viewer::COLOR(turn.figure) == vchess_viewer::CWHITE) {
+            eat = [_blackLost lastObject];
+            [_blackLost removeLastObject];
+        } else {
+            eat = [_whiteLost lastObject];
+            [_whiteLost removeLastObject];
+        }
+        eat.liveState = ALIVED;
+        [theFigures addObject:eat];
+        if (turn.eatPos >= 0) {
+            thePositions.push_back(vchess::Position(turn.eatPos));
+        } else {
+            thePositions.push_back(vchess::Position(turn.toPos));
+        }
+    }
+    
+    [self moveFigures:theFigures toPos:thePositions complete:^{
+        next(true);
+    }];    
+}
+
+- (void)moveFigure:(FigureView*)f to:(vchess::Position)position {
+    
+    if (f.liveState != KILLED) {
+        f.position = position;
+        f.frame = [_desk cellFrameForPosition:position];
+    }
+    if (f.liveState == KILLED) {
+        [self killFigure:f];
+    } else if (f.liveState == ALIVED) {
+        [self aliveFigure:f];
+    }
+}
+
+- (void)moveFigures:(NSArray*)theFigures toPos:(const PositionArray&)positions complete:(void (^)(void))complete
+{
+    if (self.playMode == PLAY_FORWARD) {
+        [UIView animateWithDuration:0.2 delay:0.8 options:UIViewAnimationOptionTransitionNone
+                         animations:^{
+                             for (int i=0; i<[theFigures count]; i++) {
+                                 [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
+                             }
+                         }
+                         completion:^(BOOL finished){
+                             complete();
+                         }
+         ];
+    } else if (self.playMode == PLAY_BACKWARD) {
+        [UIView animateWithDuration:0.1 delay:0.1 options:UIViewAnimationOptionTransitionNone
+                         animations:^{
+                             for (int i=0; i<[theFigures count]; i++) {
+                                 [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
+                             }
+                         }
+                         completion:^(BOOL finished){
+                             complete();
+                         }
+         ];
+    } else if (self.playMode == PLAY_STEP)  {
+        [UIView animateWithDuration:0.2
+                         animations:^{
+                             for (int i=0; i<[theFigures count]; i++) {
+                                 [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
+                             }
+                         }
+                         completion:^(BOOL finished){
+                             complete();
+                         }
+         ];
     }
 }
 

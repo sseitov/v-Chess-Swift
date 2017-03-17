@@ -37,25 +37,25 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-    <key>FacebookAppID</key>
-    <string>1865438713698324</string>
-    <key>FacebookDisplayName</key>
-    <string>v-Chess</string>
-    <key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
-    <key>LSApplicationCategoryType</key>
-    <string></string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbauth2</string>
-    </array>
+	<key>FacebookAppID</key>
+	<string>1865438713698324</string>
+	<key>FacebookDisplayName</key>
+	<string>v-Chess</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbauth2</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>v-Chess needs your photo library for setup your avatar.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -74,9 +74,9 @@
 		<string>gamekit</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
-	<true/>
+	<false/>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

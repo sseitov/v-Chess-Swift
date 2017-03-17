@@ -15,6 +15,14 @@ extension UINavigationController {
     }
 }
 
+enum ViewerCommand:Int {
+    case rewind = 0
+    case previouse = 1
+    case stop = 2
+    case next = 3
+    case play = 4
+}
+
 class BoardController: UIViewController {
 
     @IBOutlet weak var xAxiz: xAxizView!
@@ -36,6 +44,7 @@ class BoardController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
         
         if chessGame == nil {
+            navigationController?.setToolbarHidden(true, animated: true)
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
@@ -50,6 +59,7 @@ class BoardController: UIViewController {
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
         } else {
+            navigationController?.setToolbarHidden(false, animated: true)
             let controlView = UISegmentedControl(items: [
                 UIImage(named: "rewind")!,
                 UIImage(named: "previouse")!,
@@ -57,10 +67,16 @@ class BoardController: UIViewController {
                 UIImage(named: "next")!,
                 UIImage(named: "play")!
                 ])
+            for i in 0...4 {
+                controlView.setWidth(60, forSegmentAt: i)
+            }
             controlView.tintColor = UIColor.white
-            controlView.selectedSegmentIndex = 2
-            self.navigationItem.titleView = controlView
-            self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
+            controlView.isMomentary = true
+            controlView.addTarget(self, action: #selector(self.controlViewer(_:)), for: .valueChanged)
+            let stretch = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            
+            self.toolbarItems = [stretch, UIBarButtonItem(customView: controlView), stretch]
+            setupTitle("\(chessGame!.white!) - \(chessGame!.black!)")
             
             chessEngine = ChessEngine(view: desk)
             SVProgressHUD.show(withStatus: "Load...")
@@ -91,25 +107,8 @@ class BoardController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),
                                                name: Notification.Name("YouWinNotification"),
                                                object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.orientationChanged(_:)),
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
-    func orientationChanged(_ notify:Notification) {
-        if chessGame != nil && !IS_PAD() {
-            let orientation = UIDevice.current.orientation
-            if UIDeviceOrientationIsPortrait(orientation) {
-                if orientation == .faceUp {
-                    self.navigationItem.prompt = nil
-                } else {
-                    self.navigationItem.prompt = "\(chessGame!.white!) - \(chessGame!.black!)"
-                }
-            } else {
-                self.navigationItem.prompt = nil
-            }
-        }
-    }
-
     override func goBack() {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
@@ -180,6 +179,54 @@ class BoardController: UIViewController {
                 self.stopGame(button)
             })
             alert?.show()
+        }
+    }
+    
+    func playBack() {
+        chessEngine?.turnBack({ next in
+            if (next) {
+                self.playBack()
+            } else {
+                return;
+            }
+        })
+    }
+    
+    func playForward() {
+        chessEngine?.turnForward({ next in
+            if (next) {
+                self.playForward()
+            } else {
+                return;
+            }
+        })
+    }
+    
+    func controlViewer(_ control:UISegmentedControl) {
+        let command = ViewerCommand(rawValue: control.selectedSegmentIndex)
+        switch command! {
+        case .rewind:
+            chessEngine?.playMode = .PLAY_BACKWARD
+            playBack()
+            break
+        case .previouse:
+            chessEngine?.playMode = .PLAY_STEP
+            control.isUserInteractionEnabled = false
+            chessEngine?.turnBack({ next in
+                control.isUserInteractionEnabled = true
+            })
+        case .stop:
+            chessEngine?.playMode = .NOPLAY
+        case .next:
+            chessEngine?.playMode = .PLAY_STEP
+            control.isUserInteractionEnabled = false
+            chessEngine?.turnForward({ next in
+                control.isUserInteractionEnabled = true
+            })
+        case .play:
+            chessEngine?.playMode = .PLAY_FORWARD
+            playForward()
+            break
         }
     }
     
