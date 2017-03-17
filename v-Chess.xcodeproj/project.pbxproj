@@ -67,6 +67,7 @@
 		2CDCB8C51E7A829F00520B96 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8BF1E7A829F00520B96 /* unzip.c */; };
 		2CDCB8C61E7A829F00520B96 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8C11E7A829F00520B96 /* zip.c */; };
 		2CDCB8C91E7A82B100520B96 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCB8C81E7A82B100520B96 /* ZipArchive.mm */; };
+		2CDF6A4B1E7BC60500E7D7AF /* TurnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDF6A4A1E7BC60500E7D7AF /* TurnCell.swift */; };
 		2CE9468A1E77C97200A2835F /* disposition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CE946841E77C97200A2835F /* disposition.cpp */; };
 		2CE9468B1E77C97200A2835F /* evaluate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CE946861E77C97200A2835F /* evaluate.cpp */; };
 		2CE946941E77C98800A2835F /* Desk.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CE9468D1E77C98800A2835F /* Desk.mm */; };
@@ -163,6 +164,7 @@
 		2CDCB8C21E7A829F00520B96 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = viewer/ZipArchive/minizip/zip.h; sourceTree = "<group>"; };
 		2CDCB8C71E7A82B100520B96 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = viewer/ZipArchive/ZipArchive.h; sourceTree = "<group>"; };
 		2CDCB8C81E7A82B100520B96 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ZipArchive.mm; path = viewer/ZipArchive/ZipArchive.mm; sourceTree = "<group>"; };
+		2CDF6A4A1E7BC60500E7D7AF /* TurnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnCell.swift; sourceTree = "<group>"; };
 		2CE946841E77C97200A2835F /* disposition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = disposition.cpp; path = chess/engine/disposition.cpp; sourceTree = "<group>"; };
 		2CE946851E77C97200A2835F /* disposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = disposition.h; path = chess/engine/disposition.h; sourceTree = "<group>"; };
 		2CE946861E77C97200A2835F /* evaluate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = evaluate.cpp; path = chess/engine/evaluate.cpp; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				2C6A12701E75C738003451E1 /* Extensions */,
 				2CAAA00F1E76C62B00414961 /* Profile */,
 				2C6A126C1E75AD71003451E1 /* BoardController.swift */,
+				2CDF6A4A1E7BC60500E7D7AF /* TurnCell.swift */,
 				2C3D91341E787405004CCCE3 /* ArchiveController.swift */,
 				2CB5BEA11E7708A2004E9019 /* CommunityController.swift */,
 				2CB5BEA31E77157C004E9019 /* MemberCell.swift */,
@@ -627,6 +630,7 @@
 				2C6A12791E75C74C003451E1 /* UIColorExtensions.swift in Sources */,
 				2C3D91531E78AD35004CCCE3 /* GameCell.m in Sources */,
 				2CDCB8B01E7A6FC800520B96 /* game.cpp in Sources */,
+				2CDF6A4B1E7BC60500E7D7AF /* TurnCell.swift in Sources */,
 				2C6A127B1E75C74C003451E1 /* UIViewControllerExtensions.swift in Sources */,
 				2CF5BE431E767DF2001EF8C8 /* Credentials.swift in Sources */,
 				2C6A12801E75C7CF003451E1 /* xAxizView.swift in Sources */,

@@ -26,7 +26,7 @@ class BoardController: UIViewController {
     var chessEngine:ChessEngine?
     var chessGame:ChessGame?
     
-    private var observerContext = 0
+    var notationTable:UITableView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +71,17 @@ class BoardController: UIViewController {
                     if success == nil || !success! {
                         controlView.isEnabled = false
                         self.showMessage("Error parsing game.", messageType: .error)
+                    } else {
+                        self.notationTable = UITableView(frame: CGRect(x: self.view.frame.size.width, y: 0, width: 200, height: self.view.frame.size.height), style: .grouped)
+                        self.notationTable?.autoresizingMask = UIViewAutoresizing.flexibleHeight.union(.flexibleLeftMargin)
+                        self.notationTable?.delegate = self
+                        self.notationTable?.dataSource = self
+                        self.notationTable?.isHidden = true
+                        self.view.addSubview(self.notationTable!)
+                        
+                        let btn = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(self.showTable))
+                        btn.tintColor = UIColor.white
+                        self.navigationItem.rightBarButtonItem = btn
                     }
                 }
             }
@@ -175,9 +186,61 @@ class BoardController: UIViewController {
         showMessage("Congratilations, you are win!", messageType: .information)
     }
     
+    func showTable() {
+        let wasHidden = self.notationTable!.isHidden
+        let frame = wasHidden ?
+            CGRect(x: self.view.frame.size.width - 200, y: 0, width: 200, height: self.view.frame.size.height) :
+            CGRect(x: self.view.frame.size.width, y: 0, width: 200, height: self.view.frame.size.height)
+        if wasHidden {
+            self.notationTable!.isHidden = false
+        }
+        UIView.animate(withDuration: 0.4, animations: {
+            self.notationTable?.frame = frame
+        }, completion: { _ in
+            if !wasHidden {
+                self.notationTable!.isHidden = true
+            }
+        })
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     }
 
+}
+
+extension BoardController : UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chessEngine!.turnsCount()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "notationCell") as? TurnCell
+        if cell == nil {
+            cell = TurnCell(style: .default, reuseIdentifier: "notationCell")
+        }
+        
+        cell?.number = indexPath.row
+        cell?.white.setTitle(chessEngine?.turnText(forRow: indexPath.row, white: true), for: .normal)
+        cell?.black.setTitle(chessEngine?.turnText(forRow: indexPath.row, white: false), for: .normal)
+        
+        return cell!
+    }
+}
+
+extension BoardController : UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
 }

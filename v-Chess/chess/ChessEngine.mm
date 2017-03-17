@@ -380,18 +380,41 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     return self;
 }
 
-    - (bool)setupGame:(ChessGame*)game
-    {
-        TurnsArray turns;
-        if ( parseTurns(game.turns, &turns) ) {
-            try {
-                _viewedGame = new vchess_viewer::Game(turns, game.white.UTF8String, game.black.UTF8String);
-            } catch(const std::logic_error& error) {
-                return false;
-            }
+- (bool)setupGame:(ChessGame*)game
+{
+    TurnsArray turns;
+    if ( parseTurns(game.turns, &turns) ) {
+        try {
+            _viewedGame = new vchess_viewer::Game(turns, game.white.UTF8String, game.black.UTF8String);
+        } catch(const std::logic_error& error) {
+            return false;
         }
-        return true;
     }
+    return true;
+}
 
+- (NSInteger)turnsCount
+{
+    if (!_viewedGame)
+        return 0;
     
+    int count = (int)_viewedGame->turns().size();
+    return ((count % 2) == 0) ? count / 2 : count / 2 + 1;
+}
+
+- (NSString*)turnTextForRow:(NSInteger)row white:(bool)isWhite {
+    int whiteIndex = (int)row*2;
+    if (isWhite) {
+        vchess_viewer::Turn turn = _viewedGame->turns()[whiteIndex];
+        return [NSString stringWithUTF8String:turn.turnText.c_str()];
+    } else {
+        if (whiteIndex < (_viewedGame->turns().size() - 1)) {
+            vchess_viewer::Turn turn = _viewedGame->turns()[whiteIndex+1];
+            return [NSString stringWithUTF8String:turn.turnText.c_str()];
+        } else {
+            return @"";
+        }
+    }
+}
+
 @end
