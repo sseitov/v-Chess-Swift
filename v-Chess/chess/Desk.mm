@@ -176,7 +176,7 @@
 		[self moveFigure:rook to:vchess::Position(x2, y)];
 	} else if (!move.capturePosition.isNull()) {
 		FigureView *eat = [self figureAt:move.capturePosition];
-		eat.liveState = KILLED;
+		[eat kill];
 		[self moveFigure:eat to:vchess::Position()];
 	}
  	

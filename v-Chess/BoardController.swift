@@ -18,9 +18,9 @@ extension UINavigationController {
 enum ViewerCommand:Int {
     case rewind = 0
     case previouse = 1
-    case stop = 2
-    case next = 3
-    case play = 4
+//    case stop = 2
+    case next = 2
+//    case play = 4
 }
 
 class BoardController: UIViewController {
@@ -30,6 +30,11 @@ class BoardController: UIViewController {
     @IBOutlet weak var desk: UIView!
     @IBOutlet weak var boardWidth: NSLayoutConstraint!
     @IBOutlet weak var boardHeight: NSLayoutConstraint!
+    @IBOutlet weak var whiteEatView: UIView!
+    @IBOutlet weak var blackEatView: UIView!
+    
+    var whiteEat: EatController?
+    var blackEat: EatController?
     
     var chessEngine:ChessEngine?
     var chessGame:ChessGame?
@@ -44,11 +49,13 @@ class BoardController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
         
         if chessGame == nil {
-            navigationController?.setToolbarHidden(true, animated: true)
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
-            chessEngine = ChessEngine(view: desk, for: Depth.Fast, timerView:timerView)
+            chessEngine = ChessEngine(view: desk, timerView:timerView) //        _depth = depth;
+
+            chessEngine?.whiteEat = whiteEat
+            chessEngine?.blackEat = blackEat
             
             let controlButton = UIButton(frame: CGRect(x: 0, y: 30, width: 80, height: 30))
             controlButton.titleLabel?.font = UIFont.condensedFont()
@@ -58,17 +65,34 @@ class BoardController: UIViewController {
             controlButton.setupBorder(UIColor.clear, radius: 15)
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
+
+            let soundTitle = UIBarButtonItem(title: "Sound", style: .plain, target: nil, action: nil)
+            soundTitle.tintColor = UIColor.white
+            let soundControl = UISwitch()
+            soundControl.isOn = isSoundEnabled()
+            soundControl.addTarget(self, action: #selector(self.controlSound(_:)), for: .valueChanged)
+            let soundSwitch = UIBarButtonItem(customView: soundControl)
+            
+            let stretch = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            
+            let depthTitle = UIBarButtonItem(title: "Strong depth", style: .plain, target: nil, action: nil)
+            depthTitle.tintColor = UIColor.white
+            let depthControl = UISwitch()
+            depthControl.isOn = (chessDepth() == .Strong)
+            depthControl.addTarget(self, action: #selector(self.controlDepth(_:)), for: .valueChanged)
+            let depthSwitch = UIBarButtonItem(customView: depthControl)
+            toolbarItems = [soundTitle, soundSwitch, stretch, depthTitle, depthSwitch]
+            
         } else {
-            navigationController?.setToolbarHidden(false, animated: true)
             let controlView = UISegmentedControl(items: [
                 UIImage(named: "rewind")!,
                 UIImage(named: "previouse")!,
-                UIImage(named: "stop")!,
+//                UIImage(named: "stop")!,
                 UIImage(named: "next")!,
-                UIImage(named: "play")!
+//                UIImage(named: "play")!
                 ])
-            for i in 0...4 {
-                controlView.setWidth(60, forSegmentAt: i)
+            for i in 0...2 {
+                controlView.setWidth(100, forSegmentAt: i)
             }
             controlView.tintColor = UIColor.white
             controlView.isMomentary = true
@@ -79,6 +103,9 @@ class BoardController: UIViewController {
             setupTitle("\(chessGame!.white!) - \(chessGame!.black!)")
             
             chessEngine = ChessEngine(view: desk)
+            chessEngine?.whiteEat = whiteEat
+            chessEngine?.blackEat = blackEat
+            
             SVProgressHUD.show(withStatus: "Load...")
             DispatchQueue.global().async {
                 let success = self.chessEngine?.setupGame(self.chessGame)
@@ -119,9 +146,45 @@ class BoardController: UIViewController {
         if UIInterfaceOrientationIsLandscape(orientation) {
             self.boardWidth.constant = self.view.frame.height
             self.boardHeight.constant = self.view.frame.height
+            whiteEatView.frame = whiteEatFrame(landscape: true)
+            blackEatView.frame = blackEatFrame(landscape: true)
         } else {
             self.boardWidth.constant = self.view.frame.width
             self.boardHeight.constant = self.view.frame.width
+            whiteEatView.frame = whiteEatFrame(landscape: false)
+            blackEatView.frame = blackEatFrame(landscape: false)
+        }
+    }
+    
+    private func isRotated(_ orientation:UIInterfaceOrientation) -> Bool {
+        return (orientation == .landscapeLeft) || (orientation == .portraitUpsideDown)
+    }
+    
+    private func whiteEatFrame(landscape:Bool) -> CGRect {
+        if landscape {
+            return CGRect(x: self.view.frame.size.width - (self.view.frame.size.width - self.view.frame.size.height)/2 + 10,
+                          y: 10,
+                          width: (self.view.frame.size.width - self.view.frame.size.height)/2 - 20,
+                          height: self.view.frame.size.height - 20)
+        } else {
+            return CGRect(x: 10,
+                          y: self.view.frame.size.height - (self.view.frame.size.height - self.view.frame.size.width)/2 + 10,
+                          width: self.view.frame.size.width - 10,
+                          height: (self.view.frame.size.height - self.view.frame.size.width)/2 - 20)
+        }
+    }
+    
+    private func blackEatFrame(landscape:Bool) -> CGRect {
+        if landscape {
+            return CGRect(x: 10,
+                          y: 10,
+                          width: (self.view.frame.size.width - self.view.frame.size.height) / 2 - 20,
+                          height: self.view.frame.size.height - 20)
+        } else {
+            return CGRect(x: 10,
+                          y: 10,
+                          width: self.view.frame.size.width - 10,
+                          height: (self.view.frame.size.height - self.view.frame.size.width) / 2 - 20)
         }
     }
     
@@ -133,12 +196,26 @@ class BoardController: UIViewController {
             if UIInterfaceOrientationIsLandscape(orientation) {
                 self.boardWidth.constant = self.view.frame.height
                 self.boardHeight.constant = self.view.frame.height
+                if self.isRotated(orientation) {
+                    self.blackEatView.frame = self.whiteEatFrame(landscape: true)
+                    self.whiteEatView.frame = self.blackEatFrame(landscape: true)
+                } else {
+                    self.blackEatView.frame = self.blackEatFrame(landscape: true)
+                    self.whiteEatView.frame = self.whiteEatFrame(landscape: true)
+                }
             } else {
                 self.boardWidth.constant = self.view.frame.width
                 self.boardHeight.constant = self.view.frame.width
+                if self.isRotated(orientation) {
+                    self.blackEatView.frame = self.whiteEatFrame(landscape: false)
+                    self.whiteEatView.frame = self.blackEatFrame(landscape: false)
+                } else {
+                    self.blackEatView.frame = self.blackEatFrame(landscape: false)
+                    self.whiteEatView.frame = self.whiteEatFrame(landscape: false)
+                }
             }
         }) { (context: UIViewControllerTransitionCoordinatorContext) in
-            self.setRotated((orientation == .landscapeLeft) || (orientation == .portraitUpsideDown))
+            self.setRotated(self.isRotated(orientation))
         }
     }
     
@@ -149,7 +226,7 @@ class BoardController: UIViewController {
     }
 
     private func startGame(_ button:UIButton, blackColor:Bool) {
-        self.chessEngine?.startGame(blackColor)
+        self.chessEngine?.startGame(blackColor, for: chessDepth())
         button.setTitle("Surrender", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.errorColor()
@@ -160,6 +237,16 @@ class BoardController: UIViewController {
         button.setTitle("Start", for: .normal)
         button.setTitleColor(UIColor.mainColor(), for: .normal)
         button.backgroundColor = UIColor.white
+    }
+    
+    func controlDepth(_ sender:UISwitch) {
+        setChessDepth(sender.isOn)
+        chessEngine?.depth = chessDepth()
+    }
+    
+    func controlSound(_ sender:UISwitch) {
+        chessEngine?.soundEnable = sender.isOn
+        setSoundEnabled(sender.isOn)
     }
     
     func controlGame(_ button:UIButton) {
@@ -215,18 +302,18 @@ class BoardController: UIViewController {
             chessEngine?.turnBack({ next in
                 control.isUserInteractionEnabled = true
             })
-        case .stop:
-            chessEngine?.playMode = .NOPLAY
+//        case .stop:
+//            chessEngine?.playMode = .NOPLAY
         case .next:
             chessEngine?.playMode = .PLAY_STEP
             control.isUserInteractionEnabled = false
             chessEngine?.turnForward({ next in
                 control.isUserInteractionEnabled = true
             })
-        case .play:
-            chessEngine?.playMode = .PLAY_FORWARD
-            playForward()
-            break
+//        case .play:
+//            chessEngine?.playMode = .PLAY_FORWARD
+//            playForward()
+//            break
         }
     }
     
@@ -254,6 +341,12 @@ class BoardController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "white" {
+            whiteEat = segue.destination as? EatController
+        }
+        if segue.identifier == "black" {
+            blackEat = segue.destination as? EatController
+        }
     }
 
 }

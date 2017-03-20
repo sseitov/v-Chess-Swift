@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "ChessGame.h"
 
-typedef NS_ENUM(NSUInteger, Depth) {
+typedef NS_ENUM(NSInteger, Depth) {
     Fast = 3,
     Strong = 4,
 };
 
-typedef NS_ENUM(NSUInteger, PlayMode) {
+typedef NS_ENUM(NSInteger, PlayMode) {
     NOPLAY = 0,
     PLAY_STEP = 1,
     PLAY_FORWARD = 2,
@@ -23,11 +23,13 @@ typedef NS_ENUM(NSUInteger, PlayMode) {
 
 NSString* const YouWinNotification = @"YouWinNotification";
 
+@class EatController;
+
 @interface ChessEngine : NSObject
 
-- (instancetype)initWithView:(UIView*)view forDepth:(Depth)depth timerView:(UISegmentedControl*)timerView;
+- (instancetype)initWithView:(UIView*)view timerView:(UISegmentedControl*)timerView;
 - (void)rotateDesk:(bool)rotate;
-- (void)startGame:(bool)white;
+- (void)startGame:(bool)white forDepth:(Depth)depth;
 - (void)stopGame;
 - (bool)gameStarted;
 
@@ -38,6 +40,10 @@ NSString* const YouWinNotification = @"YouWinNotification";
 - (void)turnForward:(void (^)(bool))next;
 - (void)turnBack:(void (^)(bool))next;
 
+@property (readwrite) Depth	depth;
 @property (readwrite) PlayMode	playMode;
+@property (readwrite) bool soundEnable;
+@property (weak, nonatomic) UICollectionViewController *whiteEat;
+@property (weak, nonatomic) UICollectionViewController *blackEat;
 
 @end

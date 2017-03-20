@@ -94,6 +94,22 @@
                         <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilF-qH-QfD">
+                                <rect key="frame" x="20" y="10" width="300" height="60"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="8Co-nH-luO" kind="embed" identifier="white" id="pPF-pv-cgk"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u55-Pl-FbE">
+                                <rect key="frame" x="20" y="410" width="300" height="60"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="SlB-sU-xin" kind="embed" identifier="black" id="Kcs-Rw-70h"/>
+                                </connections>
+                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBC-az-Uvw">
                                 <rect key="frame" x="0.0" y="80" width="320" height="320"/>
                                 <subviews>
@@ -145,9 +161,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="blackEatView" destination="ilF-qH-QfD" id="Bg3-4y-iGm"/>
                         <outlet property="boardHeight" destination="bsp-lz-buL" id="oH4-AD-0OQ"/>
                         <outlet property="boardWidth" destination="Oap-c5-8hN" id="Skh-CV-QD6"/>
                         <outlet property="desk" destination="eB4-iV-A3S" id="KBl-kg-ulp"/>
+                        <outlet property="whiteEatView" destination="u55-Pl-FbE" id="GRq-yw-h0W"/>
                         <outlet property="xAxiz" destination="Nsb-r9-Rp6" id="gWG-1O-T6X"/>
                         <outlet property="yAxiz" destination="UcL-wY-Lyf" id="96j-6O-M0V"/>
                     </connections>
@@ -841,6 +859,104 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wEZ-2P-VL3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1387.5" y="170.07042253521126"/>
+        </scene>
+        <!--Eat Controller-->
+        <scene sceneID="jQc-ad-mpQ">
+            <objects>
+                <collectionViewController id="8Co-nH-luO" customClass="EatController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="nYd-Yz-1Ks">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ysX-xS-5Ti">
+                            <size key="itemSize" width="60" height="60"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="figure" id="CR2-Ko-HcK" customClass="EatCell" customModule="v_Chess" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d8k-SY-jqq">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="d8k-SY-jqq" firstAttribute="top" secondItem="CR2-Ko-HcK" secondAttribute="topMargin" constant="-8" id="7Eu-pr-mmj"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="d8k-SY-jqq" secondAttribute="bottom" constant="-8" id="Hnm-0D-z01"/>
+                                    <constraint firstItem="d8k-SY-jqq" firstAttribute="leading" secondItem="CR2-Ko-HcK" secondAttribute="leadingMargin" constant="-8" id="WuX-2G-jYV"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="d8k-SY-jqq" secondAttribute="trailing" constant="-8" id="yQm-Cr-1hu"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="figureView" destination="d8k-SY-jqq" id="4pd-7g-tvz"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="8Co-nH-luO" id="GvJ-Cc-GGC"/>
+                            <outlet property="delegate" destination="8Co-nH-luO" id="33B-wr-4V1"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Yo-Mh-kiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="330" y="1657"/>
+        </scene>
+        <!--Eat Controller-->
+        <scene sceneID="1la-Lh-W8s">
+            <objects>
+                <collectionViewController id="SlB-sU-xin" customClass="EatController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="jwb-me-Hdg">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="5ID-bu-fuM">
+                            <size key="itemSize" width="60" height="60"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="figure" id="ODm-Dg-484" customClass="EatCell" customModule="v_Chess" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gii-Qx-x9v">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="Gii-Qx-x9v" secondAttribute="bottom" constant="-8" id="LSm-7c-agQ"/>
+                                    <constraint firstItem="Gii-Qx-x9v" firstAttribute="top" secondItem="ODm-Dg-484" secondAttribute="topMargin" constant="-8" id="kV8-Wh-ToX"/>
+                                    <constraint firstItem="Gii-Qx-x9v" firstAttribute="leading" secondItem="ODm-Dg-484" secondAttribute="leadingMargin" constant="-8" id="niu-7G-E3M"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Gii-Qx-x9v" secondAttribute="trailing" constant="-8" id="zAl-Qd-XjU"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="figureView" destination="Gii-Qx-x9v" id="6ZS-dr-CNj"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="SlB-sU-xin" id="11J-2j-f8K"/>
+                            <outlet property="delegate" destination="SlB-sU-xin" id="r5Y-sT-yvN"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ef5-D2-Aas" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="330" y="2027"/>
         </scene>
     </scenes>
     <resources>

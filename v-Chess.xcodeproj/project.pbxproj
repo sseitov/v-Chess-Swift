@@ -35,6 +35,8 @@
 		2C6A127C1E75C74C003451E1 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A12761E75C74C003451E1 /* UIViewExtensions.swift */; };
 		2C6A12801E75C7CF003451E1 /* xAxizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A127E1E75C7CF003451E1 /* xAxizView.swift */; };
 		2C6A12811E75C7CF003451E1 /* yAxizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6A127F1E75C7CF003451E1 /* yAxizView.swift */; };
+		2C6AF93F1E7FDCF90078B42C /* EatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AF93E1E7FDCF90078B42C /* EatController.swift */; };
+		2C6AF9411E7FDD170078B42C /* EatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AF9401E7FDD170078B42C /* EatCell.swift */; };
 		2CAAA0011E76A68500414961 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0001E76A68500414961 /* UIImageExtensions.swift */; };
 		2CAAA0121E76C64400414961 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0101E76C64400414961 /* LoginController.swift */; };
 		2CAAA0131E76C64400414961 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0111E76C64400414961 /* SignUpController.swift */; };
@@ -118,6 +120,8 @@
 		2C6A12761E75C74C003451E1 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Extensions/UIViewExtensions.swift; sourceTree = "<group>"; };
 		2C6A127E1E75C7CF003451E1 /* xAxizView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = xAxizView.swift; path = CustomViews/xAxizView.swift; sourceTree = "<group>"; };
 		2C6A127F1E75C7CF003451E1 /* yAxizView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = yAxizView.swift; path = CustomViews/yAxizView.swift; sourceTree = "<group>"; };
+		2C6AF93E1E7FDCF90078B42C /* EatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatController.swift; sourceTree = "<group>"; };
+		2C6AF9401E7FDD170078B42C /* EatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatCell.swift; sourceTree = "<group>"; };
 		2CAAA0001E76A68500414961 /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageExtensions.swift; path = Extensions/UIImageExtensions.swift; sourceTree = "<group>"; };
 		2CAAA0101E76C64400414961 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		2CAAA0111E76C64400414961 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
@@ -261,6 +265,8 @@
 				2C6A12701E75C738003451E1 /* Extensions */,
 				2CAAA00F1E76C62B00414961 /* Profile */,
 				2C6A126C1E75AD71003451E1 /* BoardController.swift */,
+				2C6AF93E1E7FDCF90078B42C /* EatController.swift */,
+				2C6AF9401E7FDD170078B42C /* EatCell.swift */,
 				2CDF6A4A1E7BC60500E7D7AF /* TurnCell.swift */,
 				2C3D91341E787405004CCCE3 /* ArchiveController.swift */,
 				2CB5BEA11E7708A2004E9019 /* CommunityController.swift */,
@@ -596,6 +602,7 @@
 				2C3D913A1E78857D004CCCE3 /* v-Chess.xcdatamodeld in Sources */,
 				2C3D913E1E788649004CCCE3 /* User+CoreDataProperties.swift in Sources */,
 				2C6A12771E75C74C003451E1 /* NSStringExtensions.swift in Sources */,
+				2C6AF9411E7FDD170078B42C /* EatCell.swift in Sources */,
 				2C3D91431E78898A004CCCE3 /* vChessModel.xcdatamodeld in Sources */,
 				2CAAA0011E76A68500414961 /* UIImageExtensions.swift in Sources */,
 				2C6A127C1E75C74C003451E1 /* UIViewExtensions.swift in Sources */,
@@ -626,6 +633,7 @@
 				2C3D914A1E788A68004CCCE3 /* ChessGame.m in Sources */,
 				2C6A12811E75C7CF003451E1 /* yAxizView.swift in Sources */,
 				2CB5BEA41E77157C004E9019 /* MemberCell.swift in Sources */,
+				2C6AF93F1E7FDCF90078B42C /* EatController.swift in Sources */,
 				2CE9469A1E77D2C300A2835F /* ChessEngine.mm in Sources */,
 				2C6A12791E75C74C003451E1 /* UIColorExtensions.swift in Sources */,
 				2C3D91531E78AD35004CCCE3 /* GameCell.m in Sources */,

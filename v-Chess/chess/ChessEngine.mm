@@ -40,15 +40,12 @@
     int _turnTime;
 
     vchess_viewer::Game*    _viewedGame;
-    NSMutableArray*         _whiteLost;
-    NSMutableArray*         _blackLost;
 }
 
 @property (strong, nonatomic, readonly) Desk* desk;
 @property (strong, nonatomic) NSTimer *timer;
 
 @property (readwrite, nonatomic) BOOL isDebut;
-@property (readwrite, nonatomic) enum Depth depth;
 
 @property (weak, nonatomic) UIView *deskView;
 @property (weak, nonatomic) UISegmentedControl *timerView;
@@ -65,14 +62,13 @@ typedef std::vector<vchess::Position> PositionArray;
         delete _viewedGame;
     }
 }
-    
-- (instancetype)initWithView:(UIView*)view forDepth:(Depth)depth timerView:(UISegmentedControl*)timerView
+
+- (instancetype)initWithView:(UIView*)view timerView:(UISegmentedControl*)timerView
 {
     self = [super init];
     if (self) {
         _desk = [[Desk alloc] initWithFrame:view.bounds];
         _desk.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _depth = depth;
         _deskView = view;
         _timerView = timerView;
         [_deskView addSubview:_desk];
@@ -143,14 +139,11 @@ typedef std::vector<vchess::Position> PositionArray;
     return _timerView.enabled;
 }
 
-- (void)startGame:(bool)white
+- (void)startGame:(bool)white forDepth:(Depth)depth
 {
     _timerView.enabled = YES;
-    
+    _depth = depth;
     _isDebut = YES;
-#pragma mark - TODO insert code
-//    [_whiteLostFigures clear];
-//    [_blackLostFigures clear];
     _moves.clear();
     _currentGame.reset();
     [_desk resetDisposition:_currentGame.state()];
@@ -201,36 +194,30 @@ typedef std::vector<vchess::Position> PositionArray;
 
 - (void)killFigure:(FigureView*)f
 {
-    f.liveState = KILLED;
+    [f kill];
     [f removeFromSuperview];
     [_desk.figures removeObject:f];
     
-#pragma mark - TODO insert code
-/*
     if (vchess::COLOR(f.model)) {
-        [_blackLostFigures addFigure:f];
+        [_blackEat performSelector:@selector(eat:) withObject:f];
     } else {
-        [_whiteLostFigures addFigure:f];
+        [_whiteEat performSelector:@selector(eat:) withObject:f];
     }
- */
 }
 
 - (void)aliveFigure:(FigureView*)f
 {
-#pragma mark - TODO insert code
-/*
     if (vchess::COLOR(f.model)) {
-        [_blackLostFigures removeFigure:f];
+        [_blackEat performSelector:@selector(retrive) withObject:nil];
     } else {
-        [_whiteLostFigures removeFigure:f];
+        [_whiteEat performSelector:@selector(retrive) withObject:nil];
     }
-*/
-    f.liveState = LIVING;
+    
     f.frame = [_desk cellFrameForPosition:f.position];
     [_desk.figures addObject:f];
     [_desk addSubview:f];
+    [f alive];
 }
-
 
 #pragma mark - Chess brain
 
@@ -371,9 +358,6 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
         _deskView = view;
         [_deskView addSubview:_desk];
         [_desk resetDisposition:_currentGame.state()];
-        
-        _whiteLost = [[NSMutableArray alloc] init];
-        _blackLost = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -471,12 +455,12 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
             next(false);
             return;
         }
+        [eat kill];
         if (vchess_viewer::COLOR(turn.figure) == vchess_viewer::CWHITE) {
-            [_blackLost addObject:eat];
+            [_blackEat performSelector:@selector(eat:) withObject:eat];
         } else {
-            [_whiteLost addObject:eat];
+            [_whiteEat performSelector:@selector(eat:) withObject:eat];
         }
-        eat.liveState = KILLED;
         [theFigures addObject:eat];
         thePositions.push_back(vchess::Position());
     }
@@ -520,14 +504,12 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     } else if (vchess_viewer::TURN(turn.turnType) == vchess_viewer::Capture) {
         FigureView *eat;
         if (vchess_viewer::COLOR(turn.figure) == vchess_viewer::CWHITE) {
-            eat = [_blackLost lastObject];
-            [_blackLost removeLastObject];
+            eat = [_blackEat performSelector:@selector(retrive) withObject:nil];
         } else {
-            eat = [_whiteLost lastObject];
-            [_whiteLost removeLastObject];
+            eat = [_whiteEat performSelector:@selector(retrive) withObject:nil];
         }
-        eat.liveState = ALIVED;
         [theFigures addObject:eat];
+        [eat alive];
         if (turn.eatPos >= 0) {
             thePositions.push_back(vchess::Position(turn.eatPos));
         } else {
@@ -545,12 +527,16 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     if (f.liveState != KILLED) {
         f.position = position;
         f.frame = [_desk cellFrameForPosition:position];
+    } else {
+        f.position = vchess::Position();
     }
+/*
     if (f.liveState == KILLED) {
         [self killFigure:f];
     } else if (f.liveState == ALIVED) {
         [self aliveFigure:f];
     }
+ */
 }
 
 - (void)moveFigures:(NSArray*)theFigures toPos:(const PositionArray&)positions complete:(void (^)(void))complete

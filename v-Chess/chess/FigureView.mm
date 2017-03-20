@@ -12,8 +12,8 @@ using namespace vchess;
 
 @implementation DragRect
 
-- (id)initWithFrame:(CGRect)frame {
-    
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         self.opaque = YES;
@@ -23,8 +23,8 @@ using namespace vchess;
     return self;
 }
 
-- (void)drawRect:(CGRect)rect {
-	
+- (void)drawRect:(CGRect)rect
+{
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:0 green:200.0/255.0 blue:0 alpha:1.0].CGColor);
 	CGContextStrokeRectWithWidth(context, rect, 10);
@@ -34,8 +34,8 @@ using namespace vchess;
 
 @implementation PossibleRect
 
-- (id)initWithFrame:(CGRect)frame {
-    
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         self.opaque = YES;
@@ -44,8 +44,8 @@ using namespace vchess;
     return self;
 }
 
-- (void)drawRect:(CGRect)rect {
-	
+- (void)drawRect:(CGRect)rect
+{
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	CGContextSetFillColorWithColor(context, [UIColor colorWithRed:0 green:200.0/255.0 blue:0 alpha:1.0].CGColor);
 	rect.origin.x = rect.size.width / 3;
@@ -57,10 +57,16 @@ using namespace vchess;
 
 @end
 
+@interface FigureView ()
+
+@property (readwrite, nonatomic) enum FigureLiveState liveState;
+
+@end
+
 @implementation FigureView
 
-- (UIImage*)imageByType {
-	
+- (UIImage*)imageByType
+{
 	switch (FIGURE(self.model)) {
 		case KING:
 			if (COLOR(self.model)) {
@@ -103,8 +109,8 @@ using namespace vchess;
 	}
 }
 
-- (id)initFigure:(unsigned char)figure frame:(CGRect)frame {
-	
+- (id)initFigure:(unsigned char)figure frame:(CGRect)frame
+{
 	if (self = [super initWithFrame:frame]) {
 		self.opaque = NO;
 		self.userInteractionEnabled = YES;
@@ -116,14 +122,35 @@ using namespace vchess;
 	return self;
 }
 
-- (void)promote:(BOOL)promote {
-
+- (void)promote:(BOOL)promote
+{
 	if (promote) {
 		self.model = QUEEN | COLOR(self.model);
 	} else {
 		self.model = PAWN | COLOR(self.model);
 	}
 	self.image = [self imageByType];
+}
+
+- (void)kill
+{
+    _liveState = KILLED;
+    [UIView animateWithDuration:0.4 animations:^(){
+        self.alpha = 0;
+    }];
+}
+
+- (void)alive
+{
+    _liveState = ALIVED;
+    [UIView animateWithDuration:0.4 animations:^(){
+        self.alpha = 1;
+    }];
+}
+
+- (FigureLiveState)liveState
+{
+    return _liveState;
 }
 
 @end

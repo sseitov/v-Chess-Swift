@@ -38,6 +38,25 @@ func generateUDID() -> String {
     return UUID().uuidString
 }
 
+func isSoundEnabled() -> Bool {
+    return UserDefaults.standard.bool(forKey: "enableSound")
+}
+
+func setSoundEnabled(_ enabled:Bool) {
+    UserDefaults.standard.set(enabled, forKey: "enableSound")
+    UserDefaults.standard.synchronize()
+}
+
+func chessDepth() -> Depth {
+    let boolVal = UserDefaults.standard.bool(forKey: "ChessDepth")
+    return boolVal ? .Strong : .Fast
+}
+
+func setChessDepth(_ depth:Bool) {
+    UserDefaults.standard.set(depth, forKey: "ChessDepth")
+    UserDefaults.standard.synchronize()
+}
+
 class Model: NSObject {
     
     static let shared = Model()

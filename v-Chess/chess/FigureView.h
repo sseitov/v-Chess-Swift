@@ -30,9 +30,11 @@ enum FigureLiveState {
 
 @property (readwrite, nonatomic) unsigned char model;
 @property (readwrite, nonatomic) vchess::Position position;
-@property (readwrite, nonatomic) enum FigureLiveState liveState;
 
 - (id)initFigure:(unsigned char)theModel frame:(CGRect)frame;
 - (void)promote:(BOOL)promote;
+- (void)kill;
+- (void)alive;
+- (FigureLiveState)liveState;
 
 @end
