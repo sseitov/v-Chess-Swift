@@ -18,12 +18,10 @@ extension UINavigationController {
 enum ViewerCommand:Int {
     case rewind = 0
     case previouse = 1
-//    case stop = 2
     case next = 2
-//    case play = 4
 }
 
-class BoardController: UIViewController {
+class BoardController: UIViewController, TurnCellDelegate {
 
     @IBOutlet weak var xAxiz: xAxizView!
     @IBOutlet weak var yAxiz: yAxizView!
@@ -87,9 +85,7 @@ class BoardController: UIViewController {
             let controlView = UISegmentedControl(items: [
                 UIImage(named: "rewind")!,
                 UIImage(named: "previouse")!,
-//                UIImage(named: "stop")!,
                 UIImage(named: "next")!,
-//                UIImage(named: "play")!
                 ])
             for i in 0...2 {
                 controlView.setWidth(100, forSegmentAt: i)
@@ -126,6 +122,9 @@ class BoardController: UIViewController {
                         let btn = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(self.showTable))
                         btn.tintColor = UIColor.white
                         self.navigationItem.rightBarButtonItem = btn
+                        
+                        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
+                        self.view.addGestureRecognizer(tap)
                     }
                 }
             }
@@ -140,6 +139,12 @@ class BoardController: UIViewController {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
     
+    func tap() {
+        if !notationTable!.isHidden {
+            showTable()
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let orientation = UIApplication.shared.statusBarOrientation
@@ -269,21 +274,18 @@ class BoardController: UIViewController {
         }
     }
     
-    func playBack() {
+    func playBack(_ control:UISegmentedControl) {
+        if !self.notationTable!.isHidden {
+            showTable()
+        }
         chessEngine?.turnBack({ next in
             if (next) {
-                self.playBack()
+                self.playBack(control)
             } else {
-                return;
-            }
-        })
-    }
-    
-    func playForward() {
-        chessEngine?.turnForward({ next in
-            if (next) {
-                self.playForward()
-            } else {
+                control.isUserInteractionEnabled = true
+                let indexPath = IndexPath(row: 0, section: 0)
+                self.notationTable?.reloadData()
+                self.notationTable?.selectRow(at: indexPath, animated: false, scrollPosition: .top)
                 return;
             }
         })
@@ -293,27 +295,43 @@ class BoardController: UIViewController {
         let command = ViewerCommand(rawValue: control.selectedSegmentIndex)
         switch command! {
         case .rewind:
-            chessEngine?.playMode = .PLAY_BACKWARD
-            playBack()
+            control.isUserInteractionEnabled = false
+            playBack(control)
             break
         case .previouse:
-            chessEngine?.playMode = .PLAY_STEP
             control.isUserInteractionEnabled = false
             chessEngine?.turnBack({ next in
                 control.isUserInteractionEnabled = true
+                let row = self.chessEngine!.currentIndex() > 0 ? (self.chessEngine!.currentIndex() - 1)/2 : 0
+                let indexPath = IndexPath(row: row, section: 0)
+                if let visible = self.notationTable?.indexPathsForVisibleRows {
+                    if visible.index(of: indexPath) == nil {
+                        self.notationTable?.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                    }
+                }
+                var paths:[IndexPath] = [indexPath]
+                if indexPath.row < self.chessEngine!.turnsCount() - 1 {
+                    paths.append(IndexPath(row: row+1, section: 0))
+                }
+                self.notationTable?.reloadRows(at: paths, with: .fade)
             })
-//        case .stop:
-//            chessEngine?.playMode = .NOPLAY
         case .next:
-            chessEngine?.playMode = .PLAY_STEP
             control.isUserInteractionEnabled = false
             chessEngine?.turnForward({ next in
                 control.isUserInteractionEnabled = true
+                let row = self.chessEngine!.currentIndex() > 0 ? (self.chessEngine!.currentIndex() - 1)/2 : 0
+                let indexPath = IndexPath(row: row, section: 0)
+                if let visible = self.notationTable?.indexPathsForVisibleRows {
+                    if visible.index(of: indexPath) == nil {
+                        self.notationTable?.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+                    }
+                }
+                var paths:[IndexPath] = [indexPath]
+                if indexPath.row > 0 {
+                    paths.append(IndexPath(row: row-1, section: 0))
+                }
+                self.notationTable?.reloadRows(at: paths, with: .fade)
             })
-//        case .play:
-//            chessEngine?.playMode = .PLAY_FORWARD
-//            playForward()
-//            break
         }
     }
     
@@ -338,6 +356,17 @@ class BoardController: UIViewController {
         })
     }
     
+    func didSetCurrentTurn(_ number:Int, white:Bool) {
+        showTable()
+        var index = number*2;
+        if white {
+            index += 1
+        } else {
+            index += 2
+        }
+        chessEngine?.play(to: index)
+    }
+
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -361,6 +390,7 @@ extension BoardController : UITableViewDataSource {
         var cell = tableView.dequeueReusableCell(withIdentifier: "notationCell") as? TurnCell
         if cell == nil {
             cell = TurnCell(style: .default, reuseIdentifier: "notationCell")
+            cell?.delegate = self
         }
         
         cell?.setTurn(number: indexPath.row,
@@ -368,6 +398,12 @@ extension BoardController : UITableViewDataSource {
                       black: chessEngine!.turnText(forRow: indexPath.row, white: false)
         )
         
+        let row = chessEngine!.currentIndex() > 0 ? (chessEngine!.currentIndex() - 1) / 2 : -1
+        if (indexPath.row == row) {
+            cell?.currentTurn = (chessEngine!.currentIndex() % 2) == 1
+        } else {
+            cell?.currentTurn = nil
+        }
         return cell!
     }
 }

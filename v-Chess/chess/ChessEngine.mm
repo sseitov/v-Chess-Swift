@@ -411,9 +411,31 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     return nil;
 }
 
+- (NSInteger)currentIndex
+{
+    return _viewedGame->currentTurnIndex();
+}
+
+- (void)playToIndex:(NSInteger)index
+{
+    if (index > _viewedGame->currentTurnIndex()) {
+        [self turnForward:^(bool next){
+            if (next && _viewedGame->currentTurnIndex() != index) {
+                [self playToIndex:index];
+            }
+        }];
+    } else if (index < _viewedGame->currentTurnIndex()) {
+        [self turnBack:^(bool next){
+            if (next && _viewedGame->currentTurnIndex() != index) {
+                [self playToIndex:index];
+            }
+        }];
+    }
+}
+
 - (void)turnForward:(void (^)(bool))next
 {
-    if (self.playMode == NOPLAY || !_viewedGame->hasNextTurn()) {
+    if (!_viewedGame->hasNextTurn()) {
         next(false);
         return;
     }
@@ -472,7 +494,7 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
 
 - (void)turnBack:(void (^)(bool))next
 {
-    if (self.playMode == NOPLAY || !_viewedGame->hasPrevTurn()) {
+    if (!_viewedGame->hasPrevTurn()) {
         next(false);
         return;
     }
@@ -530,51 +552,20 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     } else {
         f.position = vchess::Position();
     }
-/*
-    if (f.liveState == KILLED) {
-        [self killFigure:f];
-    } else if (f.liveState == ALIVED) {
-        [self aliveFigure:f];
-    }
- */
 }
 
 - (void)moveFigures:(NSArray*)theFigures toPos:(const PositionArray&)positions complete:(void (^)(void))complete
 {
-    if (self.playMode == PLAY_FORWARD) {
-        [UIView animateWithDuration:0.2 delay:0.8 options:UIViewAnimationOptionTransitionNone
-                         animations:^{
-                             for (int i=0; i<[theFigures count]; i++) {
-                                 [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
-                             }
+    [UIView animateWithDuration:0.1
+                     animations:^{
+                         for (int i=0; i<[theFigures count]; i++) {
+                             [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
                          }
-                         completion:^(BOOL finished){
-                             complete();
-                         }
-         ];
-    } else if (self.playMode == PLAY_BACKWARD) {
-        [UIView animateWithDuration:0.1 delay:0.1 options:UIViewAnimationOptionTransitionNone
-                         animations:^{
-                             for (int i=0; i<[theFigures count]; i++) {
-                                 [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
-                             }
-                         }
-                         completion:^(BOOL finished){
-                             complete();
-                         }
-         ];
-    } else if (self.playMode == PLAY_STEP)  {
-        [UIView animateWithDuration:0.2
-                         animations:^{
-                             for (int i=0; i<[theFigures count]; i++) {
-                                 [self moveFigure:[theFigures objectAtIndex:i] to:positions[i]];
-                             }
-                         }
-                         completion:^(BOOL finished){
-                             complete();
-                         }
-         ];
-    }
+                     }
+                     completion:^(BOOL finished){
+                         complete();
+                     }
+     ];
 }
 
 @end

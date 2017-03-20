@@ -14,13 +14,6 @@ typedef NS_ENUM(NSInteger, Depth) {
     Strong = 4,
 };
 
-typedef NS_ENUM(NSInteger, PlayMode) {
-    NOPLAY = 0,
-    PLAY_STEP = 1,
-    PLAY_FORWARD = 2,
-    PLAY_BACKWARD = 3,
-};
-
 NSString* const YouWinNotification = @"YouWinNotification";
 
 @class EatController;
@@ -39,9 +32,10 @@ NSString* const YouWinNotification = @"YouWinNotification";
 - (NSString*)turnTextForRow:(NSInteger)row white:(bool)isWhite;
 - (void)turnForward:(void (^)(bool))next;
 - (void)turnBack:(void (^)(bool))next;
+- (void)playToIndex:(NSInteger)index;
+- (NSInteger)currentIndex;
 
 @property (readwrite) Depth	depth;
-@property (readwrite) PlayMode	playMode;
 @property (readwrite) bool soundEnable;
 @property (weak, nonatomic) UICollectionViewController *whiteEat;
 @property (weak, nonatomic) UICollectionViewController *blackEat;

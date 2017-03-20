@@ -36,7 +36,9 @@ namespace vchess_viewer {
 		Turn prevTurn();
 		bool addTurn(Turn& turn);
 		const std::vector<Turn>& turns() { return mTurns; }
-		
+        Turn currentTurn() { return mTurns[mTurnIndex]; }
+        int currentTurnIndex() { return mTurnIndex; }
+        
 		static const int POSITION_SIZE = 16*16;
 		
 	private:

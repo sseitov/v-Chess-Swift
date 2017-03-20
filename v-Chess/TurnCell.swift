@@ -29,14 +29,17 @@ class TurnCell: UITableViewCell {
     
     var currentTurn:Bool? {
         didSet {
-            whiteView.setupBorder(UIColor.white, radius: 20)
-            blackView.setupBorder(UIColor.black, radius: 20)
             if currentTurn != nil {
                 if currentTurn! {
                     whiteView.setupBorder(UIColor.red, radius: 20, width: 4)
+                    blackView.setupBorder(UIColor.black, radius: 20)
                 } else {
+                    whiteView.setupBorder(UIColor.white, radius: 20)
                     blackView.setupBorder(UIColor.red, radius: 20, width: 4)
                 }
+            } else {
+                whiteView.setupBorder(UIColor.white, radius: 20)
+                blackView.setupBorder(UIColor.black, radius: 20)
             }
         }
     }

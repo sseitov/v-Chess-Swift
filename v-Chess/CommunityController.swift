@@ -15,7 +15,7 @@ class CommunityController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTitle("v-Chess Community")
+        setupTitle("Game Room")
         setupBackButton()
         
         NotificationCenter.default.addObserver(self,
