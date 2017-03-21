@@ -26,8 +26,8 @@ class CommunityController: UITableViewController {
     }
     
     func refresh() {
-        available = Model.shared.available()
-        notAvailable = Model.shared.notAvailable()
+        available = Model.shared.availableUsers(true)
+        notAvailable = Model.shared.availableUsers(false)
         tableView.reloadData()
     }
     

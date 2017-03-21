@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import Firebase
 import CoreData
 import SDWebImage
 
@@ -37,6 +37,12 @@ public class User: NSManagedObject {
         case .google:
             return "Google +"
         }
+    }
+    
+    func setAvailability(_ avail:Bool) {
+        available = avail
+        let ref = FIRDatabase.database().reference()
+        ref.child("available").child(uid!).setValue(avail)
     }
     
     func getData() -> [String:Any] {

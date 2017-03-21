@@ -13,6 +13,9 @@ import AFNetworking
 import SDWebImage
 
 let refreshUserNotification = Notification.Name("REFRESH_USER_LIST")
+let inviteGameNotification = Notification.Name("INVITE_GAME")
+let updateGameNotification = Notification.Name("UPDATE_GAME")
+let deleteGameNotification = Notification.Name("UPDATE_GAME")
 
 func currentUser() -> User? {
     if let firUser = FIRAuth.auth()?.currentUser {
@@ -109,9 +112,7 @@ class Model: NSObject {
     
     func signOut(_ completion: @escaping() -> ()) {
         let ref = FIRDatabase.database().reference()
-        currentUser()!.token = nil
-        currentUser()!.available = false
-        updateUser(currentUser()!)
+        currentUser()?.setAvailability(false)
         ref.child("tokens").child(currentUser()!.uid!).removeValue(completionBlock: { _, _ in
             switch currentUser()!.socialType {
             case .google:
@@ -125,7 +126,8 @@ class Model: NSObject {
             self.newTokenRefHandle = nil
             self.updateTokenRefHandle = nil
             self.newUserRefHandle = nil
-            self.updateUserRefHandle = nil
+            self.newAvailableRefHandle = nil
+            self.updateAvailableRefHandle = nil
             UserDefaults.standard.removeObject(forKey: "fbToken")
             completion()
         })
@@ -135,6 +137,9 @@ class Model: NSObject {
     func startObservers() {
         if newTokenRefHandle == nil {
             observeTokens()
+        }
+        if newAvailableRefHandle == nil {
+            observeAvailable()
         }
         if newUserRefHandle == nil {
             observeUsers()
@@ -147,7 +152,9 @@ class Model: NSObject {
     private var updateTokenRefHandle: FIRDatabaseHandle?
     
     private var newUserRefHandle: FIRDatabaseHandle?
-    private var updateUserRefHandle: FIRDatabaseHandle?
+
+    private var newAvailableRefHandle: FIRDatabaseHandle?
+    private var updateAvailableRefHandle: FIRDatabaseHandle?
     
     // MARK: - User table
     
@@ -246,6 +253,31 @@ class Model: NSObject {
         })
     }
     
+    fileprivate func observeAvailable() {
+        let ref = FIRDatabase.database().reference()
+        let availableQuery = ref.child("available").queryLimited(toLast:25)
+        
+        newAvailableRefHandle = availableQuery.observe(.childAdded, with: { (snapshot) -> Void in
+            if let user = self.getUser(snapshot.key) {
+                if let available = snapshot.value as? Bool {
+                    user.available = available
+                    self.saveContext()
+                    NotificationCenter.default.post(name: refreshUserNotification, object: user)
+                }
+            }
+        })
+        
+        updateAvailableRefHandle = availableQuery.observe(.childChanged, with: { (snapshot) -> Void in
+            if let user = self.getUser(snapshot.key) {
+                if let available = snapshot.value as? Bool {
+                    user.available = available
+                    self.saveContext()
+                    NotificationCenter.default.post(name: refreshUserNotification, object: user)
+                }
+            }
+        })
+    }
+
     fileprivate func observeUsers() {
         let ref = FIRDatabase.database().reference()
         let usersQuery = ref.child("users").queryLimited(toLast:25)
@@ -262,23 +294,12 @@ class Model: NSObject {
                 })
             }
         })
-        
-        updateUserRefHandle = usersQuery.observe(.childChanged, with: { (snapshot) -> Void in
-            if let user = self.getUser(snapshot.key), let userData = snapshot.value as? [String : Any] {
-                if let available = userData["available"] as? Bool {
-                    user.available = available
-                    self.saveContext()
-                    NotificationCenter.default.post(name: refreshUserNotification, object: nil)
-                }
-            }
-        })
     }
     
     func createEmailUser(_ user:FIRUser, email:String, nick:String, image:UIImage, result: @escaping(NSError?) -> ()) {
         let cashedUser = createUser(user.uid)
         cashedUser.email = email
         cashedUser.name = nick
-        cashedUser.available = true
         cashedUser.accountType = Int16(SocialType.email.rawValue)
         cashedUser.avatar = UIImagePNGRepresentation(image) as NSData?
         saveContext()
@@ -289,6 +310,7 @@ class Model: NSObject {
                 result(error as NSError?)
             } else {
                 cashedUser.avatarURL = metadata!.path!
+                cashedUser.setAvailability(true)
                 self.updateUser(cashedUser)
                 result(nil)
             }
@@ -300,7 +322,6 @@ class Model: NSObject {
         cashedUser.accountType = Int16(SocialType.facebook.rawValue)
         cashedUser.email = profile["email"] as? String
         cashedUser.name = profile["name"] as? String
-        cashedUser.available = true
         if let picture = profile["picture"] as? [String:Any] {
             if let data = picture["data"] as? [String:Any] {
                 cashedUser.avatarURL = data["url"] as? String
@@ -311,11 +332,13 @@ class Model: NSObject {
                 if data != nil {
                     cashedUser.avatar = data as NSData?
                 }
+                cashedUser.setAvailability(true)
                 self.updateUser(cashedUser)
                 completion()
             })
         } else {
             cashedUser.avatar = nil
+            cashedUser.setAvailability(true)
             updateUser(cashedUser)
             completion()
         }
@@ -326,7 +349,6 @@ class Model: NSObject {
         cashedUser.accountType = Int16(SocialType.google.rawValue)
         cashedUser.email = googleProfile.email
         cashedUser.name = googleProfile.name
-        cashedUser.available = true
         if googleProfile.hasImage {
             if let url = googleProfile.imageURL(withDimension: 100) {
                 cashedUser.avatarURL = url.absoluteString
@@ -337,22 +359,23 @@ class Model: NSObject {
                 if data != nil {
                     cashedUser.avatar = data as NSData?
                 }
+                cashedUser.setAvailability(true)
                 self.updateUser(cashedUser)
                 completion()
             })
         } else {
             cashedUser.avatar = nil
+            cashedUser.setAvailability(true)
             updateUser(cashedUser)
             completion()
         }
     }
 
-    func available() -> [User] {
+    func availableUsers(_ available:Bool) -> [User] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         let pred1 = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
-        let pred2 = NSPredicate(format: "available != nil")
-        let pred3 = NSPredicate(format: "available == true")
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2, pred3])
+        let pred2 = NSPredicate(format: "available == %@", available as CVarArg)
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
         let sort = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sort]
         if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {
@@ -362,19 +385,67 @@ class Model: NSObject {
         }
     }
     
-    func notAvailable() -> [User] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        let pred1 = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
-        let pred21 = NSPredicate(format: "available == nil")
-        let pred22 = NSPredicate(format: "available == false")
-        let pred2 = NSCompoundPredicate(orPredicateWithSubpredicates: [pred21, pred22])
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
-        let sort = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sort]
-        if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {
-            return all
+    // MARK: - Game Push notifications
+    
+    enum GamePush:Int {
+        case invite = 1
+        case accept = 2
+        case reject = 3
+        case turn = 4
+        case surrender = 5
+    }
+
+    
+    private func vchessError(_ text:String) -> NSError {
+        return NSError(domain: "v-Chess", code: -1, userInfo: [NSLocalizedDescriptionKey:text])
+    }
+
+    fileprivate lazy var httpManager:AFHTTPSessionManager = {
+        let manager = AFHTTPSessionManager(baseURL: URL(string: "https://fcm.googleapis.com/fcm/"))
+        manager.requestSerializer = AFJSONRequestSerializer()
+        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        manager.requestSerializer.setValue("key=\(pushServerKey)", forHTTPHeaderField: "Authorization")
+        manager.responseSerializer = AFHTTPResponseSerializer()
+        return manager
+    }()
+    
+    func push(to:User, type:GamePush, game:[String:String], error: @escaping(NSError?) -> ()) {
+        if to.token != nil {
+            let ref = FIRDatabase.database().reference()
+            var text:String = ""
+            if type == .invite {
+                let colorText = (game["white"]! == currentUser()!.uid!) ? "black" : "white"
+                text = "\(currentUser()!.name!) invite you play against him with \(colorText) figures."
+                ref.child("games").child(game["uid"]!).setValue(game)
+            } else if type == .accept {
+                text = "\(currentUser()!.name!) accepted your invite."
+            } else if type == .reject {
+                text = "\(currentUser()!.name!) rejected your invite."
+                ref.child("games").child(game["uid"]!).removeValue()
+            } else if type == .turn {
+                text = "\(currentUser()!.name!) made move [\(game["turn"]!)]"
+                ref.child("games").child(game["uid"]!).setValue(game)
+            } else if type == .surrender {
+                text = "\(currentUser()!.name!) surrendered."
+                ref.child("games").child(game["uid"]!).removeValue()
+            } else {
+                error(vchessError("INVALID DATA FORMAT"))
+            }
+            let notification:[String:Any] = [
+                "title" : "v-Chess",
+                "sound":"default",
+                "body" : text,
+                "content_available": true]
+            let data:[String:Int] = ["pushType" : type.rawValue]
+            
+            let message:[String:Any] = ["to" : to.token!, "priority" : "high", "notification" : notification, "data" : data]
+            httpManager.post("send", parameters: message, progress: nil, success: { task, response in
+                error(nil)
+            }, failure: { task, err in
+                error(err as NSError?)
+            })
         } else {
-            return []
+            error(vchessError("USER HAVE NO TOKEN"))
         }
     }
 }

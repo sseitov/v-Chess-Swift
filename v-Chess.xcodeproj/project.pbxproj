@@ -274,6 +274,7 @@
 				2C0BE34C1E75FC61000AE962 /* MainController.swift */,
 				2CF5BE461E7682B3001EF8C8 /* MenuController.swift */,
 				2C68D10D1E74BCF700D12AEC /* AppDelegate.swift */,
+				2CF5BE421E767DF2001EF8C8 /* Credentials.swift */,
 			);
 			path = "v-Chess";
 			sourceTree = "<group>";
@@ -306,7 +307,6 @@
 				2C68D11F1E74BD4000D12AEC /* v-Chess.entitlements */,
 				2CF5BE441E767E02001EF8C8 /* GoogleService-Info.plist */,
 				2C68D1191E74BCF800D12AEC /* Info.plist */,
-				2CF5BE421E767DF2001EF8C8 /* Credentials.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
