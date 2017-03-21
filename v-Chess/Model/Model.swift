@@ -12,10 +12,16 @@ import Firebase
 import AFNetworking
 import SDWebImage
 
+enum GamePush:Int {
+    case invite = 1
+    case accept = 2
+    case reject = 3
+    case turn = 4
+    case surrender = 5
+}
+
 let refreshUserNotification = Notification.Name("REFRESH_USER_LIST")
-let inviteGameNotification = Notification.Name("INVITE_GAME")
-let updateGameNotification = Notification.Name("UPDATE_GAME")
-let deleteGameNotification = Notification.Name("UPDATE_GAME")
+let gameNotification = Notification.Name("GAME")
 
 func currentUser() -> User? {
     if let firUser = FIRAuth.auth()?.currentUser {
@@ -387,14 +393,24 @@ class Model: NSObject {
     
     // MARK: - Game Push notifications
     
-    enum GamePush:Int {
-        case invite = 1
-        case accept = 2
-        case reject = 3
-        case turn = 4
-        case surrender = 5
+    func myGame(_ result: @escaping([String:String]?, NSError?) -> ()) {
+        let ref = FIRDatabase.database().reference()
+        ref.child("games").queryOrdered(byChild: "white").queryEqual(toValue: currentUser()!.uid!).observeSingleEvent(of: .value, with: { snapshot in
+            if let whiteValues = snapshot.value as? [String:Any] {
+                let game = whiteValues.values.first as? [String:String]
+                result(game, nil)
+            } else {
+                ref.child("games").queryOrdered(byChild: "black").queryEqual(toValue: currentUser()!.uid!).observeSingleEvent(of: .value, with: { snapshot in
+                    if let blackValues = snapshot.value as? [String:Any] {
+                        let game = blackValues.values.first as? [String:String]
+                        result(game, nil)
+                    } else {
+                        result(nil, self.vchessError("GAME NOT FOUND"))
+                    }
+                })
+            }
+        })
     }
-
     
     private func vchessError(_ text:String) -> NSError {
         return NSError(domain: "v-Chess", code: -1, userInfo: [NSLocalizedDescriptionKey:text])

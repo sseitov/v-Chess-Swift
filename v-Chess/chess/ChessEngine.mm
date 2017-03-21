@@ -38,7 +38,8 @@
     vchess::Disposition _currentGame;
     vchess::Moves _moves;
     int _turnTime;
-
+    bool _online;
+    
     vchess_viewer::Game*    _viewedGame;
 }
 
@@ -149,12 +150,41 @@ typedef std::vector<vchess::Position> PositionArray;
     [_desk resetDisposition:_currentGame.state()];
     
     _turnTime = 0;
+    _online = false;
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
     if (!white) {	// первый ход от компьютера
         [self bestMove];
     } else {			// первый ход человека
         _desk.userInteractionEnabled = YES;
     }
+}
+
+- (void)startOnlineGame:(bool)white
+{
+    _timerView.enabled = YES;
+    _moves.clear();
+    _currentGame.reset();
+    [_desk resetDisposition:_currentGame.state()];
+    
+    _turnTime = 0;
+    _online = true;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+    if (!white) {	// первый ход от соперника
+        _desk.userInteractionEnabled = NO;
+    } else {			// первый ход мой
+        _desk.userInteractionEnabled = YES;
+    }
+}
+
+- (void)makeOnlineMove:(NSString*)moveString
+{
+    std::string notation(moveString.UTF8String);
+    vchess::Move move;
+    [_desk makeMove:move inGame:&_currentGame completion:nil];
+    _moves.push_back(move);
+    [self logMove:move];
+    _desk.userInteractionEnabled = NO;
+    [self switchColor];
 }
 
 - (void)stopGame
@@ -183,8 +213,12 @@ typedef std::vector<vchess::Position> PositionArray;
     [self logMove:move];
     _desk.userInteractionEnabled = NO;
     [self switchColor];
-    [self bestMove];
-    //	_desk.userInteractionEnabled = YES;
+    if (_online) {
+        NSString* turnText = [NSString stringWithUTF8String:move.notation().c_str()];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MyTurnNotification object:turnText];
+    } else {
+        [self bestMove];
+    }
 }
 
 - (vchess::Moves)generateMovesForFigure:(FigureView*)figure
@@ -337,7 +371,6 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
                                         _moves.push_back(best_move);
                                         [self switchColor];
                                         _desk.userInteractionEnabled = YES;
-                                        //									   [self bestMove];
                                     } else {
                                         [self surrender];
                                     }

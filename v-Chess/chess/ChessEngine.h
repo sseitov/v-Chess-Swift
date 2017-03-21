@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, Depth) {
 };
 
 NSString* const YouWinNotification = @"YouWinNotification";
+NSString* const MyTurnNotification = @"MyTurnNotification";
 
 @class EatController;
 
@@ -23,6 +24,7 @@ NSString* const YouWinNotification = @"YouWinNotification";
 - (instancetype)initWithView:(UIView*)view timerView:(UISegmentedControl*)timerView;
 - (void)rotateDesk:(bool)rotate;
 - (void)startGame:(bool)white forDepth:(Depth)depth;
+- (void)startOnlineGame:(bool)white;
 - (void)stopGame;
 - (bool)gameStarted;
 

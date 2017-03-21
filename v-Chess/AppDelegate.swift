@@ -148,17 +148,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 @available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
-    // Receive displayed notifications for iOS 10 devices.
+    
+    private func sendNotificationFor(_ userInfo:[AnyHashable : Any]) {
+        if let pushTypeStr = userInfo["pushType"] as? String, let pushType = Int(pushTypeStr), let push = GamePush(rawValue: pushType)  {
+            NotificationCenter.default.post(name: gameNotification, object: push, userInfo: userInfo)
+/*
+            switch push {
+            case .invite:
+                NotificationCenter.default.post(name: inviteGameNotification, object: push, userInfo: userInfo)
+            case .accept:
+                NotificationCenter.default.post(name: acceptGameNotification, object: push, userInfo: userInfo)
+            case .reject:
+                NotificationCenter.default.post(name: deleteGameNotification, object: push, userInfo: userInfo)
+            case .turn:
+                NotificationCenter.default.post(name: updateGameNotification, object: push, userInfo: userInfo)
+            case .surrender:
+                NotificationCenter.default.post(name: deleteGameNotification, object: push, userInfo: userInfo)
+            }
+ */
+        }
+    }
+    
+    // in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+
+        sendNotificationFor(notification.request.content.userInfo)
     }
-    
+
+    // from background
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        center.removeAllDeliveredNotifications()
-        UIApplication.shared.applicationIconBadgeNumber = -1
+        
+        sendNotificationFor(response.notification.request.content.userInfo)
     }
 }
 

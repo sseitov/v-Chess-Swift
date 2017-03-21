@@ -11,6 +11,60 @@ import AMSlideMenu
 
 class MenuController: AMSlideMenuRightTableViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.gameNotify(_:)),
+                                               name: gameNotification,
+                                               object: nil)
+    }
+    
+    func gameNotify(_ notify:Notification) {
+        let type = notify.object as! GamePush
+        if type == .invite {
+            Model.shared.myGame({ game, error in
+                if error == nil {
+                    let aps = notify.userInfo!["aps"] as! [AnyHashable : Any]
+                    let alert = aps["alert"] as! [AnyHashable : Any]
+                    let text = alert["body"] as! String
+                    let userID = currentUser()!.uid! == game!["white"] ? game!["black"] : game!["white"]
+                    if let user = Model.shared.getUser(userID!) {
+                        let question = self.createQuestion(text, acceptTitle: "Accept", cancelTitle: "Reject", acceptHandler: {
+                            Model.shared.push(to: user, type: .accept, game: game!, error: { err in
+                                if err == nil {
+                                    self.performSegue(withIdentifier: "play", sender: game)
+                                } else {
+                                    self.showMessage(err!.localizedDescription, messageType: .error)
+                                }
+                            })
+                        }, cancelHandler: {
+                            Model.shared.push(to: user, type: .reject, game: game!, error: { err in
+                            })
+                        })
+                        question?.show()
+                    }
+                }
+            })
+        } else if type == .accept {
+            Model.shared.myGame({ game, error in
+                if error == nil {
+                    let aps = notify.userInfo!["aps"] as! [AnyHashable : Any]
+                    let alert = aps["alert"] as! [AnyHashable : Any]
+                    let text = alert["body"] as! String
+                    self.showMessage(text, messageType: .information, messageHandler: {
+                        self.performSegue(withIdentifier: "play", sender: game)
+                    })
+                }
+            })
+        } else if type == .reject {
+            let aps = notify.userInfo!["aps"] as! [AnyHashable : Any]
+            let alert = aps["alert"] as! [AnyHashable : Any]
+            let text = alert["body"] as! String
+            self.showMessage(text, messageType: .error)
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -92,7 +146,11 @@ class MenuController: AMSlideMenuRightTableViewController {
         if segue.identifier == "play" {
             let nav = segue.destination as! UINavigationController
             let next = nav.topViewController as! BoardController
-            next.chessGame = sender as? ChessGame
+            if let chessGame = sender as? ChessGame {
+                next.chessGame = chessGame
+            } else {
+                next.onlineGame = sender as? [String:String]
+            }
         }
     }
 

@@ -67,6 +67,15 @@ class CommunityController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let user = available[indexPath.row]
+            let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
+            Model.shared.push(to: user, type: .invite, game: game, error: { error in
+                print(error)
+            })
+        }
+    }
     /*
     // MARK: - Navigation
 

@@ -36,6 +36,7 @@ class BoardController: UIViewController, TurnCellDelegate {
     
     var chessEngine:ChessEngine?
     var chessGame:ChessGame?
+    var onlineGame:[String:String]?
     
     var notationTable:UITableView?
     
@@ -46,11 +47,11 @@ class BoardController: UIViewController, TurnCellDelegate {
         setupBackButton()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
         
-        if chessGame == nil {
+        if chessGame == nil && onlineGame == nil {
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
-            chessEngine = ChessEngine(view: desk, timerView:timerView) //        _depth = depth;
+            chessEngine = ChessEngine(view: desk, timerView:timerView)
 
             chessEngine?.whiteEat = whiteEat
             chessEngine?.blackEat = blackEat
@@ -81,7 +82,10 @@ class BoardController: UIViewController, TurnCellDelegate {
             let depthSwitch = UIBarButtonItem(customView: depthControl)
             toolbarItems = [soundTitle, soundSwitch, stretch, depthTitle, depthSwitch]
             
-        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),
+                                                   name: Notification.Name("YouWinNotification"),
+                                                   object: nil)
+        } else if chessGame != nil {
             let controlView = UISegmentedControl(items: [
                 UIImage(named: "rewind")!,
                 UIImage(named: "previouse")!,
@@ -128,11 +132,33 @@ class BoardController: UIViewController, TurnCellDelegate {
                     }
                 }
             }
+        } else {
+            let timerView = UISegmentedControl(items: ["00:00", "00:00"])
+            timerView.tintColor = UIColor.white
+            self.navigationItem.titleView = timerView
+            chessEngine = ChessEngine(view: desk, timerView:timerView)
+            
+            chessEngine?.whiteEat = whiteEat
+            chessEngine?.blackEat = blackEat
+            
+            let soundTitle = UIBarButtonItem(title: "Sound", style: .plain, target: nil, action: nil)
+            soundTitle.tintColor = UIColor.white
+            let soundControl = UISwitch()
+            soundControl.isOn = isSoundEnabled()
+            soundControl.addTarget(self, action: #selector(self.controlSound(_:)), for: .valueChanged)
+            let soundSwitch = UIBarButtonItem(customView: soundControl)
+            
+            let stretch = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            toolbarItems = [soundTitle, soundSwitch, stretch]
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(self.gameNotify(_:)),
+                                                   name: gameNotification,
+                                                   object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.sendTurn(_:)),
+                                                   name: Notification.Name("MyTurnNotification"),
+                                                   object: nil)
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.youWin),
-                                               name: Notification.Name("YouWinNotification"),
-                                               object: nil)
     }
     
     override func goBack() {
@@ -366,7 +392,19 @@ class BoardController: UIViewController, TurnCellDelegate {
         }
         chessEngine?.play(to: index)
     }
-
+    
+    func gameNotify(_ notify:Notification) {
+        let type = notify.object as! GamePush
+        if type == .turn {
+            
+        } else if type == .surrender {
+            youWin()
+        }
+    }
+    
+    func sendTurn(_ notify:Notification) {
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
