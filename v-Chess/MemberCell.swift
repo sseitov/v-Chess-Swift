@@ -15,7 +15,7 @@ class MemberCell: UITableViewCell {
     @IBOutlet weak var memberName: UILabel!
     @IBOutlet weak var partnerView: UIImageView!
     @IBOutlet weak var partnerName: UILabel!
-    @IBOutlet weak var waiting: UIImageView!
+    @IBOutlet weak var waiting: UIActivityIndicatorView!
     @IBOutlet weak var partnerConstraint: NSLayoutConstraint!
     
     var onlineGame:[String:String]? {
@@ -37,16 +37,13 @@ class MemberCell: UITableViewCell {
                 self.partnerName.text = white.name
                 
                 if white.status() == .invited || black.status() == .invited {
-                    var anim:[UIImage] = []
-                    for i in 0..<24 {
-                        anim.append(UIImage(named: "frame_\(i).gif")!)
-                    }
-                    self.waiting.animationImages = anim
-                    self.waiting.animationDuration = 2
-                    self.waiting.animationRepeatCount = 0
                     self.waiting.startAnimating()
+                    memberName.textColor = UIColor.mainColor(0.4)
+                    partnerName.textColor = UIColor.mainColor(0.4)
                 } else {
                     self.waiting.stopAnimating()
+                    memberName.textColor = UIColor.mainColor()
+                    partnerName.textColor = UIColor.mainColor()
                 }
             }
         }

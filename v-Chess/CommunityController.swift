@@ -102,7 +102,7 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             let user = available[indexPath.row]
             let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
                 let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]

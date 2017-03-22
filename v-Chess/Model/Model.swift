@@ -276,8 +276,9 @@ class Model: NSObject {
         
         updateAvailableRefHandle = availableQuery.observe(.childChanged, with: { (snapshot) -> Void in
             if let user = self.getUser(snapshot.key) {
-                if let available = snapshot.value as? Int {
+                if let data = snapshot.value as? [String:Any], let available = data["status"] as? Int {
                     user.availableStatus = Int16(available)
+                    user.online = data["game"] as? String
                     self.saveContext()
                     NotificationCenter.default.post(name: refreshUserNotification, object: user)
                 }

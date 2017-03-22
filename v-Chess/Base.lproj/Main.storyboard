@@ -184,7 +184,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="member" id="Fxu-nM-KCd" customClass="MemberCell" customModule="v_Chess" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="320" height="80"/>
+                                <rect key="frame" x="0.0" y="56" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fxu-nM-KCd" id="QkJ-bN-DeE">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
@@ -230,8 +230,8 @@
                                                                 <constraint firstAttribute="height" constant="45" id="tkR-oC-nwe"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMz-EU-1Ca">
-                                                            <rect key="frame" x="2" y="0.0" width="98" height="75"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMz-EU-1Ca">
+                                                            <rect key="frame" x="0.0" y="0.0" width="95" height="75"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.4431372549" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -241,16 +241,24 @@
                                                     <constraints>
                                                         <constraint firstItem="KTZ-QC-cj7" firstAttribute="centerY" secondItem="qve-SW-Nue" secondAttribute="centerY" id="MEA-dR-NkF"/>
                                                         <constraint firstAttribute="bottom" secondItem="fMz-EU-1Ca" secondAttribute="bottom" id="MRp-11-zHF"/>
-                                                        <constraint firstItem="fMz-EU-1Ca" firstAttribute="leading" secondItem="qve-SW-Nue" secondAttribute="leading" constant="2" id="Ylc-Es-KHg"/>
+                                                        <constraint firstItem="fMz-EU-1Ca" firstAttribute="leading" secondItem="qve-SW-Nue" secondAttribute="leading" id="Ylc-Es-KHg"/>
                                                         <constraint firstItem="fMz-EU-1Ca" firstAttribute="top" secondItem="qve-SW-Nue" secondAttribute="top" id="bbO-5c-WYj"/>
                                                         <constraint firstAttribute="trailing" secondItem="KTZ-QC-cj7" secondAttribute="trailing" constant="5" id="oAa-Mf-gZv"/>
-                                                        <constraint firstItem="KTZ-QC-cj7" firstAttribute="leading" secondItem="fMz-EU-1Ca" secondAttribute="trailing" constant="5" id="tzH-Fv-Uv2"/>
+                                                        <constraint firstItem="KTZ-QC-cj7" firstAttribute="leading" secondItem="fMz-EU-1Ca" secondAttribute="trailing" constant="10" id="tzH-Fv-Uv2"/>
                                                         <constraint firstAttribute="width" constant="155" id="vLP-Lt-lMu"/>
                                                     </constraints>
                                                 </view>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bVf-ds-SOy">
+                                                    <rect key="frame" x="145" y="27" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="VDW-Nw-tbK"/>
+                                                        <constraint firstAttribute="height" constant="20" id="roW-n0-oXC"/>
+                                                    </constraints>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="bVf-ds-SOy" firstAttribute="centerX" secondItem="Cnv-z4-f4Z" secondAttribute="centerX" id="KLq-jH-hKP"/>
                                                 <constraint firstItem="qve-SW-Nue" firstAttribute="top" secondItem="Cnv-z4-f4Z" secondAttribute="top" id="UOK-kh-Vwx"/>
                                                 <constraint firstItem="1iZ-cr-3q1" firstAttribute="leading" secondItem="Cnv-z4-f4Z" secondAttribute="leading" id="a8B-bs-9VX"/>
                                                 <constraint firstAttribute="trailing" secondItem="qve-SW-Nue" secondAttribute="trailing" id="axT-DP-Pw2"/>
@@ -258,6 +266,7 @@
                                                 <constraint firstItem="qve-SW-Nue" firstAttribute="leading" secondItem="1iZ-cr-3q1" secondAttribute="trailing" id="hLq-zh-nqX"/>
                                                 <constraint firstAttribute="bottom" secondItem="qve-SW-Nue" secondAttribute="bottom" id="hfX-1C-q5a"/>
                                                 <constraint firstItem="1iZ-cr-3q1" firstAttribute="top" secondItem="Cnv-z4-f4Z" secondAttribute="top" id="ko6-4b-0zH"/>
+                                                <constraint firstItem="bVf-ds-SOy" firstAttribute="centerY" secondItem="Cnv-z4-f4Z" secondAttribute="centerY" id="pGT-xT-diM"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -276,6 +285,7 @@
                                     <outlet property="partnerConstraint" destination="vLP-Lt-lMu" id="NDj-G3-EnN"/>
                                     <outlet property="partnerName" destination="fMz-EU-1Ca" id="uI6-2X-c7s"/>
                                     <outlet property="partnerView" destination="KTZ-QC-cj7" id="Mtd-15-7Xg"/>
+                                    <outlet property="waiting" destination="bVf-ds-SOy" id="gpz-0s-vxX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -907,7 +917,7 @@
         <scene sceneID="jQc-ad-mpQ">
             <objects>
                 <collectionViewController id="8Co-nH-luO" customClass="EatController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="nYd-Yz-1Ks">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="nYd-Yz-1Ks">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -956,7 +966,7 @@
         <scene sceneID="1la-Lh-W8s">
             <objects>
                 <collectionViewController id="SlB-sU-xin" customClass="EatController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jwb-me-Hdg">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="jwb-me-Hdg">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
