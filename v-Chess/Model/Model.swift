@@ -457,12 +457,12 @@ class Model: NSObject {
                 text = "\(currentUser()!.name!) invite you play against him with \(colorText) figures."
                 ref.child("games").child(game["uid"]!).setValue(game)
             } else if type == .accept {
-                text = "\(currentUser()!.name!) accepted your invite."
+                text = "\(currentUser()!.name!) accepted your invitation."
             } else if type == .reject {
-                text = "\(currentUser()!.name!) rejected your invite."
+                text = "\(currentUser()!.name!) rejected your invitation."
                 ref.child("games").child(game["uid"]!).removeValue()
             } else if type == .turn {
-                text = "\(currentUser()!.name!) made move [\(game["turn"]!)]"
+                text = "\(currentUser()!.name!) made move.]"
                 ref.child("games").child(game["uid"]!).setValue(game)
             } else if type == .surrender {
                 text = "\(currentUser()!.name!) surrendered."

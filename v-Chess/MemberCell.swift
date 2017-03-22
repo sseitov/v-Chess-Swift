@@ -16,11 +16,17 @@ class MemberCell: UITableViewCell {
     @IBOutlet weak var partnerView: UIImageView!
     @IBOutlet weak var partnerName: UILabel!
     @IBOutlet weak var waiting: UIActivityIndicatorView!
-    @IBOutlet weak var partnerConstraint: NSLayoutConstraint!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
     
     var onlineGame:[String:String]? {
         didSet {
-            partnerConstraint.constant = self.frame.size.width / 2
+            partnerView.isHidden = false
+            partnerName.isHidden = false
+            waiting.isHidden = false
+
             if let white = Model.shared.getUser(onlineGame!["white"]!), let black = Model.shared.getUser(onlineGame!["black"]!) {
                 if white.avatar != nil, let image = UIImage(data: white.avatar as! Data) {
                     self.memberView.image = image.withSize(self.memberView.frame.size).inCircle()
@@ -51,7 +57,10 @@ class MemberCell: UITableViewCell {
     
     var member:User? {
         didSet {
-            partnerConstraint.constant = 0
+            partnerView.isHidden = true
+            partnerName.isHidden = true
+            waiting.isHidden = true
+            
             if member!.avatar != nil, let image = UIImage(data: member!.avatar as! Data) {
                 memberView.image = image.withSize(memberView.frame.size).inCircle()
             } else if member!.avatarURL != nil, let url = URL(string: member!.avatarURL!) {

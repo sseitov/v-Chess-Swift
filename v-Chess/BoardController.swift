@@ -36,9 +36,12 @@ class BoardController: UIViewController, TurnCellDelegate {
     
     var chessEngine:ChessEngine?
     var chessGame:ChessGame?
+    
     var onlineGame:[String:String]?
+    var partner:User?
     
     var notationTable:UITableView?
+    var status:UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,6 +136,8 @@ class BoardController: UIViewController, TurnCellDelegate {
                 }
             }
         } else {
+            partner = Model.shared.gamePartner(onlineGame!)
+            
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
@@ -141,15 +146,26 @@ class BoardController: UIViewController, TurnCellDelegate {
             chessEngine?.whiteEat = whiteEat
             chessEngine?.blackEat = blackEat
             
-            let soundTitle = UIBarButtonItem(title: "Sound", style: .plain, target: nil, action: nil)
-            soundTitle.tintColor = UIColor.white
-            let soundControl = UISwitch()
-            soundControl.isOn = isSoundEnabled()
-            soundControl.addTarget(self, action: #selector(self.controlSound(_:)), for: .valueChanged)
-            let soundSwitch = UIBarButtonItem(customView: soundControl)
+            let white = onlineGame!["white"]! == currentUser()!.uid
+            chessEngine?.startOnlineGame(white)
             
+            let controlButton = UIButton(frame: CGRect(x: 0, y: 30, width: 80, height: 30))
+            controlButton.titleLabel?.font = UIFont.condensedFont()
+            controlButton.setTitle("Surrender", for: .normal)
+            controlButton.setTitleColor(UIColor.white, for: .normal)
+            controlButton.backgroundColor = UIColor.errorColor()
+            controlButton.setupBorder(UIColor.clear, radius: 15)
+            controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
+            
+            if !white {
+                status = UIBarButtonItem(title: "Waiting move from \(partner!.name!)", style: .plain, target: nil, action: nil)
+            } else {
+                status = UIBarButtonItem(title: "Need make move", style: .plain, target: nil, action: nil)
+            }
+            status?.tintColor = UIColor.white
             let stretch = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            toolbarItems = [soundTitle, soundSwitch, stretch]
+            self.toolbarItems = [stretch, status!, stretch]
             
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(self.gameNotify(_:)),
@@ -265,9 +281,23 @@ class BoardController: UIViewController, TurnCellDelegate {
     
     private func stopGame(_ button:UIButton) {
         self.chessEngine?.stopGame()
-        button.setTitle("Start", for: .normal)
-        button.setTitleColor(UIColor.mainColor(), for: .normal)
-        button.backgroundColor = UIColor.white
+        if onlineGame != nil {
+            SVProgressHUD.show(withStatus: "Surrender...")
+            Model.shared.pushGame(to: partner!, type: .surrender, game: onlineGame!, error: { error in
+                SVProgressHUD.dismiss()
+                if error != nil {
+                    self.showMessage(error!.localizedDescription, messageType: .error, messageHandler: {
+                        self.goBack()
+                    })
+                } else {
+                    self.goBack()
+                }
+            })
+        } else {
+            button.setTitle("Start", for: .normal)
+            button.setTitleColor(UIColor.mainColor(), for: .normal)
+            button.backgroundColor = UIColor.white
+        }
     }
     
     func controlDepth(_ sender:UISwitch) {
@@ -362,7 +392,13 @@ class BoardController: UIViewController, TurnCellDelegate {
     }
     
     func youWin() {
-        showMessage("Congratilations, you are win!", messageType: .information)
+        if onlineGame != nil {
+            showMessage("Congratilations, you are win!", messageType: .information, messageHandler: {
+                self.goBack()
+            })
+        } else {
+            showMessage("Congratilations, you are win!", messageType: .information)
+        }
     }
     
     func showTable() {

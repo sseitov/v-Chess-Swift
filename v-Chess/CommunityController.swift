@@ -102,7 +102,29 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
+            if let game = online[indexPath.row] as? [String:String],
+                let white = Model.shared.getUser(game["white"]!),
+                let black = Model.shared.getUser(game["black"]!) {
+                
+                if white.status() == .invited || black.status() == .invited {
+                    let alert = createQuestion("Are you want to reject this invitation?", acceptTitle: "Reject", cancelTitle: "Cancel", acceptHandler: {
+                        let partner = white.uid! == currentUser()!.uid! ? black : white
+                        SVProgressHUD.show(withStatus: "Reject...")
+                        Model.shared.pushGame(to: partner, type: .reject, game: game, error: { error in
+                            SVProgressHUD.dismiss()
+                            if error != nil {
+                                self.showMessage(error!.localizedDescription, messageType: .error)
+                            } else {
+                                self.refresh()
+                            }
+                        })
+                    })
+                    alert?.show()
+                }
+                
+            }
+        } else if indexPath.section == 1 {
             let user = available[indexPath.row]
             let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
                 let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
