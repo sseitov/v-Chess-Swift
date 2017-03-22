@@ -139,7 +139,7 @@
 	return nil;
 }
 
-- (void)moveFigure:(FigureView*)f to:(vchess::Position)position
+- (void)moveFigure:(FigureView*)f to:(const vchess::Position&)position
 {
 	if (f.liveState == KILLED) {
 		[self.delegate killFigure:f];
@@ -151,7 +151,7 @@
 	}
 }
 
-- (void)moveFigure:(FigureView*)f to:(vchess::Position)position
+- (void)moveFigure:(FigureView*)f to:(const vchess::Position&)position
 		completion:(void (^)())completion
 {
 	[UIView animateWithDuration:0.2
@@ -184,8 +184,13 @@
 		[figure promote:true];
 	}
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"enableSound"]) {
-		AudioServicesPlaySystemSound (soundID);
+        [self playSound];
 	}
+}
+
+- (void)playSound
+{
+    AudioServicesPlaySystemSound (soundID);
 }
 
 - (BOOL)checkState:(vchess::GameState)state

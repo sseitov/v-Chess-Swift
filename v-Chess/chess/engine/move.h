@@ -44,6 +44,106 @@ namespace vchess {
 			: figure(_figure), from(_from), to(_to), moveType(_moveType), promote(false), firstMove(false), captureFigure(0)
 		{}
 		
+        Move(const std::string& description)
+            : moveType(NotMove), promote(false), firstMove(false), captureFigure(0)
+        {
+            char f = description[0];
+            switch (f) {
+                case 'K':
+                    figure = KING;
+                case 'Q':
+                    figure = QUEEN;
+                case 'R':
+                    figure = ROOK;
+                case 'B':
+                    figure = BISHOP;
+                case 'N':
+                    figure = KNIGHT;
+                default:
+                    figure = PAWN;
+            }
+            from = Position(description.substr(1,2));
+            to = Position(description.substr(3,2));
+            std::string t = description.substr(5,3);
+            if (t == "NOR")
+                moveType = Normal;
+            else if (t == "CAP")
+                moveType = Capture;
+            else if (t == "ENP")
+                moveType = EnPassant;
+            else if (t == "QUE")
+                moveType = QueenCastling;
+            else if (t == "KIN")
+                moveType = KingCastling;
+            else
+                moveType = NotMove;
+            promote = description[8] == 'Y';
+            firstMove = description[9] == 'Y';
+            captureFigure = description[10];
+            if (captureFigure > 0) {
+                capturePosition = Position(description.substr(11,2));
+            }
+        }
+        
+        std::string textDesctiption() const {
+            std::string text;
+            switch (FIGURE(figure)) {
+                case KING:
+                    text = "K";
+                    break;
+                case QUEEN:
+                    text = "Q";
+                    break;
+                case ROOK:
+                    text = "R";
+                    break;
+                case BISHOP:
+                    text = "B";
+                    break;
+                case KNIGHT:
+                    text = "N";
+                    break;
+                default:
+                    text = "p";
+                    break;
+            }
+            text += from.notation();
+            text += to.notation();
+            switch (moveType) {
+                case Normal:
+                    text += "NOR";
+                    break;
+                case Capture:
+                    text += "CAP";
+                    break;
+                case EnPassant:			// взятие пешкой через битое поле
+                    text += "ENP";
+                    break;
+                case QueenCastling:		// рокировки
+                    text += "QUE";
+                    break;
+                case KingCastling:
+                    text += "KIN";
+                    break;
+                default:                // NotMove,
+                    text += "NOT";
+                    break;
+            }
+            if (promote)
+                text += "Y";
+            else
+                text += "N";
+            if (firstMove)
+                text += "Y";
+            else
+                text += "N";
+            text += captureFigure;
+            if (captureFigure > 0) {
+                text += capturePosition.notation();
+            }
+            return text;
+        }
+        
 		std::string notation() const
 		{
 			if (moveType != NotMove) {

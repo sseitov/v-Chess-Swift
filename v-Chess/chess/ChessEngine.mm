@@ -178,13 +178,14 @@ typedef std::vector<vchess::Position> PositionArray;
 
 - (void)makeOnlineMove:(NSString*)moveString
 {
-    std::string notation(moveString.UTF8String);
-    vchess::Move move;
+    std::string description(moveString.UTF8String);
+    vchess::Move move(description);
+
     [_desk makeMove:move inGame:&_currentGame completion:nil];
+    [_desk playSound];
     _moves.push_back(move);
-    [self logMove:move];
-    _desk.userInteractionEnabled = NO;
     [self switchColor];
+    _desk.userInteractionEnabled = YES;
 }
 
 - (void)stopGame
@@ -214,7 +215,7 @@ typedef std::vector<vchess::Position> PositionArray;
     _desk.userInteractionEnabled = NO;
     [self switchColor];
     if (_online) {
-        NSString* turnText = [NSString stringWithUTF8String:move.notation().c_str()];
+        NSString* turnText = [NSString stringWithUTF8String:move.textDesctiption().c_str()];
         [[NSNotificationCenter defaultCenter] postNotificationName:MyTurnNotification object:turnText];
     } else {
         [self bestMove];

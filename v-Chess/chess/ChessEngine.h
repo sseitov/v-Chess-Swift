@@ -25,6 +25,7 @@ NSString* const MyTurnNotification = @"MyTurnNotification";
 - (void)rotateDesk:(bool)rotate;
 - (void)startGame:(bool)white forDepth:(Depth)depth;
 - (void)startOnlineGame:(bool)white;
+- (void)makeOnlineMove:(NSString*)move;
 - (void)stopGame;
 - (bool)gameStarted;
 

@@ -49,13 +49,15 @@ class BoardController: UIViewController, TurnCellDelegate {
         setupTitle("Choose mode from menu")
         setupBackButton()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
+
+        mainController?.disableSlider()
         
         if chessGame == nil && onlineGame == nil {
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
+            
             chessEngine = ChessEngine(view: desk, timerView:timerView)
-
             chessEngine?.whiteEat = whiteEat
             chessEngine?.blackEat = blackEat
             
@@ -141,8 +143,8 @@ class BoardController: UIViewController, TurnCellDelegate {
             let timerView = UISegmentedControl(items: ["00:00", "00:00"])
             timerView.tintColor = UIColor.white
             self.navigationItem.titleView = timerView
-            chessEngine = ChessEngine(view: desk, timerView:timerView)
             
+            chessEngine = ChessEngine(view: desk, timerView:timerView)
             chessEngine?.whiteEat = whiteEat
             chessEngine?.blackEat = blackEat
             
@@ -161,7 +163,7 @@ class BoardController: UIViewController, TurnCellDelegate {
             if !white {
                 status = UIBarButtonItem(title: "Waiting move from \(partner!.name!)", style: .plain, target: nil, action: nil)
             } else {
-                status = UIBarButtonItem(title: "Need make move", style: .plain, target: nil, action: nil)
+                status = UIBarButtonItem(title: "You need make move", style: .plain, target: nil, action: nil)
             }
             status?.tintColor = UIColor.white
             let stretch = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -432,13 +434,32 @@ class BoardController: UIViewController, TurnCellDelegate {
     func gameNotify(_ notify:Notification) {
         let type = notify.object as! GamePush
         if type == .turn {
-            
+            Model.shared.lastMove(gameId: onlineGame!["uid"]!, move: { move in
+                if move != nil {
+                    self.chessEngine?.makeOnlineMove(move!)
+                    self.status?.title = "You need make move"
+                } else {
+                    self.showMessage("Can not read move.", messageType: .error)
+                }
+            })
         } else if type == .surrender {
             youWin()
         }
     }
     
     func sendTurn(_ notify:Notification) {
+        if let turn = notify.object as? String {
+            onlineGame!["turn"] = turn
+            SVProgressHUD.show(withStatus: "Send...")
+            Model.shared.pushGame(to: partner!, type: .turn, game: onlineGame!, error: { error in
+                SVProgressHUD.dismiss()
+                if error != nil {
+                    self.showMessage(error!.localizedDescription, messageType: .error)
+                } else {
+                    self.status?.title = "Waiting move from \(self.partner!.name!)"
+                }
+            })
+        }
     }
     
     // MARK: - Navigation

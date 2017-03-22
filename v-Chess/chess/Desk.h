@@ -36,6 +36,6 @@
 - (void)makeMove:(const vchess::Move&)move
 		  inGame:(vchess::Disposition*)game
 	  completion:(void (^)(BOOL))completion;
-
+- (void)playSound;
 
 @end

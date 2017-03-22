@@ -916,7 +916,7 @@
         <scene sceneID="jQc-ad-mpQ">
             <objects>
                 <collectionViewController id="8Co-nH-luO" customClass="EatController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="nYd-Yz-1Ks">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="nYd-Yz-1Ks">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -959,13 +959,13 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Yo-Mh-kiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="330" y="1657"/>
+            <point key="canvasLocation" x="-42" y="1617"/>
         </scene>
         <!--Eat Controller-->
         <scene sceneID="1la-Lh-W8s">
             <objects>
                 <collectionViewController id="SlB-sU-xin" customClass="EatController" customModule="v_Chess" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="jwb-me-Hdg">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jwb-me-Hdg">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -1008,7 +1008,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ef5-D2-Aas" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="330" y="2027"/>
+            <point key="canvasLocation" x="-42" y="2007"/>
         </scene>
     </scenes>
     <resources>

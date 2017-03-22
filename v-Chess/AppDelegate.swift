@@ -24,6 +24,8 @@ func navBarHeight() -> CGFloat {
     }
 }
 
+var mainController:MainController?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -75,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared().isEnableAutoToolbar = false
         
         StorageManager.shared().initUserPackages()
+        
+        mainController = window?.rootViewController as? MainController
         
         return true
     }

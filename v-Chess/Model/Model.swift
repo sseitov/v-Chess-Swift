@@ -201,6 +201,7 @@ class Model: NSObject {
                     user.setData(userData, completion: {
                         self.getUserToken(uid, token: { token in
                             user.token = token
+                            user.setAvailable(.available)
                             self.saveContext()
                             result(user)
                         })
@@ -433,6 +434,17 @@ class Model: NSObject {
     func gamePartner(_ game:[String:String]) -> User? {
         let uid = game["white"]! == currentUser()!.uid! ? game["black"]! : game["white"]!
         return getUser(uid)
+    }
+    
+    func lastMove(gameId:String, move: @escaping(String?) -> ()) {
+        let ref = FIRDatabase.database().reference()
+        ref.child("games").child(gameId).observeSingleEvent(of: .value, with: { snapshot in
+            if let gameData = snapshot.value as? [String:Any] {
+                move(gameData["turn"] as? String)
+            } else {
+                move(nil)
+            }
+        })
     }
     
     private func vchessError(_ text:String) -> NSError {
