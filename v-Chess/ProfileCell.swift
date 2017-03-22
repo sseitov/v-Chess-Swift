@@ -35,6 +35,6 @@ class ProfileStatusCell: UITableViewCell {
     @IBOutlet weak var availableSwitch: UISwitch!
     
     @IBAction func changeAvailable(_ sender: UISwitch) {
-        currentUser()!.setAvailability(sender.isOn)
+        currentUser()!.setAvailable(sender.isOn ? .available : .closed)
     }    
 }

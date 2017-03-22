@@ -31,7 +31,7 @@ class MenuController: AMSlideMenuRightTableViewController {
                     let userID = currentUser()!.uid! == game!["white"] ? game!["black"] : game!["white"]
                     if let user = Model.shared.getUser(userID!) {
                         let question = self.createQuestion(text, acceptTitle: "Accept", cancelTitle: "Reject", acceptHandler: {
-                            Model.shared.push(to: user, type: .accept, game: game!, error: { err in
+                            Model.shared.pushGame(to: user, type: .accept, game: game!, error: { err in
                                 if err == nil {
                                     self.performSegue(withIdentifier: "play", sender: game)
                                 } else {
@@ -39,7 +39,7 @@ class MenuController: AMSlideMenuRightTableViewController {
                                 }
                             })
                         }, cancelHandler: {
-                            Model.shared.push(to: user, type: .reject, game: game!, error: { err in
+                            Model.shared.pushGame(to: user, type: .reject, game: game!, error: { err in
                             })
                         })
                         question?.show()

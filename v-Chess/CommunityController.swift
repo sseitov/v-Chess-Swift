@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class CommunityController: UITableViewController {
 
+    var online:[Any] = []
     var available:[User] = []
     var notAvailable:[User] = []
     
@@ -26,9 +28,12 @@ class CommunityController: UITableViewController {
     }
     
     func refresh() {
-        available = Model.shared.availableUsers(true)
-        notAvailable = Model.shared.availableUsers(false)
-        tableView.reloadData()
+        Model.shared.onlineGames({ games in
+            self.online = games
+            self.available = Model.shared.availableUsers(true)
+            self.notAvailable = Model.shared.availableUsers(false)
+            self.tableView.reloadData()
+        })
     }
     
     override func goBack() {
@@ -38,7 +43,7 @@ class CommunityController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -50,40 +55,69 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? available.count : notAvailable.count
+        switch section {
+        case 0:
+            return online.count
+        case 1:
+            return available.count
+        default:
+            return notAvailable.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "available for invitations" : "not available"
+        switch section {
+        case 0:
+            return "playing online"
+        case 1:
+            return "available for invitations"
+        default:
+            return "not available"
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "member", for: indexPath) as! MemberCell
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
+            cell.onlineGame = online[indexPath.row] as? [String:String]
+        case 1:
             cell.member = available[indexPath.row]
-        } else {
+        default:
             cell.member = notAvailable[indexPath.row]
         }
         return cell
     }
 
+    private func invite(_ user:User, toGame:[String:String]) {
+        SVProgressHUD.show(withStatus: "Invite...")
+        Model.shared.pushGame(to: user, type: .invite, game: toGame, error: { error in
+            SVProgressHUD.dismiss()
+            if error != nil {
+                self.showMessage(error!.localizedDescription, messageType: .error)
+            } else {
+                self.refresh()
+            }
+        })
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let user = available[indexPath.row]
-            let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
-            Model.shared.push(to: user, type: .invite, game: game, error: { error in
-                print(error)
+            let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
+                let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
+                self.invite(user, toGame: game)
+            }, handler2: {
+                let game = ["uid" : generateUDID(), "white" : user.uid!, "black" : currentUser()!.uid!]
+                self.invite(user, toGame: game)
             })
+            alert?.firstButton.backgroundColor = UIColor.white
+            alert?.firstButton.setupBorder(UIColor.black, radius: 1)
+            alert?.firstButton.setTitleColor(UIColor.black, for: .normal)
+            alert?.secondButton.backgroundColor = UIColor.black
+            alert?.show()
+
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

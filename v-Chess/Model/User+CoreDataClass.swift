@@ -18,6 +18,13 @@ enum SocialType:Int {
     case google = 2
 }
 
+enum AvailableStatus:Int {
+    case closed = 0
+    case available = 1
+    case invited = 2
+    case playing = 3
+}
+
 public class User: NSManagedObject {
     
     lazy var socialType: SocialType = {
@@ -39,10 +46,24 @@ public class User: NSManagedObject {
         }
     }
     
-    func setAvailability(_ avail:Bool) {
-        available = avail
+    func setAvailable(_ status:AvailableStatus, onlineGame:String? = nil ) {
+        availableStatus = Int16(status.rawValue)
+        var data:[String:Any] = ["status": status.rawValue]
+        if onlineGame != nil {
+            online = onlineGame
+            data["game"] = onlineGame!
+        }
+        Model.shared.saveContext()
         let ref = FIRDatabase.database().reference()
-        ref.child("available").child(uid!).setValue(avail)
+        ref.child("available").child(uid!).setValue(data)
+    }
+    
+    func status() -> AvailableStatus {
+        if let st = AvailableStatus(rawValue: Int(availableStatus)) {
+            return st
+        } else {
+            return .closed
+        }
     }
     
     func getData() -> [String:Any] {
@@ -56,7 +77,6 @@ public class User: NSManagedObject {
         if avatarURL != nil {
             profile["avatarURL"] = avatarURL!
         }
-        profile["available"] = available
         return profile
     }
     
@@ -65,11 +85,6 @@ public class User: NSManagedObject {
             accountType = Int16(typeVal)
         } else {
             accountType = 0
-        }
-        if let availVal = profile["available"] as? Bool {
-            self.available = availVal
-        } else {
-            self.available = false
         }
         
         email = profile["email"] as? String

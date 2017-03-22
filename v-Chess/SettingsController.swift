@@ -51,7 +51,7 @@ class SettingsController: UITableViewController, ProfileCellDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let profileCell = tableView.dequeueReusableCell(withIdentifier: "available", for: indexPath) as! ProfileStatusCell
-            profileCell.availableSwitch.isOn = currentUser()!.available
+            profileCell.availableSwitch.isOn = (currentUser()!.status() == .available)
             return profileCell
         } else {
             let profileCell = tableView.dequeueReusableCell(withIdentifier: "profile", for: indexPath) as! ProfileCell

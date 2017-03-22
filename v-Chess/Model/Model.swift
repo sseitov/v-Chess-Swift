@@ -118,7 +118,7 @@ class Model: NSObject {
     
     func signOut(_ completion: @escaping() -> ()) {
         let ref = FIRDatabase.database().reference()
-        currentUser()?.setAvailability(false)
+        currentUser()?.setAvailable(.closed)
         ref.child("tokens").child(currentUser()!.uid!).removeValue(completionBlock: { _, _ in
             switch currentUser()!.socialType {
             case .google:
@@ -265,8 +265,9 @@ class Model: NSObject {
         
         newAvailableRefHandle = availableQuery.observe(.childAdded, with: { (snapshot) -> Void in
             if let user = self.getUser(snapshot.key) {
-                if let available = snapshot.value as? Bool {
-                    user.available = available
+                if let data = snapshot.value as? [String:Any], let available = data["status"] as? Int {
+                    user.availableStatus = Int16(available)
+                    user.online = data["game"] as? String
                     self.saveContext()
                     NotificationCenter.default.post(name: refreshUserNotification, object: user)
                 }
@@ -275,8 +276,8 @@ class Model: NSObject {
         
         updateAvailableRefHandle = availableQuery.observe(.childChanged, with: { (snapshot) -> Void in
             if let user = self.getUser(snapshot.key) {
-                if let available = snapshot.value as? Bool {
-                    user.available = available
+                if let available = snapshot.value as? Int {
+                    user.availableStatus = Int16(available)
                     self.saveContext()
                     NotificationCenter.default.post(name: refreshUserNotification, object: user)
                 }
@@ -316,7 +317,7 @@ class Model: NSObject {
                 result(error as NSError?)
             } else {
                 cashedUser.avatarURL = metadata!.path!
-                cashedUser.setAvailability(true)
+                cashedUser.setAvailable(.available)
                 self.updateUser(cashedUser)
                 result(nil)
             }
@@ -338,13 +339,13 @@ class Model: NSObject {
                 if data != nil {
                     cashedUser.avatar = data as NSData?
                 }
-                cashedUser.setAvailability(true)
+                cashedUser.setAvailable(.available)
                 self.updateUser(cashedUser)
                 completion()
             })
         } else {
             cashedUser.avatar = nil
-            cashedUser.setAvailability(true)
+            cashedUser.setAvailable(.available)
             updateUser(cashedUser)
             completion()
         }
@@ -365,13 +366,13 @@ class Model: NSObject {
                 if data != nil {
                     cashedUser.avatar = data as NSData?
                 }
-                cashedUser.setAvailability(true)
+                cashedUser.setAvailable(.available)
                 self.updateUser(cashedUser)
                 completion()
             })
         } else {
             cashedUser.avatar = nil
-            cashedUser.setAvailability(true)
+            cashedUser.setAvailable(.available)
             updateUser(cashedUser)
             completion()
         }
@@ -380,7 +381,8 @@ class Model: NSObject {
     func availableUsers(_ available:Bool) -> [User] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         let pred1 = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
-        let pred2 = NSPredicate(format: "available == %@", available as CVarArg)
+        let status:AvailableStatus = available ? .available : .closed
+        let pred2 = NSPredicate(format: "availableStatus == %d", status.rawValue)
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
         let sort = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sort]
@@ -412,6 +414,26 @@ class Model: NSObject {
         })
     }
     
+    func onlineGames(_ games: @escaping([Any]) -> ()) {
+        let ref = FIRDatabase.database().reference()
+        ref.child("games").observeSingleEvent(of: .value, with: { snapshot in
+            if let values = snapshot.value as? [String:Any] {
+                var online:[Any] = []
+                for uid in values.keys {
+                    online.append(values[uid] as Any)
+                }
+                games(online)
+            } else {
+                games([])
+            }
+        })
+    }
+    
+    func gamePartner(_ game:[String:String]) -> User? {
+        let uid = game["white"]! == currentUser()!.uid! ? game["black"]! : game["white"]!
+        return getUser(uid)
+    }
+    
     private func vchessError(_ text:String) -> NSError {
         return NSError(domain: "v-Chess", code: -1, userInfo: [NSLocalizedDescriptionKey:text])
     }
@@ -425,7 +447,7 @@ class Model: NSObject {
         return manager
     }()
     
-    func push(to:User, type:GamePush, game:[String:String], error: @escaping(NSError?) -> ()) {
+    func pushGame(to:User, type:GamePush, game:[String:String], error: @escaping(NSError?) -> ()) {
         if to.token != nil {
             let ref = FIRDatabase.database().reference()
             var text:String = ""
@@ -456,6 +478,20 @@ class Model: NSObject {
             
             let message:[String:Any] = ["to" : to.token!, "priority" : "high", "notification" : notification, "data" : data]
             httpManager.post("send", parameters: message, progress: nil, success: { task, response in
+                if type == .invite {
+                    to.setAvailable(.invited, onlineGame: game["uid"]!)
+                    currentUser()?.setAvailable(.invited, onlineGame: game["uid"]!)
+                } else if type == .accept {
+                    to.setAvailable(.playing, onlineGame: game["uid"]!)
+                    currentUser()?.setAvailable(.playing, onlineGame: game["uid"]!)
+                } else if type == .reject {
+                    to.setAvailable(.available)
+                    currentUser()?.setAvailable(.available)
+                } else if type == .surrender {
+                    to.setAvailable(.available)
+                    currentUser()?.setAvailable(.available)
+                }
+
                 error(nil)
             }, failure: { task, err in
                 error(err as NSError?)
