@@ -129,7 +129,7 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
         FIRAuth.auth()?.createUser(withEmail: emailField.text(), password: passwordField.text(), completion: { firUser, error in
             if error != nil {
                 SVProgressHUD.dismiss()
-                self.showMessage((error as! NSError).localizedDescription, messageType: .error)
+                self.showMessage((error as NSError?)!.localizedDescription, messageType: .error)
             } else {
                 Model.shared.createEmailUser(firUser!,
                                              email: self.emailField.text(),

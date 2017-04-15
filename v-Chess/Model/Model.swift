@@ -314,16 +314,20 @@ class Model: NSObject {
         saveContext()
         let meta = FIRStorageMetadata()
         meta.contentType = "image/png"
-        self.storageRef.child(generateUDID()).put(cashedUser.avatar as! Data, metadata: meta, completion: { metadata, error in
-            if error != nil {
-                result(error as NSError?)
-            } else {
-                cashedUser.avatarURL = metadata!.path!
-                cashedUser.setAvailable(.available)
-                self.updateUser(cashedUser)
-                result(nil)
-            }
-        })
+        let data = cashedUser.avatar as Data?
+        if data != nil {
+            self.storageRef.child(generateUDID()).put(data!, metadata: meta, completion: { metadata, error in
+                if error != nil {
+                    result(error as NSError?)
+                } else {
+                    cashedUser.avatarURL = metadata!.path!
+                    cashedUser.setAvailable(.available)
+                    self.updateUser(cashedUser)
+                    result(nil)
+                }
+            })
+            
+        }
     }
     
     func createFacebookUser(_ user:FIRUser, profile:[String:Any], completion: @escaping() -> ()) {
@@ -382,17 +386,50 @@ class Model: NSObject {
 
     func availableUsers(_ available:Bool) -> [User] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        let pred1 = NSPredicate(format: "any uid != %@", currentUser()!.uid!)
+        let pred1 = NSPredicate(format: "uid != %@", currentUser()!.uid!)
         let status:AvailableStatus = available ? .available : .closed
         let pred2 = NSPredicate(format: "availableStatus == %d", status.rawValue)
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
         let sort = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sort]
+        do {
+            let result = try managedObjectContext.fetch(fetchRequest)
+            if let all = result as? [User] {
+                return all
+            } else {
+                return []
+            }
+        } catch {
+            return []
+        }
+    }
+    
+    func allLocalUsers() -> [User] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {
             return all
         } else {
             return []
         }
+    }
+    
+    func refreshUsers(_ complete: @escaping() -> ()) {
+        let ref = FIRDatabase.database().reference()
+        ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            var uids:[String] = []
+            if let values = snapshot.value as? [String:Any] {
+                for (key, _) in values {
+                    uids.append(key)
+                }
+            }
+            let all = self.allLocalUsers()
+            for user in all {
+                if !uids.contains(user.uid!) {
+                    self.managedObjectContext.delete(user)
+                }
+            }
+            complete()
+        })
     }
     
     // MARK: - Game Push notifications

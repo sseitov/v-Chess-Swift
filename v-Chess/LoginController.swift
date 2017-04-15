@@ -152,7 +152,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
         SVProgressHUD.show(withStatus: "Login...")
         FIRAuth.auth()?.signIn(withEmail: user, password: password, completion: { firUser, error in
             if error != nil {
-                let err = error as? NSError
+                let err = error as NSError?
                 SVProgressHUD.dismiss()
                 if let reason = err!.userInfo["error_name"] as? String  {
                     if reason == "ERROR_USER_NOT_FOUND" {

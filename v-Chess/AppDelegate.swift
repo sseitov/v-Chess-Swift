@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func connectToFcm() {
         FIRMessaging.messaging().connect { (error) in
             if error != nil {
-                print("Unable to connect with FCM. \(error)")
+                print("Unable to connect with FCM. \(error!.localizedDescription)")
             }
         }
     }

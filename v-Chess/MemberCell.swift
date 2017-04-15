@@ -28,21 +28,29 @@ class MemberCell: UITableViewCell {
             waiting.isHidden = false
 
             if let white = Model.shared.getUser(onlineGame!["white"]!), let black = Model.shared.getUser(onlineGame!["black"]!) {
-                if white.avatar != nil, let image = UIImage(data: white.avatar as! Data) {
+                if white.avatar != nil, let data = white.avatar as Data?, let image = UIImage(data: data) {
                     self.memberView.image = image.withSize(self.memberView.frame.size).inCircle()
                 } else if white.avatarURL != nil, let url = URL(string: white.avatarURL!) {
-                    self.memberView.sd_setImage(with: url)
+                    SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: nil, completed: { image, _, _, _ in
+                        if image != nil {
+                            self.memberView.image = image!.withSize(self.memberView.frame.size).inCircle()
+                        }
+                    })
                 }
                 self.memberName.text = white.name
                 
-                if black.avatar != nil, let image = UIImage(data: black.avatar as! Data) {
+                if black.avatar != nil, let data =  black.avatar as Data?, let image = UIImage(data: data) {
                     self.partnerView.image = image.withSize(self.partnerView.frame.size).inCircle()
                 } else if black.avatarURL != nil, let url = URL(string: black.avatarURL!) {
-                    self.partnerView.sd_setImage(with: url)
+                    SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: nil, completed: { image, _, _, _ in
+                        if image != nil {
+                            self.memberView.image = image!.withSize(self.memberView.frame.size).inCircle()
+                        }
+                    })
                 }
                 self.partnerName.text = white.name
                 
-                if white.status() == .invited || black.status() == .invited {
+                if (white.status() == .invited && white == currentUser()) || (black.status() == .invited && black == currentUser()) {
                     self.waiting.startAnimating()
                     memberName.textColor = UIColor.mainColor(0.4)
                     partnerName.textColor = UIColor.mainColor(0.4)
@@ -61,7 +69,7 @@ class MemberCell: UITableViewCell {
             partnerName.isHidden = true
             waiting.isHidden = true
             
-            if member!.avatar != nil, let image = UIImage(data: member!.avatar as! Data) {
+            if member!.avatar != nil, let data = member!.avatar as Data?, let image = UIImage(data: data) {
                 memberView.image = image.withSize(memberView.frame.size).inCircle()
             } else if member!.avatarURL != nil, let url = URL(string: member!.avatarURL!) {
                 memberView.sd_setImage(with: url)

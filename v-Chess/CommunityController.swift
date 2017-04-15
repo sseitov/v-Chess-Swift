@@ -24,7 +24,12 @@ class CommunityController: UITableViewController {
                                                selector: #selector(self.refresh),
                                                name: refreshUserNotification,
                                                object: nil)
-        refresh()
+        
+        SVProgressHUD.show(withStatus: "Refresh...")
+        Model.shared.refreshUsers {
+            SVProgressHUD.dismiss()
+            self.refresh()
+        }
     }
     
     func refresh() {
@@ -107,7 +112,7 @@ class CommunityController: UITableViewController {
                 let white = Model.shared.getUser(game["white"]!),
                 let black = Model.shared.getUser(game["black"]!) {
                 
-                if white.status() == .invited || black.status() == .invited {
+                if (white.status() == .invited && white == currentUser()) || (black.status() == .invited && black == currentUser()) {
                     let alert = createQuestion("Are you want to reject this invitation?", acceptTitle: "Reject", cancelTitle: "Cancel", acceptHandler: {
                         let partner = white.uid! == currentUser()!.uid! ? black : white
                         SVProgressHUD.show(withStatus: "Reject...")
