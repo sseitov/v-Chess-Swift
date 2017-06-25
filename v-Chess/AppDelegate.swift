@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.statusBarStyle = .lightContent
         
         SVProgressHUD.setDefaultStyle(.custom)
-        SVProgressHUD.setBackgroundColor(UIColor.mainColor())
+        SVProgressHUD.setBackgroundColor(MainColor)
         SVProgressHUD.setForegroundColor(UIColor.white)
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont.condensedFont()], for: .normal)

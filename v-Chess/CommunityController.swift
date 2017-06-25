@@ -113,7 +113,7 @@ class CommunityController: UITableViewController {
                 let black = Model.shared.getUser(game["black"]!) {
                 
                 if (white.status() == .invited && white == currentUser()) || (black.status() == .invited && black == currentUser()) {
-                    let alert = createQuestion("Are you want to reject this invitation?", acceptTitle: "Reject", cancelTitle: "Cancel", acceptHandler: {
+                    yesNoQuestion("Are you want to reject this invitation?", acceptLabel: "Reject", cancelLabel: "Cancel", acceptHandler: {
                         let partner = white.uid! == currentUser()!.uid! ? black : white
                         SVProgressHUD.show(withStatus: "Reject...")
                         Model.shared.pushGame(to: partner, type: .reject, game: game, error: { error in
@@ -125,7 +125,6 @@ class CommunityController: UITableViewController {
                             }
                         })
                     })
-                    alert?.show()
                 }
                 
             }

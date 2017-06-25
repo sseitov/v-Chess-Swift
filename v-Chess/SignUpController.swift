@@ -169,10 +169,8 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
                 imagePicker.sourceType = .photoLibrary
                 imagePicker.delegate = self
                 imagePicker.modalPresentationStyle = .formSheet
-                if let font = UIFont(name: "HelveticaNeue-CondensedBold", size: 15) {
-                    imagePicker.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.mainColor(), NSFontAttributeName : font]
-                }
-                imagePicker.navigationBar.tintColor = UIColor.mainColor()
+                imagePicker.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : MainColor, NSFontAttributeName : UIFont.condensedFont(15)]
+                imagePicker.navigationBar.tintColor = MainColor
                 self.present(imagePicker, animated: true, completion: nil)
         }, handler2: {
             let imagePicker = UIImagePickerController()

@@ -63,14 +63,13 @@ class SettingsController: UITableViewController, ProfileCellDelegate {
     }
     
     func signOut() {
-        let alert = createQuestion("Are you really want to sign out?", acceptTitle: "Sure", cancelTitle: "Cancel", acceptHandler: {
+        yesNoQuestion("Are you really want to sign out?", acceptLabel: "Sure", cancelLabel: "Cancel", acceptHandler: {
             SVProgressHUD.show(withStatus: "SignOut...")
             Model.shared.signOut({
                 SVProgressHUD.dismiss()
                 self.goBack()
             })
         })
-        alert?.show()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

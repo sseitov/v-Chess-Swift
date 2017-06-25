@@ -1,9 +1,8 @@
 //
-//  UIViewExtensions.swift
-//  iNear
+//  UIViewExtension.swift
 //
-//  Created by Сергей Сейтов on 28.11.16.
-//  Copyright © 2016 Сергей Сейтов. All rights reserved.
+//  Created by Сергей Сейтов on 22.05.17.
+//  Copyright © 2017 V-Channel. All rights reserved.
 //
 
 import UIKit
@@ -43,18 +42,10 @@ extension UIView {
     }
     
     func roundRectMask() {
-        // Create a mask layer and the frame to determine what will be visible in the view.
         let maskLayer = CAShapeLayer()
         let maskRect = bounds
-        
-        // Create a path with the rectangle in it.
         let path = CGPath(roundedRect: maskRect, cornerWidth: 10, cornerHeight: 7, transform: nil)
-            //CGPathCreateWithRect(maskRect, nil)
-        
-        // Set the path to the mask layer.
         maskLayer.path = path
-        
-        // Set the mask of the view.
         self.layer.mask = maskLayer
     }
     
@@ -90,36 +81,36 @@ extension UIView {
     
     func toImageWithScale(_ scale:CGFloat) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, scale)
-    
+        
         if self.isKind(of: UIScrollView.self) {
             let ctx = UIGraphicsGetCurrentContext();
             let offset = (self as! UIScrollView).contentOffset
             ctx?.translateBy(x: -offset.x, y: -offset.y);
         }
-    
+        
         if self.responds(to: #selector(UIView.drawHierarchy(in:afterScreenUpdates:))) {
             self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
         } else {
             self.layer.render(in: UIGraphicsGetCurrentContext()!)
         }
-    
+        
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
-    
+        
         return snapshot
     }
-
+    
     func toImageInRect(_ rect:CGRect) -> UIImage? {
         return toImageInRect(rect, scale:0)
     }
     
     func toImageInRect(_ rect:CGRect, scale:CGFloat) -> UIImage? {
-    
+        
         if let wholeSnapshot = toImageWithScale(scale) {
             let imageRect = CGRect(x: rect.origin.x * wholeSnapshot.scale,
-                                       y: rect.origin.y * wholeSnapshot.scale,
-                                       width: rect.size.width * wholeSnapshot.scale,
-                                       height: rect.size.height * wholeSnapshot.scale)
+                                   y: rect.origin.y * wholeSnapshot.scale,
+                                   width: rect.size.width * wholeSnapshot.scale,
+                                   height: rect.size.height * wholeSnapshot.scale)
             let imageRef = wholeSnapshot.cgImage?.cropping(to: imageRect);
             let snapshot = UIImage.init(cgImage: imageRef!, scale: wholeSnapshot.scale, orientation: wholeSnapshot.imageOrientation)
             return snapshot;

@@ -30,7 +30,7 @@ class MenuController: AMSlideMenuRightTableViewController {
                     let text = alert["body"] as! String
                     let userID = currentUser()!.uid! == game!["white"] ? game!["black"] : game!["white"]
                     if let user = Model.shared.getUser(userID!) {
-                        let question = self.createQuestion(text, acceptTitle: "Accept", cancelTitle: "Reject", acceptHandler: {
+                        self.yesNoQuestion(text, acceptLabel: "Accept", cancelLabel: "Reject", acceptHandler: {
                             Model.shared.pushGame(to: user, type: .accept, game: game!, error: { err in
                                 if err == nil {
                                     self.performSegue(withIdentifier: "play", sender: game)
@@ -42,7 +42,6 @@ class MenuController: AMSlideMenuRightTableViewController {
                             Model.shared.pushGame(to: user, type: .reject, game: game!, error: { err in
                             })
                         })
-                        question?.show()
                     }
                 }
             })
@@ -70,7 +69,7 @@ class MenuController: AMSlideMenuRightTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -91,7 +90,7 @@ class MenuController: AMSlideMenuRightTableViewController {
         label.font = UIFont.condensedFont(13)
         label.text = "v-Chess menu".uppercased()
         label.textColor = UIColor.white
-        label.backgroundColor = UIColor.mainColor()
+        label.backgroundColor = MainColor
         return label
     }
     
@@ -100,14 +99,11 @@ class MenuController: AMSlideMenuRightTableViewController {
         cell.imageView?.setupBorder(UIColor.white, radius: 40, width: 3)
         switch indexPath.row {
         case 1:
-            cell.textLabel?.text = "game room".uppercased()
-            cell.imageView?.image = UIImage(named: "community")!.withSize(CGSize(width: 80, height: 80)).inCircle()
-        case 2:
             cell.textLabel?.text = "Games Archive".uppercased()
             cell.imageView?.image = UIImage(named: "archive")!.withSize(CGSize(width: 80, height: 80)).inCircle()
-        case 3:
-            cell.textLabel?.text = "settings".uppercased()
-            cell.imageView?.image = UIImage(named: "settings")!.withSize(CGSize(width: 80, height: 80)).inCircle()
+        case 2:
+            cell.textLabel?.text = "game room".uppercased()
+            cell.imageView?.image = UIImage(named: "community")!.withSize(CGSize(width: 80, height: 80)).inCircle()
         default:
             cell.textLabel?.text = "Play".uppercased()
             cell.imageView?.image = UIImage(named: "logo")!.withSize(CGSize(width: 80, height: 80)).inCircle()
@@ -115,7 +111,7 @@ class MenuController: AMSlideMenuRightTableViewController {
         cell.contentView.backgroundColor = UIColor.clear
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.font = UIFont.condensedFont()
-        cell.textLabel?.textColor = UIColor.mainColor()
+        cell.textLabel?.textColor = MainColor
         cell.textLabel?.textAlignment = .center
         
         return cell
@@ -130,15 +126,11 @@ class MenuController: AMSlideMenuRightTableViewController {
     // MARK: - Navigation
     
     @IBAction func unwindToMenu(_ segue: UIStoryboardSegue) {
-        if currentUser() == nil {
-            performSegue(withIdentifier: "login", sender: self)
+        let nav = segue.source as! UINavigationController
+        if let archive = nav.topViewController as? MasterLoader {
+            performSegue(withIdentifier: "play", sender: archive.mSelectedGame)
         } else {
-            let nav = segue.source as! UINavigationController
-            if let archive = nav.topViewController as? MasterLoader {
-                performSegue(withIdentifier: "play", sender: archive.mSelectedGame)
-            } else {
-                mainVC.openRightMenu(animated: true)
-            }
+            mainVC.openRightMenu(animated: true)
         }
     }
   

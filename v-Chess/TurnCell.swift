@@ -60,7 +60,7 @@ class TurnCell: UITableViewCell {
         numberView.font = UIFont.condensedFont(15)
         numberView.textAlignment = .center
         numberView.backgroundColor = UIColor.groupTableViewBackground
-        numberView.textColor = UIColor.mainColor()
+        numberView.textColor = MainColor
         self.contentView.addSubview(numberView)
 
         whiteView = UIButton(type: .custom)

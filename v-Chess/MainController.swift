@@ -40,20 +40,13 @@ class MainController: AMSlideMenuMainViewController {
     }
     
     override func segueIdentifierForIndexPath(inRightMenu indexPath: IndexPath!) -> String! {
-        if currentUser() == nil {
-            return "login"
-        } else {
-            Model.shared.startObservers()
-            switch indexPath.row {
-            case 1:
-                return "community"
-            case 2:
-                return "archive"
-            case 3:
-                return "settings"
-            default:
-                return "play"
-            }
+        switch indexPath.row {
+        case 1:
+            return "archive"
+        case 2:
+            return "community"
+        default:
+            return "play"
         }
     }
 

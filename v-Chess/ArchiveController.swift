@@ -67,7 +67,7 @@ class ArchiveController: UITableViewController, ChessComLoaderDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.textLabel?.font = UIFont.condensedFont()
-        cell.textLabel?.textColor = UIColor.mainColor()
+        cell.textLabel?.textColor = MainColor
         cell.accessoryType = .disclosureIndicator
         if indexPath.section == 0 {
             cell.textLabel?.text = users[indexPath.row]

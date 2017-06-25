@@ -52,12 +52,12 @@ class MemberCell: UITableViewCell {
                 
                 if (white.status() == .invited && white == currentUser()) || (black.status() == .invited && black == currentUser()) {
                     self.waiting.startAnimating()
-                    memberName.textColor = UIColor.mainColor(0.4)
-                    partnerName.textColor = UIColor.mainColor(0.4)
+                    memberName.textColor = MainColor
+                    partnerName.textColor = MainColor
                 } else {
                     self.waiting.stopAnimating()
-                    memberName.textColor = UIColor.mainColor()
-                    partnerName.textColor = UIColor.mainColor()
+                    memberName.textColor = MainColor
+                    partnerName.textColor = MainColor
                 }
             }
         }
@@ -75,12 +75,7 @@ class MemberCell: UITableViewCell {
                 memberView.sd_setImage(with: url)
             }
             memberName.text = member!.name
-            switch member!.status() {
-            case .closed:
-                memberName.textColor = UIColor.mainColor(0.4)
-            default:
-                memberName.textColor = UIColor.mainColor()
-            }
+            memberName.textColor = MainColor
         }
     }
     

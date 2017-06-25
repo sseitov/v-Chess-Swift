@@ -1,15 +1,22 @@
 //
-//  StringExtensions.swift
-//  iNear
+//  StringExtension.swift
 //
-//  Created by Сергей Сейтов on 28.11.16.
-//  Copyright © 2016 Сергей Сейтов. All rights reserved.
+//  Created by Сергей Сейтов on 22.05.17.
+//  Copyright © 2017 V-Channel. All rights reserved.
 //
 
 import UIKit
 
+func LOCALIZE(_ text:String) -> String {
+    return NSLocalizedString(text, comment: "")
+}
+
 extension String {
     
+    static func generateUDID() -> String {
+        return UUID().uuidString
+    }
+
     func isEmail() -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: self)
@@ -32,13 +39,13 @@ extension String {
             return self
         }
     }
-
+    
     func partInRange(_ start:Int, end:Int) -> String {
         let startIndex = self.characters.index(self.startIndex, offsetBy: start)
         let endIndex = self.characters.index(self.startIndex, offsetBy: end)
         return self[startIndex..<endIndex]
     }
-    
+
     func length() -> Int {
         return (self as NSString).length
     }
@@ -60,11 +67,12 @@ extension String {
             return false
         }
     }
-
+    
     func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         
         return boundingBox.height
     }
+
 }

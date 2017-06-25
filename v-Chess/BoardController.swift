@@ -48,7 +48,6 @@ class BoardController: UIViewController, TurnCellDelegate {
 
         setupTitle("Choose mode from menu")
         setupBackButton()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "velvet.png")!)
 
         mainController?.disableSlider()
         
@@ -64,7 +63,7 @@ class BoardController: UIViewController, TurnCellDelegate {
             let controlButton = UIButton(frame: CGRect(x: 0, y: 30, width: 80, height: 30))
             controlButton.titleLabel?.font = UIFont.condensedFont()
             controlButton.setTitle("Start", for: .normal)
-            controlButton.setTitleColor(UIColor.mainColor(), for: .normal)
+            controlButton.setTitleColor(MainColor, for: .normal)
             controlButton.backgroundColor = UIColor.white
             controlButton.setupBorder(UIColor.clear, radius: 15)
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
@@ -125,7 +124,7 @@ class BoardController: UIViewController, TurnCellDelegate {
                         self.notationTable?.delegate = self
                         self.notationTable?.dataSource = self
                         self.notationTable?.isHidden = true
-                        self.notationTable?.setupBorder(UIColor.mainColor(), radius: 1, width: 2)
+                        self.notationTable?.setupBorder(MainColor, radius: 1, width: 2)
                         self.view.addSubview(self.notationTable!)
                         
                         let btn = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(self.showTable))
@@ -155,7 +154,7 @@ class BoardController: UIViewController, TurnCellDelegate {
             controlButton.titleLabel?.font = UIFont.condensedFont()
             controlButton.setTitle("Surrender", for: .normal)
             controlButton.setTitleColor(UIColor.white, for: .normal)
-            controlButton.backgroundColor = UIColor.errorColor()
+            controlButton.backgroundColor = ErrorColor
             controlButton.setupBorder(UIColor.clear, radius: 15)
             controlButton.addTarget(self, action: #selector(self.controlGame(_:)), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: controlButton)
@@ -278,7 +277,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         self.chessEngine?.startGame(blackColor, for: chessDepth())
         button.setTitle("Surrender", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.errorColor()
+        button.backgroundColor = ErrorColor
     }
     
     private func stopGame(_ button:UIButton) {
@@ -297,7 +296,7 @@ class BoardController: UIViewController, TurnCellDelegate {
             })
         } else {
             button.setTitle("Start", for: .normal)
-            button.setTitleColor(UIColor.mainColor(), for: .normal)
+            button.setTitleColor(MainColor, for: .normal)
             button.backgroundColor = UIColor.white
         }
     }
@@ -325,10 +324,9 @@ class BoardController: UIViewController, TurnCellDelegate {
             alert?.secondButton.backgroundColor = UIColor.black
             alert?.show()
         } else {
-            let alert = createQuestion("You are really surrender?", acceptTitle: "Yes", cancelTitle: "Cancel", acceptHandler: {
+            yesNoQuestion("You are really surrender?", acceptLabel: "Yes", cancelLabel: "Cancel", acceptHandler: {
                 self.stopGame(button)
             })
-            alert?.show()
         }
     }
     
