@@ -45,25 +45,21 @@ public class AppUser: NSManagedObject {
             return "Google +"
         }
     }
-    
-    func setAvailable(_ status:AvailableStatus, onlineGame:String? = nil ) {
+ 
+    func setAvailable(_ status:AvailableStatus, onlineGame:String? = nil) {
         availableStatus = Int16(status.rawValue)
+        Model.shared.saveContext()
+        
+        let ref = Database.database().reference()
         var data:[String:Any] = ["status": status.rawValue]
         if onlineGame != nil {
-            online = onlineGame
             data["game"] = onlineGame!
         }
-        Model.shared.saveContext()
-        let ref = Database.database().reference()
         ref.child("available").child(uid!).setValue(data)
     }
-    
-    func status() -> AvailableStatus {
-        if let st = AvailableStatus(rawValue: Int(availableStatus)) {
-            return st
-        } else {
-            return .closed
-        }
+   
+    func isAvailable() -> Bool {
+        return (availableStatus > 0)
     }
     
     func getData() -> [String:Any] {

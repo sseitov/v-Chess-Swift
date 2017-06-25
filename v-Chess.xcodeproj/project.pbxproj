@@ -30,7 +30,6 @@
 		2C6AF9411E7FDD170078B42C /* EatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6AF9401E7FDD170078B42C /* EatCell.swift */; };
 		2C7A878B1EFF92630040A96E /* AppUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87891EFF92630040A96E /* AppUser+CoreDataClass.swift */; };
 		2C7A878C1EFF92630040A96E /* AppUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A878A1EFF92630040A96E /* AppUser+CoreDataProperties.swift */; };
-		2C7A878F1EFFA6DC0040A96E /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C7A878E1EFFA6DC0040A96E /* Auth.storyboard */; };
 		2C7A879F1EFFAB830040A96E /* CLLocationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87901EFFAB830040A96E /* CLLocationExtension.swift */; };
 		2C7A87A01EFFAB830040A96E /* ColorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87921EFFAB830040A96E /* ColorUtility.m */; };
 		2C7A87A11EFFAB830040A96E /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87941EFFAB830040A96E /* Crypto.m */; };
@@ -52,13 +51,17 @@
 		2C7A87BE1EFFB4E60040A96E /* LGTextFieldAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C7A87B51EFFB4E60040A96E /* LGTextFieldAlertView.xib */; };
 		2C7A87BF1EFFB4E60040A96E /* LGVAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C7A87B61EFFB4E60040A96E /* LGVAlertView.xib */; };
 		2C7A87C01EFFB4E60040A96E /* NSPointerArray+AbstractionHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87B81EFFB4E60040A96E /* NSPointerArray+AbstractionHelpers.m */; };
+		2C7A87C31EFFBD7F0040A96E /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C7A87C21EFFBD7F0040A96E /* Camera.storyboard */; };
+		2C7A87C91EFFBD930040A96E /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87C51EFFBD930040A96E /* Camera.m */; };
+		2C7A87CA1EFFBD930040A96E /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87C61EFFBD930040A96E /* CameraController.swift */; };
+		2C7A87CB1EFFBD930040A96E /* VideoLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7A87C81EFFBD930040A96E /* VideoLayerView.m */; };
+		2C7A87CD1EFFBDC30040A96E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7A87CC1EFFBDC30040A96E /* AVFoundation.framework */; };
 		2CAAA0121E76C64400414961 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0101E76C64400414961 /* LoginController.swift */; };
 		2CAAA0131E76C64400414961 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0111E76C64400414961 /* SignUpController.swift */; };
 		2CAAA02A1E76C71F00414961 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0291E76C71E00414961 /* Model.swift */; };
 		2CAAA0341E76C9C900414961 /* TextFieldContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0331E76C9C900414961 /* TextFieldContainer.swift */; };
 		2CAAA0371E76CDEF00414961 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAAA0351E76CDEF00414961 /* ActionSheet.swift */; };
 		2CAAA0381E76CDEF00414961 /* ActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAAA0361E76CDEF00414961 /* ActionSheet.xib */; };
-		2CB5BE9E1E76EF0B004E9019 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BE9D1E76EF0B004E9019 /* SettingsController.swift */; };
 		2CB5BEA01E76F205004E9019 /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BE9F1E76F205004E9019 /* ProfileCell.swift */; };
 		2CB5BEA21E7708A2004E9019 /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BEA11E7708A2004E9019 /* CommunityController.swift */; };
 		2CB5BEA41E77157C004E9019 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB5BEA31E77157C004E9019 /* MemberCell.swift */; };
@@ -118,7 +121,6 @@
 		2C7A87881EFF915B0040A96E /* v-Chess 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "v-Chess 2.xcdatamodel"; sourceTree = "<group>"; };
 		2C7A87891EFF92630040A96E /* AppUser+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AppUser+CoreDataClass.swift"; path = "Model/AppUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2C7A878A1EFF92630040A96E /* AppUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AppUser+CoreDataProperties.swift"; path = "Model/AppUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2C7A878E1EFFA6DC0040A96E /* Auth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		2C7A87901EFFAB830040A96E /* CLLocationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CLLocationExtension.swift; path = Extensions/CLLocationExtension.swift; sourceTree = "<group>"; };
 		2C7A87911EFFAB830040A96E /* ColorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorUtility.h; path = Extensions/ColorUtility.h; sourceTree = "<group>"; };
 		2C7A87921EFFAB830040A96E /* ColorUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorUtility.m; path = Extensions/ColorUtility.m; sourceTree = "<group>"; };
@@ -145,6 +147,13 @@
 		2C7A87B61EFFB4E60040A96E /* LGVAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LGVAlertView.xib; path = "v-Chess/Vendor/LGAlertView/LGVAlertView.xib"; sourceTree = "<group>"; };
 		2C7A87B71EFFB4E60040A96E /* NSPointerArray+AbstractionHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSPointerArray+AbstractionHelpers.h"; path = "v-Chess/Vendor/LGAlertView/NSPointerArray+AbstractionHelpers.h"; sourceTree = "<group>"; };
 		2C7A87B81EFFB4E60040A96E /* NSPointerArray+AbstractionHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSPointerArray+AbstractionHelpers.m"; path = "v-Chess/Vendor/LGAlertView/NSPointerArray+AbstractionHelpers.m"; sourceTree = "<group>"; };
+		2C7A87C21EFFBD7F0040A96E /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Camera/Camera.storyboard; sourceTree = "<group>"; };
+		2C7A87C41EFFBD930040A96E /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = Camera/Camera.h; sourceTree = "<group>"; };
+		2C7A87C51EFFBD930040A96E /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Camera.m; path = Camera/Camera.m; sourceTree = "<group>"; };
+		2C7A87C61EFFBD930040A96E /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Camera/CameraController.swift; sourceTree = "<group>"; };
+		2C7A87C71EFFBD930040A96E /* VideoLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoLayerView.h; path = Camera/VideoLayerView.h; sourceTree = "<group>"; };
+		2C7A87C81EFFBD930040A96E /* VideoLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoLayerView.m; path = Camera/VideoLayerView.m; sourceTree = "<group>"; };
+		2C7A87CC1EFFBDC30040A96E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2CAAA0101E76C64400414961 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		2CAAA0111E76C64400414961 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		2CAAA0151E76C6CA00414961 /* v-Chess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "v-Chess-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -152,7 +161,6 @@
 		2CAAA0331E76C9C900414961 /* TextFieldContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldContainer.swift; path = CustomViews/TextFieldContainer.swift; sourceTree = "<group>"; };
 		2CAAA0351E76CDEF00414961 /* ActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionSheet.swift; path = CustomViews/ActionSheet.swift; sourceTree = "<group>"; };
 		2CAAA0361E76CDEF00414961 /* ActionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionSheet.xib; path = CustomViews/ActionSheet.xib; sourceTree = "<group>"; };
-		2CB5BE9D1E76EF0B004E9019 /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		2CB5BE9F1E76F205004E9019 /* ProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		2CB5BEA11E7708A2004E9019 /* CommunityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		2CB5BEA31E77157C004E9019 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
@@ -203,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C7A87CD1EFFBDC30040A96E /* AVFoundation.framework in Frameworks */,
 				2C68D1221E74BD6500D12AEC /* GameKit.framework in Frameworks */,
 				975924937993C222EEA329EE /* Pods_v_Chess.framework in Frameworks */,
 			);
@@ -281,6 +290,7 @@
 				2C6A12701E75C738003451E1 /* Extensions */,
 				2CAAA00F1E76C62B00414961 /* Community */,
 				2C7A878D1EFFA4DF0040A96E /* Board */,
+				2C7A87C11EFFBD430040A96E /* Camera */,
 				2C3D91341E787405004CCCE3 /* ArchiveController.swift */,
 				2C0BE34C1E75FC61000AE962 /* MainController.swift */,
 				2CF5BE461E7682B3001EF8C8 /* MenuController.swift */,
@@ -293,6 +303,7 @@
 		2C68D1201E74BD6500D12AEC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C7A87CC1EFFBDC30040A96E /* AVFoundation.framework */,
 				2C68D1211E74BD6500D12AEC /* GameKit.framework */,
 				84E3430CFEA112AEFC489D6C /* Pods_v_Chess.framework */,
 			);
@@ -303,7 +314,6 @@
 			isa = PBXGroup;
 			children = (
 				2C68D1111E74BCF700D12AEC /* Main.storyboard */,
-				2C7A878E1EFFA6DC0040A96E /* Auth.storyboard */,
 				2C68D1141E74BCF700D12AEC /* Assets.xcassets */,
 				2CE9469B1E77D91800A2835F /* turn_sound.wav */,
 				2C3D913F1E78896F004CCCE3 /* Masters.sqlite */,
@@ -389,6 +399,19 @@
 			name = LGAlertView;
 			sourceTree = "<group>";
 		};
+		2C7A87C11EFFBD430040A96E /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				2C7A87C41EFFBD930040A96E /* Camera.h */,
+				2C7A87C51EFFBD930040A96E /* Camera.m */,
+				2C7A87C61EFFBD930040A96E /* CameraController.swift */,
+				2C7A87C71EFFBD930040A96E /* VideoLayerView.h */,
+				2C7A87C81EFFBD930040A96E /* VideoLayerView.m */,
+				2C7A87C21EFFBD7F0040A96E /* Camera.storyboard */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
 		2CAAA0021E76C05100414961 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,7 +428,6 @@
 			isa = PBXGroup;
 			children = (
 				2CB5BEA11E7708A2004E9019 /* CommunityController.swift */,
-				2CB5BE9D1E76EF0B004E9019 /* SettingsController.swift */,
 				2CB5BE9F1E76F205004E9019 /* ProfileCell.swift */,
 				2CAAA0101E76C64400414961 /* LoginController.swift */,
 				2CAAA0111E76C64400414961 /* SignUpController.swift */,
@@ -554,9 +576,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C7A87BB1EFFB4E60040A96E /* LGDecoratedAlertView.xib in Resources */,
+				2C7A87C31EFFBD7F0040A96E /* Camera.storyboard in Resources */,
 				2CAAA0381E76CDEF00414961 /* ActionSheet.xib in Resources */,
 				2C68D1181E74BCF700D12AEC /* LaunchScreen.storyboard in Resources */,
-				2C7A878F1EFFA6DC0040A96E /* Auth.storyboard in Resources */,
 				2CE9469E1E77DD8100A2835F /* debut_book.plist in Resources */,
 				2C7A87BE1EFFB4E60040A96E /* LGTextFieldAlertView.xib in Resources */,
 				2CE9469C1E77D91800A2835F /* turn_sound.wav in Resources */,
@@ -635,10 +657,10 @@
 				2C6AF9411E7FDD170078B42C /* EatCell.swift in Sources */,
 				2C7A87BD1EFFB4E60040A96E /* LGProgressView.m in Sources */,
 				2C3D91431E78898A004CCCE3 /* vChessModel.xcdatamodeld in Sources */,
+				2C7A87C91EFFBD930040A96E /* Camera.m in Sources */,
 				2CDCB8C61E7A829F00520B96 /* zip.c in Sources */,
 				2C7A878C1EFF92630040A96E /* AppUser+CoreDataProperties.swift in Sources */,
 				2C3D91471E7889D8004CCCE3 /* StorageManager.mm in Sources */,
-				2CB5BE9E1E76EF0B004E9019 /* SettingsController.swift in Sources */,
 				2C7A87A31EFFAB830040A96E /* DateExtension.swift in Sources */,
 				2CB5BEA01E76F205004E9019 /* ProfileCell.swift in Sources */,
 				2CE9468B1E77C97200A2835F /* evaluate.cpp in Sources */,
@@ -651,6 +673,7 @@
 				2CAAA0341E76C9C900414961 /* TextFieldContainer.swift in Sources */,
 				2C7A87A81EFFAB830040A96E /* UIFontExtension.swift in Sources */,
 				2C7A87A01EFFAB830040A96E /* ColorUtility.m in Sources */,
+				2C7A87CB1EFFBD930040A96E /* VideoLayerView.m in Sources */,
 				2C7A87A91EFFAB830040A96E /* UIImageExtension.swift in Sources */,
 				2C7A87AB1EFFAB830040A96E /* UIViewExtension.swift in Sources */,
 				2CE946951E77C98800A2835F /* FigureView.mm in Sources */,
@@ -680,6 +703,7 @@
 				2CB5BEA21E7708A2004E9019 /* CommunityController.swift in Sources */,
 				2C3D91501E788F4C004CCCE3 /* MasterLoader.mm in Sources */,
 				2CE9468A1E77C97200A2835F /* disposition.cpp in Sources */,
+				2C7A87CA1EFFBD930040A96E /* CameraController.swift in Sources */,
 				2C7A87A61EFFAB830040A96E /* StringExtension.swift in Sources */,
 				2CDCB8B41E7A7B4000520B96 /* ChessComLoader.mm in Sources */,
 				2C0BE34E1E75FC61000AE962 /* MainController.swift in Sources */,

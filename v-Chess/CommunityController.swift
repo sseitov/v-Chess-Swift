@@ -11,33 +11,62 @@ import SVProgressHUD
 
 class CommunityController: UITableViewController {
 
-    var online:[Any] = []
     var available:[AppUser] = []
-    var notAvailable:[AppUser] = []
+    
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var userEmail: UILabel!
+    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var availableSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("Game Room")
         setupBackButton()
+        signOutButton.setupCircle()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.refresh),
                                                name: refreshUserNotification,
                                                object: nil)
         
-        SVProgressHUD.show(withStatus: "Refresh...")
-        Model.shared.refreshUsers {
-            SVProgressHUD.dismiss()
-            self.refresh()
+        if currentUser() == nil {
+            performSegue(withIdentifier: "login", sender: nil)
+        } else {
+            Model.shared.startObservers()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if currentUser() != nil {
+            userName.text = currentUser()!.name
+            userEmail.text = currentUser()!.email
+            if let data = currentUser()!.avatar as Data?, let image = UIImage(data: data) {
+                userImage.image = image.withSize(userImage.frame.size).inCircle()
+            }
+            availableSwitch.isOn = currentUser()!.isAvailable()
+            refresh()
         }
     }
     
     func refresh() {
-        Model.shared.onlineGames({ games in
-            self.online = games
-            self.available = Model.shared.availableUsers(true)
-            self.notAvailable = Model.shared.availableUsers(false)
-            self.tableView.reloadData()
+        if currentUser()!.isAvailable() {
+            let btn = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.refreshUsers))
+            btn.tintColor = UIColor.white
+            navigationItem.setRightBarButton(btn, animated: true)
+            self.available = Model.shared.availableUsers()
+        } else {
+            navigationItem.setRightBarButton(nil, animated: true)
+            self.available = []
+        }
+        self.tableView.reloadData()
+    }
+    
+    func refreshUsers() {
+        SVProgressHUD.show(withStatus: "Refresh...")
+        Model.shared.refreshUsers({ users in
+            SVProgressHUD.dismiss()
         })
     }
     
@@ -45,10 +74,29 @@ class CommunityController: UITableViewController {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
 
+    @IBAction func signOut(_ sender: Any) {
+        yesNoQuestion("Are you shure you want sign out?", acceptLabel: "SignOut", cancelLabel: "Cancel", acceptHandler: {
+            SVProgressHUD.show(withStatus: "SignOut...")
+            Model.shared.signOut {
+                SVProgressHUD.dismiss()
+                self.performSegue(withIdentifier: "login", sender: nil)
+            }
+        })
+    }
+    
+    @IBAction func switchAvailable(_ sender: UISwitch) {
+        if sender.isOn {
+            currentUser()?.setAvailable(.available)
+        } else {
+            currentUser()?.setAvailable(.closed)
+        }
+        refresh()
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -60,37 +108,16 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return online.count
-        case 1:
-            return available.count
-        default:
-            return notAvailable.count
-        }
+        return available.count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "playing online"
-        case 1:
-            return "available for invitations"
-        default:
-            return "not available"
-        }
+        return "Members available for invitation"
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "member", for: indexPath) as! MemberCell
-        switch indexPath.section {
-        case 0:
-            cell.onlineGame = online[indexPath.row] as? [String:String]
-        case 1:
-            cell.member = available[indexPath.row]
-        default:
-            cell.member = notAvailable[indexPath.row]
-        }
+        cell.member = available[indexPath.row]
         return cell
     }
 
@@ -107,43 +134,19 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            if let game = online[indexPath.row] as? [String:String],
-                let white = Model.shared.getUser(game["white"]!),
-                let black = Model.shared.getUser(game["black"]!) {
-                
-                if (white.status() == .invited && white == currentUser()) || (black.status() == .invited && black == currentUser()) {
-                    yesNoQuestion("Are you want to reject this invitation?", acceptLabel: "Reject", cancelLabel: "Cancel", acceptHandler: {
-                        let partner = white.uid! == currentUser()!.uid! ? black : white
-                        SVProgressHUD.show(withStatus: "Reject...")
-                        Model.shared.pushGame(to: partner, type: .reject, game: game, error: { error in
-                            SVProgressHUD.dismiss()
-                            if error != nil {
-                                self.showMessage(error!.localizedDescription, messageType: .error)
-                            } else {
-                                self.refresh()
-                            }
-                        })
-                    })
-                }
-                
-            }
-        } else if indexPath.section == 1 {
-            let user = available[indexPath.row]
-            let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
-                let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
-                self.invite(user, toGame: game)
-            }, handler2: {
-                let game = ["uid" : generateUDID(), "white" : user.uid!, "black" : currentUser()!.uid!]
-                self.invite(user, toGame: game)
-            })
-            alert?.firstButton.backgroundColor = UIColor.white
-            alert?.firstButton.setupBorder(UIColor.black, radius: 1)
-            alert?.firstButton.setTitleColor(UIColor.black, for: .normal)
-            alert?.secondButton.backgroundColor = UIColor.black
-            alert?.show()
-
-        }
+        let user = available[indexPath.row]
+        let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
+            let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
+            self.invite(user, toGame: game)
+        }, handler2: {
+            let game = ["uid" : generateUDID(), "white" : user.uid!, "black" : currentUser()!.uid!]
+            self.invite(user, toGame: game)
+        })
+        alert?.firstButton.backgroundColor = UIColor.white
+        alert?.firstButton.setupBorder(UIColor.black, radius: 1)
+        alert?.firstButton.setTitleColor(UIColor.black, for: .normal)
+        alert?.secondButton.backgroundColor = UIColor.black
+        alert?.show()
     }
 
 }

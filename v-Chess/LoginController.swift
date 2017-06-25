@@ -20,7 +20,8 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle("Authentication")
-        
+        setupBackButton()
+
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -40,8 +41,12 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
     }
 
     override func goBack() {
-        Model.shared.startObservers()
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
+    }
+
+    func didLogin() {
+        Model.shared.startObservers()
+        super.goBack()
     }
     
     func tap() {
@@ -103,7 +108,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
                             if let profile = result as? [String:Any] {
                                 Model.shared.createFacebookUser(firUser!, profile: profile, completion: {
                                     SVProgressHUD.dismiss()
-                                    self.goBack()
+                                    self.didLogin()
                                 })
                             } else {
                                 self.showMessage("Can not read user profile.", messageType: .error)
@@ -138,7 +143,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
             } else {
                 Model.shared.createGoogleUser(firUser!, googleProfile: user.profile, completion: {
                     SVProgressHUD.dismiss()
-                    self.goBack()
+                    self.didLogin()
                 })
             }
         })
@@ -170,7 +175,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
                     Model.shared.uploadUser(firUser!.uid, result: { user in
                         SVProgressHUD.dismiss()
                         if user != nil {
-                            self.goBack()
+                            self.didLogin()
                         } else {
                             self.showMessage("Can not download profile data.", messageType: .error)
                         }

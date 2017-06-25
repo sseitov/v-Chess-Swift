@@ -25,6 +25,10 @@ enum GamePush:Int {
 let refreshUserNotification = Notification.Name("REFRESH_USER_LIST")
 let gameNotification = Notification.Name("GAME")
 
+func vchessError(_ text:String) -> NSError {
+    return NSError(domain: "com.vchannel.v-chess", code: -1, userInfo: [NSLocalizedDescriptionKey:text])
+}
+
 func currentUser() -> AppUser? {
     if let firUser = Auth.auth().currentUser {
         if let user = Model.shared.getUser(firUser.uid) {
@@ -134,9 +138,7 @@ class Model: NSObject {
             self.newTokenRefHandle = nil
             self.updateTokenRefHandle = nil
             self.newUserRefHandle = nil
-            self.newAvailableRefHandle = nil
-            self.updateAvailableRefHandle = nil
-            UserDefaults.standard.removeObject(forKey: "fbToken")
+            self.updateUserRefHandle = nil
             completion()
         })
     }
@@ -145,9 +147,6 @@ class Model: NSObject {
     func startObservers() {
         if newTokenRefHandle == nil {
             observeTokens()
-        }
-        if newAvailableRefHandle == nil {
-            observeAvailable()
         }
         if newUserRefHandle == nil {
             observeUsers()
@@ -158,11 +157,8 @@ class Model: NSObject {
     
     private var newTokenRefHandle: DatabaseHandle?
     private var updateTokenRefHandle: DatabaseHandle?
-    
     private var newUserRefHandle: DatabaseHandle?
-
-    private var newAvailableRefHandle: DatabaseHandle?
-    private var updateAvailableRefHandle: DatabaseHandle?
+    private var updateUserRefHandle: DatabaseHandle?
     
     // MARK: - User table
     
@@ -203,7 +199,6 @@ class Model: NSObject {
                     user.setData(userData, completion: {
                         self.getUserToken(uid, token: { token in
                             user.token = token
-                            user.setAvailable(.available)
                             self.saveContext()
                             result(user)
                         })
@@ -248,7 +243,6 @@ class Model: NSObject {
                 if let token = snapshot.value as? String {
                     user.token = token
                     self.saveContext()
-                    NotificationCenter.default.post(name: refreshUserNotification, object: nil)
                 }
             }
         })
@@ -258,55 +252,83 @@ class Model: NSObject {
                 if let token = snapshot.value as? String {
                     user.token = token
                     self.saveContext()
-                    NotificationCenter.default.post(name: refreshUserNotification, object: nil)
-                }
-            }
-        })
-    }
-    
-    fileprivate func observeAvailable() {
-        let ref = Database.database().reference()
-        let availableQuery = ref.child("available").queryLimited(toLast:25)
-        
-        newAvailableRefHandle = availableQuery.observe(.childAdded, with: { (snapshot) -> Void in
-            if let user = self.getUser(snapshot.key) {
-                if let data = snapshot.value as? [String:Any], let available = data["status"] as? Int {
-                    user.availableStatus = Int16(available)
-                    user.online = data["game"] as? String
-                    self.saveContext()
-                    NotificationCenter.default.post(name: refreshUserNotification, object: user)
-                }
-            }
-        })
-        
-        updateAvailableRefHandle = availableQuery.observe(.childChanged, with: { (snapshot) -> Void in
-            if let user = self.getUser(snapshot.key) {
-                if let data = snapshot.value as? [String:Any], let available = data["status"] as? Int {
-                    user.availableStatus = Int16(available)
-                    user.online = data["game"] as? String
-                    self.saveContext()
-                    NotificationCenter.default.post(name: refreshUserNotification, object: user)
                 }
             }
         })
     }
 
+    fileprivate func updateStatus(_ uid:String, status:Int16) {
+        if let user = self.getUser(uid) {
+            if status == 0 {
+                self.deleteUser(uid)
+            } else {
+                user.availableStatus = Int16(status)
+                self.saveContext()
+            }
+            NotificationCenter.default.post(name:refreshUserNotification, object: nil)
+        } else if status > 0 {
+            self.uploadUser(uid, result: { user in
+                if user != nil {
+                    user?.availableStatus = Int16(status)
+                    self.saveContext()
+                    NotificationCenter.default.post(name:refreshUserNotification, object: nil)
+                }
+            })
+        }
+    }
+    
+    func refreshUsers(_ complete:@escaping() -> ()) {
+        let ref = Database.database().reference()
+        ref.child("available").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
+            if let values = snapshot.value as? [String:Any] {
+                for uid in values.keys {
+                    if uid == currentUser()!.uid! {
+                        continue
+                    }
+                    if let data = values[uid] as? [String:Any], let status = data["status"] as? Int {
+                        if status > 0 {
+                            if let user = self.getUser(uid) {
+                                user.availableStatus = Int16(status)
+                                self.saveContext()
+                            } else {
+                                self.uploadUser(uid, result: { user in
+                                    if user != nil {
+                                        user!.availableStatus = Int16(status)
+                                        self.saveContext()
+                                        NotificationCenter.default.post(name:refreshUserNotification, object: nil)
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+            complete()
+        })
+    }
+
     fileprivate func observeUsers() {
         let ref = Database.database().reference()
-        let usersQuery = ref.child("users").queryLimited(toLast:25)
+        let availableQuery = ref.child("available").queryLimited(toLast:255)
         
-        newUserRefHandle = usersQuery.observe(.childAdded, with: { (snapshot) -> Void in
-            if self.getUser(snapshot.key) == nil, let userData = snapshot.value as? [String : Any] {
-                let user = self.createUser(snapshot.key)
-                user.setData(userData, completion: {
-                    self.getUserToken(snapshot.key, token: { token in
-                        user.token = token
-                        self.saveContext()
-                        NotificationCenter.default.post(name:refreshUserNotification, object: nil)
-                    })
-                })
+        newUserRefHandle = availableQuery.observe(.childAdded, with: { (snapshot) -> Void in
+            if let data = snapshot.value as? [String : Any],
+                snapshot.key != currentUser()!.uid!,
+                let status = data["status"] as? Int
+            {
+                self.updateStatus(snapshot.key, status: Int16(status))
             }
         })
+        
+        updateUserRefHandle = availableQuery.observe(.childChanged, with: { (snapshot) -> Void in
+            if let data = snapshot.value as? [String : Any],
+                snapshot.key != currentUser()!.uid!,
+                let status = data["status"] as? Int
+            {
+                self.updateStatus(snapshot.key, status: Int16(status))
+            }
+        })
+
     }
     
     func createEmailUser(_ user:User, email:String, nick:String, image:UIImage, result: @escaping(NSError?) -> ()) {
@@ -321,9 +343,8 @@ class Model: NSObject {
         saveContext()
         let meta = StorageMetadata()
         meta.contentType = "image/png"
-        let data = cashedUser.avatar as Data?
-        if data != nil {
-            self.storageRef.child(generateUDID()).putData(data!, metadata: meta, completion: { metadata, error in
+        if let data = cashedUser.avatar as Data? {
+            self.storageRef.child(generateUDID()).putData(data, metadata: meta, completion: { metadata, error in
                 if error != nil {
                     result(error as NSError?)
                 } else {
@@ -333,7 +354,8 @@ class Model: NSObject {
                     result(nil)
                 }
             })
-            
+        } else {
+            result(vchessError("Invalid data."))
         }
     }
     
@@ -397,12 +419,9 @@ class Model: NSObject {
         }
     }
 
-    func availableUsers(_ available:Bool) -> [AppUser] {
+    func availableUsers() -> [AppUser] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AppUser")
-        let pred1 = NSPredicate(format: "uid != %@", currentUser()!.uid!)
-        let status:AvailableStatus = available ? .available : .closed
-        let pred2 = NSPredicate(format: "availableStatus == %d", status.rawValue)
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1, pred2])
+        fetchRequest.predicate = NSPredicate(format: "uid != %@", currentUser()!.uid!)
         let sort = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sort]
         do {
@@ -415,34 +434,6 @@ class Model: NSObject {
         } catch {
             return []
         }
-    }
-    
-    func allLocalUsers() -> [AppUser] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AppUser")
-        if let all = try? managedObjectContext.fetch(fetchRequest) as! [AppUser] {
-            return all
-        } else {
-            return []
-        }
-    }
-    
-    func refreshUsers(_ complete: @escaping() -> ()) {
-        let ref = Database.database().reference()
-        ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
-            var uids:[String] = []
-            if let values = snapshot.value as? [String:Any] {
-                for (key, _) in values {
-                    uids.append(key)
-                }
-            }
-            let all = self.allLocalUsers()
-            for user in all {
-                if !uids.contains(user.uid!) {
-                    self.managedObjectContext.delete(user)
-                }
-            }
-            complete()
-        })
     }
     
     // MARK: - Game Push notifications
@@ -462,21 +453,6 @@ class Model: NSObject {
                         result(nil, self.vchessError("GAME NOT FOUND"))
                     }
                 })
-            }
-        })
-    }
-    
-    func onlineGames(_ games: @escaping([Any]) -> ()) {
-        let ref = Database.database().reference()
-        ref.child("games").observeSingleEvent(of: .value, with: { snapshot in
-            if let values = snapshot.value as? [String:Any] {
-                var online:[Any] = []
-                for uid in values.keys {
-                    online.append(values[uid] as Any)
-                }
-                games(online)
-            } else {
-                games([])
             }
         })
     }

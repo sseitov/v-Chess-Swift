@@ -17,13 +17,12 @@ extension AppUser {
     }
 
     @NSManaged public var accountType: Int16
-    @NSManaged public var availableStatus: Int16
     @NSManaged public var avatar: NSData?
     @NSManaged public var avatarURL: String?
     @NSManaged public var email: String?
     @NSManaged public var name: String?
-    @NSManaged public var online: String?
     @NSManaged public var token: String?
     @NSManaged public var uid: String?
+    @NSManaged public var availableStatus: Int16
 
 }

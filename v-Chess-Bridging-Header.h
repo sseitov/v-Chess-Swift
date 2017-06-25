@@ -8,3 +8,5 @@
 #import "MasterLoader.h"
 #import "ChessGame.h"
 #import "ChessComLoader.h"
+#import "Camera.h"
+#import "VideoLayerView.h"

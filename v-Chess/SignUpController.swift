@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import Firebase
 
-class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CameraDelegate {
     
     @IBOutlet weak var imageButton: UIButton!
     @IBOutlet weak var nickField: TextFieldContainer!
@@ -27,6 +27,9 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
         super.viewDidLoad()
         setupTitle("SignUp")
         setupBackButton()
+        
+        Camera.shared().startup()
+
         imageButton.addDashedBorder()
         
         nickField.textType = .emailAddress
@@ -51,7 +54,7 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
             passwordField.setText(userPassword!)
         }
         
-        signUpButton.setupBorder(UIColor.clear, radius: 30)
+        signUpButton.setupBorder(UIColor.clear, radius: 20)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tap))
         self.view.addGestureRecognizer(tap)
@@ -173,11 +176,12 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
                 imagePicker.navigationBar.tintColor = MainColor
                 self.present(imagePicker, animated: true, completion: nil)
         }, handler2: {
-            let imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = false
-            imagePicker.sourceType = .camera
-            imagePicker.delegate = self
-            self.present(imagePicker, animated: true, completion: nil)
+            let camera = UIStoryboard(name: "Camera", bundle: nil)
+            let cameraController = camera.instantiateViewController(withIdentifier: "Camera") as! CameraController
+            cameraController.modalTransitionStyle = .flipHorizontal
+            cameraController.delegate = self
+            cameraController.isFront = true
+            self.present(cameraController, animated: true, completion: nil)
         })
         actionView?.show()
     }
@@ -195,4 +199,11 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
         dismiss(animated: true, completion: nil)
     }
     
+    func didTakePhoto(_ image:UIImage) {
+        dismiss(animated: true, completion: {
+            self.avatar = image.withSize(CGSize(width:256, height:256))
+            self.imageButton.setImage(self.avatar!.inCircle(), for: .normal)
+        })
+    }
+   
 }
