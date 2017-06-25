@@ -12,8 +12,8 @@ import SVProgressHUD
 class CommunityController: UITableViewController {
 
     var online:[Any] = []
-    var available:[User] = []
-    var notAvailable:[User] = []
+    var available:[AppUser] = []
+    var notAvailable:[AppUser] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +94,7 @@ class CommunityController: UITableViewController {
         return cell
     }
 
-    private func invite(_ user:User, toGame:[String:String]) {
+    private func invite(_ user:AppUser, toGame:[String:String]) {
         SVProgressHUD.show(withStatus: "Invite...")
         Model.shared.pushGame(to: user, type: .invite, game: toGame, error: { error in
             SVProgressHUD.dismiss()

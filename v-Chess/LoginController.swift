@@ -9,6 +9,8 @@
 import UIKit
 import SVProgressHUD
 import Firebase
+import GoogleSignIn
+import FBSDKLoginKit
 
 class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate, TextFieldContainerDelegate {
 
@@ -19,7 +21,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
         super.viewDidLoad()
         setupTitle("Authentication")
         
-        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
    
@@ -92,8 +94,8 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
                     print(FBSDKAccessToken.current().tokenString)
                     UserDefaults.standard.set(FBSDKAccessToken.current().tokenString, forKey: "fbToken")
                     UserDefaults.standard.synchronize()
-                    let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-                    FIRAuth.auth()?.signIn(with: credential, completion: { firUser, error in
+                    let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                    Auth.auth().signIn(with: credential, completion: { firUser, error in
                         if error != nil {
                             SVProgressHUD.dismiss()
                             self.showMessage((error as NSError?)!.localizedDescription, messageType: .error)
@@ -105,7 +107,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
                                 })
                             } else {
                                 self.showMessage("Can not read user profile.", messageType: .error)
-                                try? FIRAuth.auth()?.signOut()
+                                try? Auth.auth().signOut()
                             }
                         }
                     })
@@ -126,10 +128,10 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
             return
         }
         let authentication = user.authentication
-        let credential = FIRGoogleAuthProvider.credential(withIDToken: (authentication?.idToken)!,
+        let credential = GoogleAuthProvider.credential(withIDToken: (authentication?.idToken)!,
                                                           accessToken: (authentication?.accessToken)!)
         SVProgressHUD.show(withStatus: "Login...")
-        FIRAuth.auth()?.signIn(with: credential, completion: { firUser, error in
+        Auth.auth().signIn(with: credential, completion: { firUser, error in
             if error != nil {
                 SVProgressHUD.dismiss()
                 self.showMessage((error as NSError?)!.localizedDescription, messageType: .error)
@@ -143,14 +145,14 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
     }
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        try? FIRAuth.auth()?.signOut()
+        try? Auth.auth().signOut()
     }
 
     // MARK: - Email Auth
     
     func emailAuth(user:String, password:String) {
         SVProgressHUD.show(withStatus: "Login...")
-        FIRAuth.auth()?.signIn(withEmail: user, password: password, completion: { firUser, error in
+        Auth.auth().signIn(withEmail: user, password: password, completion: { firUser, error in
             if error != nil {
                 let err = error as NSError?
                 SVProgressHUD.dismiss()

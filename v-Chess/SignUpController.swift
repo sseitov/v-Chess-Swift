@@ -126,7 +126,7 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
     
     func emailSignUp() {
         SVProgressHUD.show(withStatus: "SignUp...")
-        FIRAuth.auth()?.createUser(withEmail: emailField.text(), password: passwordField.text(), completion: { firUser, error in
+        Auth.auth().createUser(withEmail: emailField.text(), password: passwordField.text(), completion: { firUser, error in
             if error != nil {
                 SVProgressHUD.dismiss()
                 self.showMessage((error as NSError?)!.localizedDescription, messageType: .error)
@@ -137,7 +137,7 @@ class SignUpController: UIViewController, TextFieldContainerDelegate, UINavigati
                                              image: self.avatar!, result:
                     { setError in
                         if setError == nil {
-                            FIRAuth.auth()?.currentUser?.sendEmailVerification(completion: { error in
+                            Auth.auth().currentUser?.sendEmailVerification(completion: { error in
                                 SVProgressHUD.dismiss()
                                 if error == nil {
                                     self.showMessage("Check your mailbox now. You account will be activated after you confirm registration.", messageType: .information, messageHandler: {

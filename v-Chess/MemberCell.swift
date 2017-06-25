@@ -63,7 +63,7 @@ class MemberCell: UITableViewCell {
         }
     }
     
-    var member:User? {
+    var member:AppUser? {
         didSet {
             partnerView.isHidden = true
             partnerName.isHidden = true

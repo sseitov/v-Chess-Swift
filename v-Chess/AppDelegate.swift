@@ -11,6 +11,8 @@ import Firebase
 import UserNotifications
 import SVProgressHUD
 import IQKeyboardManager
+import GoogleSignIn
+import FBSDKLoginKit
 
 func IS_PAD() -> Bool {
     return UIDevice.current.userInterfaceIdiom == .pad
@@ -33,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
+        
         // Register_for_notifications
         if #available(iOS 10.0, *) {
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -41,8 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 completionHandler: {_, _ in })
             
             UNUserNotificationCenter.current().delegate = self
-            FIRMessaging.messaging().remoteMessageDelegate = self
-            
         } else {
             let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -50,20 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-        
-        // Use Firebase library to configure APIs
-        FIRApp.configure()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.tokenRefreshNotification),
-                                               name: .firInstanceIDTokenRefresh,
-                                               object: nil)
-        
-        FIRAuth.auth()?.addStateDidChangeListener({ auth, user in
-            if let token = FIRInstanceID.instanceID().token(), let currUser = auth.currentUser {
-                Model.shared.publishToken(currUser, token:token)
-            }
-        })
+        Messaging.messaging().delegate = self
         
         UIApplication.shared.statusBarStyle = .lightContent
         
@@ -81,29 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainController = window?.rootViewController as? MainController
         
         return true
-    }
-    
-    // MARK: - Refresh FCM token
-    
-    func tokenRefreshNotification(_ notification: Notification) {
-        if let refreshedToken = FIRInstanceID.instanceID().token() {
-            print("InstanceID token: \(refreshedToken)")
-            connectToFcm()
-            if let user = FIRAuth.auth()?.currentUser {
-                Model.shared.publishToken(user, token: refreshedToken)
-            } else {
-                UserDefaults.standard.set(refreshedToken, forKey: "fcmToken")
-                UserDefaults.standard.synchronize()
-            }
-        }
-    }
-    
-    func connectToFcm() {
-        FIRMessaging.messaging().connect { (error) in
-            if error != nil {
-                print("Unable to connect with FCM. \(error!.localizedDescription)")
-            }
-        }
     }
     
     // MARK: - Application delegate
@@ -124,9 +91,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         #if DEBUG
-            FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.sandbox)
+            Messaging.messaging().setAPNSToken(deviceToken, type: .sandbox)
         #else
-            FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.prod)
+            Messaging.messaging().setAPNSToken(deviceToken, type: .prod)
         #endif
     }
 
@@ -156,20 +123,6 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     private func sendNotificationFor(_ userInfo:[AnyHashable : Any]) {
         if let pushTypeStr = userInfo["pushType"] as? String, let pushType = Int(pushTypeStr), let push = GamePush(rawValue: pushType)  {
             NotificationCenter.default.post(name: gameNotification, object: push, userInfo: userInfo)
-/*
-            switch push {
-            case .invite:
-                NotificationCenter.default.post(name: inviteGameNotification, object: push, userInfo: userInfo)
-            case .accept:
-                NotificationCenter.default.post(name: acceptGameNotification, object: push, userInfo: userInfo)
-            case .reject:
-                NotificationCenter.default.post(name: deleteGameNotification, object: push, userInfo: userInfo)
-            case .turn:
-                NotificationCenter.default.post(name: updateGameNotification, object: push, userInfo: userInfo)
-            case .surrender:
-                NotificationCenter.default.post(name: deleteGameNotification, object: push, userInfo: userInfo)
-            }
- */
         }
     }
     
@@ -190,9 +143,13 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
 }
 
-extension AppDelegate : FIRMessagingDelegate {
-    // Receive data message on iOS 10 devices while app is in the foreground.
-    func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
+extension AppDelegate : MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        if let currUser = currentUser() {
+            Model.shared.publishToken(currUser, token: fcmToken)
+        }
     }
 }
 

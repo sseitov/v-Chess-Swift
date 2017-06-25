@@ -38,7 +38,7 @@ class BoardController: UIViewController, TurnCellDelegate {
     var chessGame:ChessGame?
     
     var onlineGame:[String:String]?
-    var partner:User?
+    var partner:AppUser?
     
     var notationTable:UITableView?
     var status:UIBarButtonItem?

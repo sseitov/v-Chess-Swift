@@ -11,6 +11,8 @@ import CoreData
 import Firebase
 import AFNetworking
 import SDWebImage
+import GoogleSignIn
+import FBSDKLoginKit
 
 enum GamePush:Int {
     case invite = 1
@@ -23,8 +25,8 @@ enum GamePush:Int {
 let refreshUserNotification = Notification.Name("REFRESH_USER_LIST")
 let gameNotification = Notification.Name("GAME")
 
-func currentUser() -> User? {
-    if let firUser = FIRAuth.auth()?.currentUser {
+func currentUser() -> AppUser? {
+    if let firUser = Auth.auth().currentUser {
         if let user = Model.shared.getUser(firUser.uid) {
             if user.socialType == .email {
                 return (firUser.isEmailVerified || testUser(user.email!)) ? user : nil
@@ -117,7 +119,7 @@ class Model: NSObject {
     // MARK: - SignOut from cloud
     
     func signOut(_ completion: @escaping() -> ()) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         currentUser()?.setAvailable(.closed)
         ref.child("tokens").child(currentUser()!.uid!).removeValue(completionBlock: { _, _ in
             switch currentUser()!.socialType {
@@ -128,7 +130,7 @@ class Model: NSObject {
             default:
                 break
             }
-            try? FIRAuth.auth()?.signOut()
+            try? Auth.auth().signOut()
             self.newTokenRefHandle = nil
             self.updateTokenRefHandle = nil
             self.newUserRefHandle = nil
@@ -152,31 +154,31 @@ class Model: NSObject {
         }
     }
     
-    lazy var storageRef: FIRStorageReference = FIRStorage.storage().reference(forURL: firStorage)
+    lazy var storageRef: StorageReference = Storage.storage().reference(forURL: firStorage)
     
-    private var newTokenRefHandle: FIRDatabaseHandle?
-    private var updateTokenRefHandle: FIRDatabaseHandle?
+    private var newTokenRefHandle: DatabaseHandle?
+    private var updateTokenRefHandle: DatabaseHandle?
     
-    private var newUserRefHandle: FIRDatabaseHandle?
+    private var newUserRefHandle: DatabaseHandle?
 
-    private var newAvailableRefHandle: FIRDatabaseHandle?
-    private var updateAvailableRefHandle: FIRDatabaseHandle?
+    private var newAvailableRefHandle: DatabaseHandle?
+    private var updateAvailableRefHandle: DatabaseHandle?
     
     // MARK: - User table
     
-    func createUser(_ uid:String) -> User {
+    func createUser(_ uid:String) -> AppUser {
         var user = getUser(uid)
         if user == nil {
-            user = NSEntityDescription.insertNewObject(forEntityName: "User", into: managedObjectContext) as? User
+            user = NSEntityDescription.insertNewObject(forEntityName: "AppUser", into: managedObjectContext) as? AppUser
             user!.uid = uid
         }
         return user!
     }
     
-    func getUser(_ uid:String) -> User? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+    func getUser(_ uid:String) -> AppUser? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AppUser")
         fetchRequest.predicate = NSPredicate(format: "uid = %@", uid)
-        if let user = try? managedObjectContext.fetch(fetchRequest).first as? User {
+        if let user = try? managedObjectContext.fetch(fetchRequest).first as? AppUser {
             return user
         } else {
             return nil
@@ -190,11 +192,11 @@ class Model: NSObject {
         }
     }
     
-    func uploadUser(_ uid:String, result: @escaping(User?) -> ()) {
+    func uploadUser(_ uid:String, result: @escaping(AppUser?) -> ()) {
         if let existingUser = getUser(uid) {
             result(existingUser)
         } else {
-            let ref = FIRDatabase.database().reference()
+            let ref = Database.database().reference()
             ref.child("users").child(uid).observeSingleEvent(of: .value, with: { snapshot in
                 if let userData = snapshot.value as? [String:Any] {
                     let user = self.createUser(uid)
@@ -213,14 +215,14 @@ class Model: NSObject {
         }
     }
     
-    func updateUser(_ user:User) {
+    func updateUser(_ user:AppUser) {
         saveContext()
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.child("users").child(user.uid!).setValue(user.getData())
     }
     
     fileprivate func getUserToken(_ uid:String, token: @escaping(String?) -> ()) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.child("tokens").child(uid).observeSingleEvent(of: .value, with: { snapshot in
             if let result = snapshot.value as? String {
                 token(result)
@@ -230,13 +232,15 @@ class Model: NSObject {
         })
     }
     
-    func publishToken(_ user:FIRUser,  token:String) {
-        let ref = FIRDatabase.database().reference()
-        ref.child("tokens").child(user.uid).setValue(token)
+    func publishToken(_ user:AppUser, token:String) {
+        user.token = token
+        saveContext()
+        let ref = Database.database().reference()
+        ref.child("tokens").child(user.uid!).setValue(token)
     }
     
     fileprivate func observeTokens() {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         let tokensQuery = ref.child("tokens").queryLimited(toLast:25)
         
         newTokenRefHandle = tokensQuery.observe(.childAdded, with: { (snapshot) -> Void in
@@ -261,7 +265,7 @@ class Model: NSObject {
     }
     
     fileprivate func observeAvailable() {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         let availableQuery = ref.child("available").queryLimited(toLast:25)
         
         newAvailableRefHandle = availableQuery.observe(.childAdded, with: { (snapshot) -> Void in
@@ -288,7 +292,7 @@ class Model: NSObject {
     }
 
     fileprivate func observeUsers() {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         let usersQuery = ref.child("users").queryLimited(toLast:25)
         
         newUserRefHandle = usersQuery.observe(.childAdded, with: { (snapshot) -> Void in
@@ -305,18 +309,21 @@ class Model: NSObject {
         })
     }
     
-    func createEmailUser(_ user:FIRUser, email:String, nick:String, image:UIImage, result: @escaping(NSError?) -> ()) {
+    func createEmailUser(_ user:User, email:String, nick:String, image:UIImage, result: @escaping(NSError?) -> ()) {
         let cashedUser = createUser(user.uid)
         cashedUser.email = email
         cashedUser.name = nick
         cashedUser.accountType = Int16(SocialType.email.rawValue)
         cashedUser.avatar = UIImagePNGRepresentation(image) as NSData?
+        if let token = Messaging.messaging().fcmToken {
+            Model.shared.publishToken(cashedUser, token: token)
+        }
         saveContext()
-        let meta = FIRStorageMetadata()
+        let meta = StorageMetadata()
         meta.contentType = "image/png"
         let data = cashedUser.avatar as Data?
         if data != nil {
-            self.storageRef.child(generateUDID()).put(data!, metadata: meta, completion: { metadata, error in
+            self.storageRef.child(generateUDID()).putData(data!, metadata: meta, completion: { metadata, error in
                 if error != nil {
                     result(error as NSError?)
                 } else {
@@ -330,11 +337,14 @@ class Model: NSObject {
         }
     }
     
-    func createFacebookUser(_ user:FIRUser, profile:[String:Any], completion: @escaping() -> ()) {
+    func createFacebookUser(_ user:User, profile:[String:Any], completion: @escaping() -> ()) {
         let cashedUser = createUser(user.uid)
         cashedUser.accountType = Int16(SocialType.facebook.rawValue)
         cashedUser.email = profile["email"] as? String
         cashedUser.name = profile["name"] as? String
+        if let token = Messaging.messaging().fcmToken {
+            Model.shared.publishToken(cashedUser, token: token)
+        }
         if let picture = profile["picture"] as? [String:Any] {
             if let data = picture["data"] as? [String:Any] {
                 cashedUser.avatarURL = data["url"] as? String
@@ -357,11 +367,14 @@ class Model: NSObject {
         }
     }
     
-    func createGoogleUser(_ user:FIRUser, googleProfile: GIDProfileData!, completion: @escaping() -> ()) {
+    func createGoogleUser(_ user:User, googleProfile: GIDProfileData!, completion: @escaping() -> ()) {
         let cashedUser = createUser(user.uid)
         cashedUser.accountType = Int16(SocialType.google.rawValue)
         cashedUser.email = googleProfile.email
         cashedUser.name = googleProfile.name
+        if let token = Messaging.messaging().fcmToken {
+            Model.shared.publishToken(cashedUser, token: token)
+        }
         if googleProfile.hasImage {
             if let url = googleProfile.imageURL(withDimension: 100) {
                 cashedUser.avatarURL = url.absoluteString
@@ -384,8 +397,8 @@ class Model: NSObject {
         }
     }
 
-    func availableUsers(_ available:Bool) -> [User] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+    func availableUsers(_ available:Bool) -> [AppUser] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AppUser")
         let pred1 = NSPredicate(format: "uid != %@", currentUser()!.uid!)
         let status:AvailableStatus = available ? .available : .closed
         let pred2 = NSPredicate(format: "availableStatus == %d", status.rawValue)
@@ -394,7 +407,7 @@ class Model: NSObject {
         fetchRequest.sortDescriptors = [sort]
         do {
             let result = try managedObjectContext.fetch(fetchRequest)
-            if let all = result as? [User] {
+            if let all = result as? [AppUser] {
                 return all
             } else {
                 return []
@@ -404,9 +417,9 @@ class Model: NSObject {
         }
     }
     
-    func allLocalUsers() -> [User] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        if let all = try? managedObjectContext.fetch(fetchRequest) as! [User] {
+    func allLocalUsers() -> [AppUser] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "AppUser")
+        if let all = try? managedObjectContext.fetch(fetchRequest) as! [AppUser] {
             return all
         } else {
             return []
@@ -414,7 +427,7 @@ class Model: NSObject {
     }
     
     func refreshUsers(_ complete: @escaping() -> ()) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
             var uids:[String] = []
             if let values = snapshot.value as? [String:Any] {
@@ -435,7 +448,7 @@ class Model: NSObject {
     // MARK: - Game Push notifications
     
     func myGame(_ result: @escaping([String:String]?, NSError?) -> ()) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.child("games").queryOrdered(byChild: "white").queryEqual(toValue: currentUser()!.uid!).observeSingleEvent(of: .value, with: { snapshot in
             if let whiteValues = snapshot.value as? [String:Any] {
                 let game = whiteValues.values.first as? [String:String]
@@ -454,7 +467,7 @@ class Model: NSObject {
     }
     
     func onlineGames(_ games: @escaping([Any]) -> ()) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.child("games").observeSingleEvent(of: .value, with: { snapshot in
             if let values = snapshot.value as? [String:Any] {
                 var online:[Any] = []
@@ -468,13 +481,13 @@ class Model: NSObject {
         })
     }
     
-    func gamePartner(_ game:[String:String]) -> User? {
+    func gamePartner(_ game:[String:String]) -> AppUser? {
         let uid = game["white"]! == currentUser()!.uid! ? game["black"]! : game["white"]!
         return getUser(uid)
     }
     
     func lastMove(gameId:String, move: @escaping(String?) -> ()) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         ref.child("games").child(gameId).observeSingleEvent(of: .value, with: { snapshot in
             if let gameData = snapshot.value as? [String:Any] {
                 move(gameData["turn"] as? String)
@@ -497,9 +510,9 @@ class Model: NSObject {
         return manager
     }()
     
-    func pushGame(to:User, type:GamePush, game:[String:String], error: @escaping(NSError?) -> ()) {
+    func pushGame(to:AppUser, type:GamePush, game:[String:String], error: @escaping(NSError?) -> ()) {
         if to.token != nil {
-            let ref = FIRDatabase.database().reference()
+            let ref = Database.database().reference()
             var text:String = ""
             if type == .invite {
                 let colorText = (game["white"]! == currentUser()!.uid!) ? "black" : "white"

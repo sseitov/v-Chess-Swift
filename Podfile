@@ -8,7 +8,12 @@ target 'v-Chess' do
     pod 'Firebase/Auth'
     pod 'Firebase/Database'
     pod 'Firebase/Messaging'
-    pod 'Google/SignIn'
+    
+    pod 'GoogleSignIn'
+    
+    pod 'FBSDKCoreKit'
+    pod 'FBSDKLoginKit'
+    pod 'FBSDKShareKit'
     
     pod 'AFNetworking'
     
