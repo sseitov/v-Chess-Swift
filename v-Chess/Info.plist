@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0</string>
+	<string>4.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -58,6 +58,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>v-Chess needs your photo library for setup your avatar.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>v-Chess needs access to your contacts to send invitations.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>v-Chess needs your photo library for setup your avatar.</string>
 	<key>UIBackgroundModes</key>

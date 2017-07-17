@@ -8,8 +8,10 @@
 
 import UIKit
 import SVProgressHUD
+import Firebase
+import GoogleSignIn
 
-class CommunityController: UITableViewController {
+class CommunityController: UITableViewController, GIDSignInDelegate {
 
     var available:[AppUser] = []
     
@@ -18,6 +20,8 @@ class CommunityController: UITableViewController {
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var signOutButton: UIButton!
     @IBOutlet weak var availableSwitch: UISwitch!
+    
+    private var inviteEnabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +38,24 @@ class CommunityController: UITableViewController {
             performSegue(withIdentifier: "login", sender: nil)
         } else {
             Model.shared.startObservers()
+            if let provider = Auth.auth().currentUser!.providerData.first {
+                if provider.providerID == "google.com" {
+                    GIDSignIn.sharedInstance().clientID = "1032784464543-hpfitve3jg6v4778449efiv6niddr098.apps.googleusercontent.com"
+                    GIDSignIn.sharedInstance().delegate = self
+                    GIDSignIn.sharedInstance().signInSilently()
+                }
+            }
         }
     }
     
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if user != nil {
+            inviteEnabled = true
+            let indexPath = IndexPath(row: 0, section: 0)
+            tableView.insertRows(at: [indexPath], with: .fade)
+        }
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if currentUser() != nil {
@@ -79,6 +98,7 @@ class CommunityController: UITableViewController {
             SVProgressHUD.show(withStatus: "SignOut...")
             Model.shared.signOut {
                 SVProgressHUD.dismiss()
+                self.tableView.reloadData()
                 self.performSegue(withIdentifier: "login", sender: nil)
             }
         })
@@ -96,11 +116,19 @@ class CommunityController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if currentUser() != nil {
+            if currentUser()!.isAvailable() {
+                return 2
+            } else {
+                return 1
+            }
+        } else {
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return section == 0 ? 1 : 40
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -108,17 +136,35 @@ class CommunityController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return available.count
+        if currentUser() != nil {
+            if section == 0 {
+                return inviteEnabled ? 1 : 0
+            } else {
+                return available.count
+            }
+        } else {
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Members available for invitation"
+        return section == 1 ? "members that available for offer" : ""
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "member", for: indexPath) as! MemberCell
-        cell.member = available[indexPath.row]
-        return cell
+        if indexPath.section == 0 {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+            cell.textLabel?.numberOfLines = 0
+            cell.textLabel?.font = UIFont.mainFont(15)
+            cell.textLabel?.textColor = MainColor
+            cell.textLabel?.text = "Invite your friends into v-Chess Game Room"
+            cell.imageView?.image = UIImage(named: "invite")
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "member", for: indexPath) as! MemberCell
+            cell.member = available[indexPath.row]
+            return cell
+        }
     }
 
     private func invite(_ user:AppUser, toGame:[String:String]) {
@@ -132,21 +178,52 @@ class CommunityController: UITableViewController {
             }
         })
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = available[indexPath.row]
-        let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
-            let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
-            self.invite(user, toGame: game)
-        }, handler2: {
-            let game = ["uid" : generateUDID(), "white" : user.uid!, "black" : currentUser()!.uid!]
-            self.invite(user, toGame: game)
-        })
-        alert?.firstButton.backgroundColor = UIColor.white
-        alert?.firstButton.setupBorder(UIColor.black, radius: 1)
-        alert?.firstButton.setTitleColor(UIColor.black, for: .normal)
-        alert?.secondButton.backgroundColor = UIColor.black
-        alert?.show()
+        if indexPath.section == 0 {
+            tableView.deselectRow(at: indexPath, animated: false)
+            sendInvite()
+        } else {
+            let user = available[indexPath.row]
+            let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
+                let game = ["uid" : generateUDID(), "white" : currentUser()!.uid!, "black" : user.uid!]
+                self.invite(user, toGame: game)
+            }, handler2: {
+                let game = ["uid" : generateUDID(), "white" : user.uid!, "black" : currentUser()!.uid!]
+                self.invite(user, toGame: game)
+            })
+            alert?.firstButton.backgroundColor = UIColor.white
+            alert?.firstButton.setupBorder(UIColor.black, radius: 1)
+            alert?.firstButton.setTitleColor(UIColor.black, for: .normal)
+            alert?.secondButton.backgroundColor = UIColor.black
+            alert?.show()
+        }
     }
 
+    func sendInvite() {
+        if let invite = Invites.inviteDialog() {
+            invite.setInviteDelegate(self)
+            let message = "\(currentUser()!.name!) invite you into v-Chess Game Room!"
+            invite.setMessage(message)
+            invite.setTitle("Invite")
+            invite.setDeepLink(deepLink)
+            invite.setCallToActionText("Install")
+            invite.open()
+        }
+    }
+}
+
+extension CommunityController : InviteDelegate {
+    
+    func inviteFinished(withInvitations invitationIds: [String], error: Error?) {
+        if let error = error {
+            if error.localizedDescription != "Canceled by User" {
+                let message = "Can not send invite. Error: \(error.localizedDescription)"
+                showMessage(message, messageType: .error)
+            }
+        } else {
+            let message = "\(invitationIds.count) invites sent."
+            showMessage(message, messageType: .information)
+        }
+    }
 }

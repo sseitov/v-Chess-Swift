@@ -234,7 +234,7 @@
                                         <action selector="switchAvailable:" destination="AqP-9W-3fY" eventType="valueChanged" id="Dhp-Kc-oKU"/>
                                     </connections>
                                 </switch>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable online game's invitations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGb-tG-9a1">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable online game's offers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGb-tG-9a1">
                                     <rect key="frame" x="74" y="79" width="236" height="31"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="31" id="aUd-Pm-rJ0"/>
