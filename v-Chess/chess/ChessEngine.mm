@@ -389,6 +389,7 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     self = [super init];
     if (self) {
         _desk = [[Desk alloc] initWithFrame:view.bounds];
+        _desk.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _deskView = view;
         [_deskView addSubview:_desk];
         [_desk resetDisposition:_currentGame.state()];
