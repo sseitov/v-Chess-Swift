@@ -373,7 +373,7 @@ class Model: NSObject {
             }
         }
         if cashedUser.avatarURL != nil, let url = URL(string: cashedUser.avatarURL!) {
-            SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: { _ in}, completed: { _, data, error, _ in
+            SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: nil, completed: { _, data, error, _ in
                 if data != nil {
                     cashedUser.avatar = data as NSData?
                 }
@@ -403,7 +403,7 @@ class Model: NSObject {
             }
         }
         if cashedUser.avatarURL != nil, let url = URL(string: cashedUser.avatarURL!) {
-            SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: { _ in}, completed: { _, data, error, _ in
+            SDWebImageDownloader.shared().downloadImage(with: url, options: [], progress: nil, completed: { _, data, error, _ in
                 if data != nil {
                     cashedUser.avatar = data as NSData?
                 }

@@ -91,7 +91,7 @@ class TurnCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func setCurrentTurnNotify(_ notify:Notification) {
+    @objc func setCurrentTurnNotify(_ notify:Notification) {
         let num = notify.object as! Int
         if (number != num) {
             currentTurn = nil
@@ -100,13 +100,13 @@ class TurnCell: UITableViewCell {
         }
     }
     
-    func touchWhite() {
+    @objc func touchWhite() {
         delegate?.didSetCurrentTurn(number, white: true)
 //        currentTurn = true
         NotificationCenter.default.post(name: unsetCurrentTurnNotification, object: number, userInfo: ["color" : true])
     }
     
-    func touchBlack() {
+    @objc func touchBlack() {
         delegate?.didSetCurrentTurn(number, white: false)
 //        currentTurn = false
         NotificationCenter.default.post(name: unsetCurrentTurnNotification, object: number, userInfo: ["color" : false])

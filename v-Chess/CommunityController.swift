@@ -69,7 +69,7 @@ class CommunityController: UITableViewController, GIDSignInDelegate {
         }
     }
     
-    func refresh() {
+    @objc func refresh() {
         if currentUser()!.isAvailable() {
             let btn = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.refreshUsers))
             btn.tintColor = UIColor.white
@@ -82,9 +82,9 @@ class CommunityController: UITableViewController, GIDSignInDelegate {
         self.tableView.reloadData()
     }
     
-    func refreshUsers() {
+    @objc func refreshUsers() {
         SVProgressHUD.show(withStatus: "Refresh...")
-        Model.shared.refreshUsers({ users in
+        Model.shared.refreshUsers({
             SVProgressHUD.dismiss()
         })
     }

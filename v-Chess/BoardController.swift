@@ -182,7 +182,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
     
-    func tap() {
+    @objc func tap() {
         if !notationTable!.isHidden {
             showTable()
         }
@@ -301,17 +301,17 @@ class BoardController: UIViewController, TurnCellDelegate {
         }
     }
     
-    func controlDepth(_ sender:UISwitch) {
+    @objc func controlDepth(_ sender:UISwitch) {
         setChessDepth(sender.isOn)
         chessEngine?.depth = chessDepth()
     }
     
-    func controlSound(_ sender:UISwitch) {
+    @objc func controlSound(_ sender:UISwitch) {
         chessEngine?.soundEnable = sender.isOn
         setSoundEnabled(sender.isOn)
     }
     
-    func controlGame(_ button:UIButton) {
+    @objc func controlGame(_ button:UIButton) {
         if !chessEngine!.gameStarted() {
             let alert = ActionSheet.create(title: "What color you choose?", actions: ["WHITE", "BLACK"], handler1: {
                 self.startGame(button, blackColor: true)
@@ -347,7 +347,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         })
     }
     
-    func controlViewer(_ control:UISegmentedControl) {
+    @objc func controlViewer(_ control:UISegmentedControl) {
         let command = ViewerCommand(rawValue: control.selectedSegmentIndex)
         switch command! {
         case .rewind:
@@ -391,7 +391,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         }
     }
     
-    func youWin() {
+    @objc func youWin() {
         if onlineGame != nil {
             showMessage("Congratilations, you are win!", messageType: .information, messageHandler: {
                 self.goBack()
@@ -401,7 +401,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         }
     }
     
-    func showTable() {
+    @objc func showTable() {
         let wasHidden = self.notationTable!.isHidden
         let frame = wasHidden ?
             CGRect(x: self.view.frame.size.width - 200, y: 0, width: 200, height: self.view.frame.size.height) :
@@ -429,7 +429,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         chessEngine?.play(to: index)
     }
     
-    func gameNotify(_ notify:Notification) {
+    @objc func gameNotify(_ notify:Notification) {
         let type = notify.object as! GamePush
         if type == .turn {
             Model.shared.lastMove(gameId: onlineGame!["uid"]!, move: { move in
@@ -445,7 +445,7 @@ class BoardController: UIViewController, TurnCellDelegate {
         }
     }
     
-    func sendTurn(_ notify:Notification) {
+    @objc func sendTurn(_ notify:Notification) {
         if let turn = notify.object as? String {
             onlineGame!["turn"] = turn
             SVProgressHUD.show(withStatus: "Send...")

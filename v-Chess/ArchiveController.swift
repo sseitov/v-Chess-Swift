@@ -30,7 +30,7 @@ class ArchiveController: UITableViewController, ChessComLoaderDelegate {
         self.navigationController?.performSegue(withIdentifier: "unwindToMenu", sender: self)
     }
 
-    func loadGame() {
+    @objc func loadGame() {
         performSegue(withIdentifier: "importGame", sender: nil)
     }
     

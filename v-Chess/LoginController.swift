@@ -49,7 +49,7 @@ class LoginController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate,
         super.goBack()
     }
     
-    func tap() {
+    @objc func tap() {
         UIApplication.shared.sendAction(#selector(UIApplication.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     

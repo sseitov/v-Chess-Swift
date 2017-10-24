@@ -20,7 +20,7 @@ class MenuController: AMSlideMenuRightTableViewController {
                                                object: nil)
     }
     
-    func gameNotify(_ notify:Notification) {
+    @objc func gameNotify(_ notify:Notification) {
         let type = notify.object as! GamePush
         if type == .invite {
             Model.shared.myGame({ game, error in
