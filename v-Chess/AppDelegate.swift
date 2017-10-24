@@ -39,20 +39,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         // Register_for_notifications
+        // Register_for_notifications
         if #available(iOS 10.0, *) {
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-            
             UNUserNotificationCenter.current().delegate = self
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+                
+                guard error == nil else {
+                    print("============ Display Error.. Handle Error.. etc..")
+                    return
+                }
+                
+                if granted {
+                    DispatchQueue.main.async {
+                        //Register for RemoteNotifications. Your Remote Notifications can display alerts now :)
+                        application.registerForRemoteNotifications()
+                    }
+                }
+                else {
+                    print("======== user denying permissions..")
+                }
+            }
         } else {
             let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
             application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
         }
-        
-        application.registerForRemoteNotifications()
+
         Messaging.messaging().delegate = self
         
         UIApplication.shared.statusBarStyle = .lightContent
