@@ -113,7 +113,7 @@
 - (void)update
 {
     [UIView animateWithDuration:0.4 animations:^{
-        for (FigureView *f in _figures) {
+        for (FigureView *f in self->_figures) {
             f.frame = [self cellFrameForPosition:f.position];
         }
     }];

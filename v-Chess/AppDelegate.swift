@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
         } else {
             return GIDSignIn.sharedInstance().handle(url,
-                                                     sourceApplication: options[.sourceApplication] as! String!,
+                                                     sourceApplication: options[.sourceApplication] as! String?,
                                                      annotation: options[.annotation])
         }
     }

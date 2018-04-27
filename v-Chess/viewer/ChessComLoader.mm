@@ -102,8 +102,8 @@
 - (void)importZipPGN:(NSURL*)url name:(NSString*)package isZip:(bool)isZip progress:(void (^)(float))progress complete:(void (^)(int))complete{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        doImport = YES;
-        importStopped = [[NSConditionLock alloc] initWithCondition:ImportIsWorking];
+        self->doImport = YES;
+        self->importStopped = [[NSConditionLock alloc] initWithCondition:ImportIsWorking];
         
         PGNImporter *importer = [PGNImporter sharedPGNImporter];
         
@@ -155,20 +155,20 @@
                     progress(currentProgress);
                 });
                 
-                if (!doImport) {
+                if (!self->doImport) {
                     break;
                 }
             }
-            if (!doImport) {
+            if (!self->doImport) {
                 break;
             }
         }
         
-        if (doImport) {
-            doImport = NO;
+        if (self->doImport) {
+            self->doImport = NO;
         }
-        [importStopped lock];
-        [importStopped unlockWithCondition:ImportIsDone];
+        [self->importStopped lock];
+        [self->importStopped unlockWithCondition:ImportIsDone];
         
         dispatch_async(dispatch_get_main_queue(), ^(){
             complete(success);

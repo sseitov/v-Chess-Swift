@@ -87,13 +87,13 @@ typedef std::vector<vchess::Position> PositionArray;
 {
     [UIView animateWithDuration:0.2
                      animations:^{
-                         _desk.frame = _deskView.bounds;
+                         self->_desk.frame = self->_deskView.bounds;
                      }
                      completion:^(BOOL finished){
-                         if (_desk.rotated != rotate) {
-                             [_desk rotate];
+                         if (self->_desk.rotated != rotate) {
+                             [self->_desk rotate];
                          } else {
-                             [_desk update];
+                             [self->_desk update];
                          }
                      }
      ];
@@ -350,28 +350,28 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     best_move = vchess::Move();
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^() {
-        if (_isDebut) {
+        if (self->_isDebut) {
             best_move = [self searchFromBook];
         }
         if (best_move.moveType == vchess::NotMove) {
-            _isDebut = NO;
+            self->_isDebut = NO;
             best_move = vchess::Move();
-            DEPTH = _depth;
-            search(_currentGame, _desk.activeColor, DEPTH, -vchess::W_INFINITY, vchess::W_INFINITY);
+            DEPTH = self->_depth;
+            search(self->_currentGame, self->_desk.activeColor, DEPTH, -vchess::W_INFINITY, vchess::W_INFINITY);
         }
         [self logMove:best_move];
         dispatch_async(dispatch_get_main_queue(), ^()
                        {
                            [SVProgressHUD dismiss];
                            if (best_move.moveType != vchess::NotMove) {
-                               [_desk makeMove:best_move
-                                        inGame:&_currentGame
+                               [self->_desk makeMove:best_move
+                                              inGame:&self->_currentGame
                                     completion:^(BOOL success)
                                 {
                                     if (success) {
-                                        _moves.push_back(best_move);
+                                        self->_moves.push_back(best_move);
                                         [self switchColor];
-                                        _desk.userInteractionEnabled = YES;
+                                        self->_desk.userInteractionEnabled = YES;
                                     } else {
                                         [self surrender];
                                     }
@@ -455,13 +455,13 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
 {
     if (index > _viewedGame->currentTurnIndex()) {
         [self turnForward:^(bool next){
-            if (next && _viewedGame->currentTurnIndex() != index) {
+            if (next && self->_viewedGame->currentTurnIndex() != index) {
                 [self playToIndex:index];
             }
         }];
     } else if (index < _viewedGame->currentTurnIndex()) {
         [self turnBack:^(bool next){
-            if (next && _viewedGame->currentTurnIndex() != index) {
+            if (next && self->_viewedGame->currentTurnIndex() != index) {
                 [self playToIndex:index];
             }
         }];
@@ -523,7 +523,7 @@ int search(vchess::Disposition position, bool color, int depth, int alpha, int b
     }
     
     [self moveFigures:theFigures toPos:thePositions complete:^{
-        next(_viewedGame->hasNextTurn());
+        next(self->_viewedGame->hasNextTurn());
     }];
 }
 

@@ -22,12 +22,12 @@ class EatController: UICollectionViewController, UICollectionViewDelegateFlowLay
         collectionView?.reloadData()
     }
     
-    func eat(_ figure:UIImageView) {
+    @objc func eat(_ figure:UIImageView) {
         figures.append(figure)
         collectionView?.reloadData()
     }
     
-    func retrive() -> UIImageView? {
+    @objc func retrive() -> UIImageView? {
         let figure = figures.last
         figures.removeLast()
         collectionView?.reloadData()

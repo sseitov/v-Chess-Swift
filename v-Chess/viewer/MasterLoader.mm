@@ -148,7 +148,7 @@
 	NSInteger index = [_mMasterEco indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop){
 		NSString *str = (NSString*)obj;
 		std::string text([str UTF8String]);
-		if (idx >= [_mMasterEco count]) {
+        if (idx >= [self->_mMasterEco count]) {
 			*stop = YES;
 		} else {
 			if (text >= searchText) {
