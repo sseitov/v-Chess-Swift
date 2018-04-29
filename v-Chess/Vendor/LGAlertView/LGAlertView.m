@@ -575,7 +575,7 @@ static dispatch_semaphore_t show_animation_semaphore;
                               duration:transitionDuration2 + transitionDelay2
                                options:UIViewAnimationOptionTransitionCrossDissolve
                             animations:^{
-                                self->_circularProgressBGImageView.image = _completionImage;
+                                self->_circularProgressBGImageView.image = self->_completionImage;
                             }
                             completion:^(BOOL finished) {
                                 dispatch_semaphore_signal(show_animation_semaphore);
